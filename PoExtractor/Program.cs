@@ -18,9 +18,7 @@ namespace PoExtractor.Core {
             }
 
             string[] projectFiles;
-            if (args[0].EndsWith(".csproj")) {
-                projectFiles = new string[] { args[0] };
-            } else if (Directory.Exists(args[0])) {
+            if (Directory.Exists(args[0])) {
                 projectFiles = Directory.EnumerateFiles(args[0], "*.csproj", SearchOption.AllDirectories).ToArray();
             } else {
                 WriteHelp();
@@ -32,7 +30,7 @@ namespace PoExtractor.Core {
             foreach (var projectFilePath in projectFiles) {
                 var projectPath = Path.GetDirectoryName(projectFilePath);
                 var basePath = Path.GetDirectoryName(projectPath) + Path.DirectorySeparatorChar;
-                var outputPath = Path.Combine(outputBasePath, projectPath.TrimStart(basePath), "OrchardCore.pot");
+                var outputPath = Path.Combine(outputBasePath, projectPath.TrimStart(basePath) + ".pot");
 
                 ProcessProject(projectPath, basePath, outputPath);
             }
@@ -40,7 +38,7 @@ namespace PoExtractor.Core {
 
         private static void WriteHelp() {
             Console.WriteLine("Usage: PoExtractor.exe input output");
-            Console.WriteLine("    input: Path to a .cproj file to proccess single project or a path to prcess all project in the specified path");
+            Console.WriteLine("    input: Path to input directory, all projects at the the path will be processed");
             Console.WriteLine("    output: Path to a directory where POT files will be generated");
         }
 
