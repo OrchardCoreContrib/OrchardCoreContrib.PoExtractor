@@ -1,16 +1,16 @@
 # PoExtractor
 
-This utility extracts translatable strings from the C# code and from the Razor templates to POT (portable object template) files. It is designed to follow conventions used in the OrchardCore project.
+This utility extracts translatable strings from the C# code and from the Razor templates to POT (portable object template) files. It is designed to follow conventions used in the [OrchardCore](https://github.com/OrchardCMS/OrchardCore) project.
 
 ## Usage
 
 `PoExtractor.exe inputpath outputpath`
 
-Extracts all translatable strings from the projects at specified input path and saves generated POT files at the specified output path. It creates one POT file per a project.
+Extracts all translatable strings from projects at the specified input path and saves generated POT files at the specified output path. It creates one POT file per a project.
 
 ## Limitations
 
-PoExtractor assumes, the code follows several conventions
+PoExtractor assumes, the code follows several conventions:
 
 * `IStringLocalizer` or a derived class is accessed via property named `T`
 * context of the localizable string is full name (with namespace) of the containing class for C# code
