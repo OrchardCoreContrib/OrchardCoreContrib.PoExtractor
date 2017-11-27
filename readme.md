@@ -4,7 +4,7 @@ This utility extracts translatable strings from the C# code and from the Razor t
 
 ## Usage
 
-`PoExtractor.exe inputpath outputpath`
+`dotnet PoExtractor.dll inputpath outputpath`
 
 Extracts all translatable strings from projects at the specified input path and saves generated POT files at the specified output path. It creates one POT file per a project.
 
