@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Web.Razor;
+using Microsoft.AspNetCore.Razor.Language;
+using Microsoft.AspNetCore.Razor.Language.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CSharp;
@@ -66,26 +68,15 @@ namespace PoExtractor.Core {
                 new PluralStringExtractor(razorMetadataProvider)
             };
 
-            var razorHost = new RazorEngineHost(RazorCodeLanguage.Languages["cshtml"]);
-            var razor = new RazorTemplateEngine(razorHost);
+            var compiledViews = ViewCompiler.CompileViews(projectPath);
             var cs = new CSharpCodeProvider();
 
-            foreach (var file in Directory.EnumerateFiles(projectPath, "*.cshtml", SearchOption.AllDirectories)) {
-                using (var reader = new StreamReader(file)) {
-                    try {
-                        var compileUnit = razor.GenerateCode(reader, "View", "PoExtraxtor.GeneratedCode", file, null).GeneratedCode;
-
-                        var sb = new StringBuilder();
-                        using (var writer = new StringWriter(sb)) {
-                            cs.GenerateCodeFromCompileUnit(compileUnit, writer, new System.CodeDom.Compiler.CodeGeneratorOptions());
-                        }
-
-                        var syntaxTree = CSharpSyntaxTree.ParseText(sb.ToString(), path: file);
-
-                        localizedStringsCollector.Visit(syntaxTree.GetRoot());
-                    } catch (Exception ex) {
-                        Console.WriteLine("Compile fail for: {0}", file);
-                    }
+            foreach (var view in compiledViews) {
+                try {
+                    var syntaxTree = CSharpSyntaxTree.ParseText(view.GeneratedCode, path: view.FilePath);
+                    localizedStringsCollector.Visit(syntaxTree.GetRoot());
+                } catch (Exception ex) {
+                    Console.WriteLine("Compile fail for: {0}", view.FilePath);
                 }
             }
 
