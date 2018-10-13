@@ -53,6 +53,10 @@ namespace PoExtractor.Core {
                 });
 
             foreach (var file in Directory.EnumerateFiles(projectPath, "*.cs", SearchOption.AllDirectories)) {
+                if (Path.GetFileName(file).EndsWith(".g.cshtml.cs")) {
+                    continue;
+                }
+
                 using (var stream = File.OpenRead(file)) {
                     using (var reader = new StreamReader(stream)) {
                         var syntaxTree = CSharpSyntaxTree.ParseText(reader.ReadToEnd(), path: file);
