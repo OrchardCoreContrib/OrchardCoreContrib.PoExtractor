@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace PoExtractor.Core {
     public class PotFile : IDisposable {
@@ -17,14 +18,14 @@ namespace PoExtractor.Core {
             }
 
             if (!string.IsNullOrEmpty(record.Context)) {
-                _writer.WriteLine($"msgctxt \"{record.Context}\"");
+                _writer.WriteLine($"msgctxt \"{this.Escape(record.Context)}\"");
             }
 
-            _writer.WriteLine($"msgid \"{record.Text}\"");
+            _writer.WriteLine($"msgid \"{this.Escape(record.Text)}\"");
             if (string.IsNullOrEmpty(record.TextPlural)) {
                 _writer.WriteLine($"msgstr \"\"");
             } else {
-                _writer.WriteLine($"msgid_plural \"{record.TextPlural}\"");
+                _writer.WriteLine($"msgid_plural \"{this.Escape(record.TextPlural)}\"");
                 _writer.WriteLine($"msgstr[0] \"\"");
             }
 
@@ -48,6 +49,14 @@ namespace PoExtractor.Core {
                 _writer.Close();
                 _writer.Dispose();
             }
+        }
+
+        private string Escape(string text) {
+            var sb = new StringBuilder(text);
+            sb.Replace("\\", "\\\\"); // \ -> \\
+            sb.Replace("\"", "\\\""); // " -> \"
+
+            return sb.ToString();
         }
     }
 }
