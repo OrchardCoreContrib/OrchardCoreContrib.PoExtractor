@@ -13,28 +13,49 @@ using PoExtractor.Core.MetadataProviders;
 
 namespace PoExtractor.Core {
     class Program {
+        private static Func<string, string, string, string> DefaultOutputPathGenerator = (string basePath, string outputBasePath, string projectFilePath) => {
+            var projectPath = Path.GetDirectoryName(projectFilePath);
+            return Path.Combine(outputBasePath, projectPath.TrimStart(basePath + Path.DirectorySeparatorChar) + ".pot");
+        };
+
+        private static Func<string, string, string, string> OrchardOutputPathGenerator = (string basePath, string outputBasePath, string projectFilePath) => {
+            var projectRelativePath = projectFilePath.TrimStart(Path.Combine(basePath, "src" + Path.DirectorySeparatorChar));
+            var projectDir = projectRelativePath.Split(Path.DirectorySeparatorChar).First();
+
+            var projectPath = Path.GetDirectoryName(projectFilePath);
+
+
+            return Path.Combine(outputBasePath, projectDir, Path.GetFileNameWithoutExtension(projectFilePath) + ".pot");
+        };
+
+        private static string[] ProjectBlacklist = new[] { "test", "src\\OrchardCore.Cms.Web", "src\\OrchardCore.Mvc.Web", "src\\OrchardCore.Nancy.Web" };
+
         static void Main(string[] args) {
             if (args.Length != 2) {
                 WriteHelp();
                 return;
             }
 
+            var basePath = args[0];
+            var outputBasePath = args[1];
+
             string[] projectFiles;
-            if (Directory.Exists(args[0])) {
-                projectFiles = Directory.EnumerateFiles(args[0], "*.csproj", SearchOption.AllDirectories).ToArray();
+            if (Directory.Exists(basePath)) {
+                projectFiles = Directory.EnumerateFiles(basePath, "*.csproj", SearchOption.AllDirectories).ToArray();
             } else {
                 WriteHelp();
                 return;
             }
 
-            var outputBasePath = args[1];
-
             foreach (var projectFilePath in projectFiles) {
                 var projectPath = Path.GetDirectoryName(projectFilePath);
-                var basePath = Path.GetDirectoryName(projectPath) + Path.DirectorySeparatorChar;
-                var outputPath = Path.Combine(outputBasePath, projectPath.TrimStart(basePath) + ".pot");
+                var projectRelativePath = projectPath.TrimStart(basePath + Path.DirectorySeparatorChar);
 
-                ProcessProject(projectPath, basePath, outputPath);
+                if (ProjectBlacklist.Any(o => projectRelativePath.StartsWith(o))) {
+                    continue;
+                }
+
+                ProcessProject(projectPath, OrchardOutputPathGenerator(args[0], args[1], projectFilePath));
             }
         }
 
@@ -44,8 +65,8 @@ namespace PoExtractor.Core {
             Console.WriteLine("    output: Path to a directory where POT files will be generated");
         }
 
-        private static void ProcessProject(string projectPath, string basePath, string outputFilePath) {
-            var codeMetadataProvider = new CodeMetadataProvider(basePath);
+        private static void ProcessProject(string projectPath, string outputFilePath) {
+            var codeMetadataProvider = new CodeMetadataProvider(projectPath);
             var localizedStringsCollector = new LocalizableStringCollector(
                 new ILocalizableStringExtractor[] {
                     new SingularStringExtractor(codeMetadataProvider),
@@ -66,7 +87,7 @@ namespace PoExtractor.Core {
                 }
             }
 
-            var razorMetadataProvider = new RazorMetadataProvider(basePath);
+            var razorMetadataProvider = new RazorMetadataProvider(projectPath);
             localizedStringsCollector.Extractors = new ILocalizableStringExtractor[] {
                 new SingularStringExtractor(razorMetadataProvider),
                 new PluralStringExtractor(razorMetadataProvider)
@@ -93,7 +114,7 @@ namespace PoExtractor.Core {
                 }
             }
 
-            Console.WriteLine($"{projectPath.TrimStart(basePath)}: Found {localizedStringsCollector.Strings.Count()} strings.");
+            Console.WriteLine($"{Path.GetFileName(projectPath)}: Found {localizedStringsCollector.Strings.Count()} strings.");
         }
     }
 }
