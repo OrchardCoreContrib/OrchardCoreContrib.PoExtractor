@@ -49,13 +49,14 @@ namespace PoExtractor.Core {
 
             foreach (var projectFilePath in projectFiles) {
                 var projectPath = Path.GetDirectoryName(projectFilePath);
+                var projectBasePath = Path.GetDirectoryName(projectPath) + Path.DirectorySeparatorChar;
                 var projectRelativePath = projectPath.TrimStart(basePath + Path.DirectorySeparatorChar);
 
                 if (ProjectBlacklist.Any(o => projectRelativePath.StartsWith(o))) {
                     continue;
                 }
 
-                ProcessProject(projectPath, OrchardOutputPathGenerator(args[0], args[1], projectFilePath));
+                ProcessProject(projectPath, projectBasePath, OrchardOutputPathGenerator(args[0], args[1], projectFilePath));
             }
         }
 
@@ -65,8 +66,8 @@ namespace PoExtractor.Core {
             Console.WriteLine("    output: Path to a directory where POT files will be generated");
         }
 
-        private static void ProcessProject(string projectPath, string outputFilePath) {
-            var codeMetadataProvider = new CodeMetadataProvider(projectPath);
+        private static void ProcessProject(string projectPath, string projectBasePath, string outputFilePath) {
+            var codeMetadataProvider = new CodeMetadataProvider(projectBasePath);
             var localizedStringsCollector = new LocalizableStringCollector(
                 new ILocalizableStringExtractor[] {
                     new SingularStringExtractor(codeMetadataProvider),
@@ -87,7 +88,7 @@ namespace PoExtractor.Core {
                 }
             }
 
-            var razorMetadataProvider = new RazorMetadataProvider(projectPath);
+            var razorMetadataProvider = new RazorMetadataProvider(projectBasePath);
             localizedStringsCollector.Extractors = new ILocalizableStringExtractor[] {
                 new SingularStringExtractor(razorMetadataProvider),
                 new PluralStringExtractor(razorMetadataProvider)

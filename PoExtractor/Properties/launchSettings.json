@@ -2,7 +2,7 @@
   "profiles": {
     "PoExtractor": {
       "commandName": "Project",
-      "commandLineArgs": "c:\\Users\\Lukas\\Source\\Repos\\Orchard2 c:\\Temp\\Test"
+      "commandLineArgs": "c:\\Users\\Lukas\\Source\\Repos\\OrchardCore c:\\Temp\\Test"
     }
   }
 }

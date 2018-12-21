@@ -22,7 +22,7 @@ namespace PoExtractor.Core.MetadataProviders {
 
         public LocalizableStringLocation GetLocation(SyntaxNode node) {
             var result = new LocalizableStringLocation {
-                SourceFile = node.SyntaxTree.FilePath.TrimStart(this.BasePath)
+                SourceFile = node.SyntaxTree.FilePath.TrimStart(this.BasePath + Path.DirectorySeparatorChar)
             };
 
             var statement = node.Ancestors().OfType<ExpressionStatementSyntax>().FirstOrDefault();
