@@ -14,7 +14,9 @@ namespace PoExtractor.Core {
         public void WriteRecord(LocalizableString record) {
             foreach (var location in record.Locations) {
                 _writer.WriteLine($"#: {location.SourceFile}:{location.SourceFileLine}");
-                _writer.WriteLine($"#. {location.Comment}");
+                if (!string.IsNullOrEmpty(location.Comment)) {
+                    _writer.WriteLine($"#. {location.Comment}");
+                }
             }
 
             if (!string.IsNullOrEmpty(record.Context)) {

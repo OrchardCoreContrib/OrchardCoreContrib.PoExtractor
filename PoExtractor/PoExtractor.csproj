@@ -6,9 +6,11 @@
   </PropertyGroup>
 
 <ItemGroup>
+    <PackageReference Include="Fluid.Core" Version="1.0.0-beta2" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Language" Version="2.2.0" />
     <PackageReference Include="Microsoft.CodeAnalysis" Version="2.10.0" />
+    <PackageReference Include="OrchardCore.DisplayManagement.Liquid" Version="1.0.0-beta2-69590" />
     <PackageReference Include="System.CodeDom" Version="4.5.0" />
+    <PackageReference Include="System.Text.Encodings.Web" Version="4.5.0" />
   </ItemGroup>
-
 </Project>

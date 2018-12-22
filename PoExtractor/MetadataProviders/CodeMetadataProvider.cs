@@ -4,7 +4,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace PoExtractor.Core.MetadataProviders {
-    public class CodeMetadataProvider : ILocalizableMetadataProvider {
+    public class CodeMetadataProvider : IMetadataProvider<SyntaxNode> {
         public string BasePath { get; private set; }
 
         public CodeMetadataProvider(string basePath) {

@@ -3,8 +3,8 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace PoExtractor.Core.Extractors {
-    public class SingularStringExtractor : LocalizableStringExtractor {
-        public SingularStringExtractor(ILocalizableMetadataProvider metadataProvider) : base(metadataProvider) {
+    public class SingularStringExtractor : LocalizableStringExtractor<SyntaxNode> {
+        public SingularStringExtractor(IMetadataProvider<SyntaxNode> metadataProvider) : base(metadataProvider) {
         }
 
         public override LocalizableStringOccurence TryExtract(SyntaxNode node) {

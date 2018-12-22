@@ -1,6 +1,6 @@
 # PoExtractor
 
-This utility extracts translatable strings from the C# code and from the Razor templates to POT (portable object template) files. It is designed to follow conventions used in the [OrchardCore](https://github.com/OrchardCMS/OrchardCore) project.
+This utility extracts translatable strings from the C# code, Razor templates and Liquid templates to POT (portable object template) files. It is designed to follow conventions used in the [OrchardCore](https://github.com/OrchardCMS/OrchardCore) project.
 
 ## Usage
 
@@ -13,9 +13,11 @@ Extracts all translatable strings from projects at the specified input path and 
 PoExtractor assumes, the code follows several conventions:
 
 * `IStringLocalizer` or a derived class is accessed via property named `T`
+* Liquid templates uses a filter named `t`
 * context of the localizable string is full name (with namespace) of the containing class for C# code
-* context of the localizable string is dot-delimited relative path to view for Razor templates
-
+* context of the localizable string is dot-delimited relative path the to view for Razor templates
+* context of the localizable string is dot-delimited relative path the to template for Liquid templates
+* 
 ## Example
 
 C# code:
@@ -66,6 +68,14 @@ Razor view:
 
 ```
 
+Liquid template:
+```html
+div class="page-heading">
+   <h1>{{ "Page Not Found" | t }}</h1>
+/div>
+
+```
+
 Generated POT file:
 ```
 #: OrchardCore.ContentFields\Drivers\LinkFieldDriver.cs:59
@@ -78,5 +88,10 @@ msgstr ""
 #. <label asp-for="Text" @if (settings.LinkTextMode == LinkTextMode.Required) { <text> class="required" </text>  }>@T["Link text"]</label>
 msgctxt "OrchardCore.ContentFields.Views.LinkField.Edit"
 msgid "Link text"
+msgstr ""
+
+#: TheBlogTheme\Views\Shared\NotFound.liquid:0
+msgctxt "TheBlogTheme.Views.Shared.NotFound"
+msgid "Page Not Found"
 msgstr ""
 ```
