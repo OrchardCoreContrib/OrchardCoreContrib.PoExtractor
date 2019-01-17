@@ -148,7 +148,7 @@ namespace PoExtractor.Core {
                 using (var stream = File.OpenRead(file)) {
                     using (var reader = new StreamReader(stream)) {
 
-                        if (liquidParser.TryParse(reader.ReadToEnd(), out var ast, out var errors)) {
+                        if (liquidParser.TryParse(reader.ReadToEnd(), true, out var ast, out var errors)) {
                             foreach (var statement in ast) {
                                 liquidVisitor.Visit(new LiquidStatementContext() { Statement = statement, FilePath = file });
                             }
