@@ -5,7 +5,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace PoExtractor.Core.MetadataProviders {
-    public class RazorMetadataProvider : ILocalizableMetadataProvider {
+    public class RazorMetadataProvider : IMetadataProvider<SyntaxNode> {
         private string[] _sourceCache;
         private string _sourceCachePath;
 
@@ -22,7 +22,7 @@ namespace PoExtractor.Core.MetadataProviders {
 
         public LocalizableStringLocation GetLocation(SyntaxNode node) {
             var result = new LocalizableStringLocation {
-                SourceFile = node.SyntaxTree.FilePath.TrimStart(this.BasePath + Path.DirectorySeparatorChar)
+                SourceFile = node.SyntaxTree.FilePath.TrimStart(this.BasePath)
             };
 
             var statement = node.Ancestors().OfType<ExpressionStatementSyntax>().FirstOrDefault();
