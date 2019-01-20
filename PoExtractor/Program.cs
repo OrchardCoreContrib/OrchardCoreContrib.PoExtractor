@@ -24,13 +24,8 @@ namespace PoExtractor.Core {
         };
 
         private static Func<string, string, string, string> OrchardOutputPathGenerator = (string basePath, string outputBasePath, string projectFilePath) => {
-            var projectRelativePath = projectFilePath.TrimStart(Path.Combine(basePath, "src" + Path.DirectorySeparatorChar));
-            var projectDir = projectRelativePath.Split(Path.DirectorySeparatorChar).First();
-
             var projectPath = Path.GetDirectoryName(projectFilePath);
-
-
-            return Path.Combine(outputBasePath, projectDir, Path.GetFileNameWithoutExtension(projectFilePath) + ".pot");
+            return Path.Combine(outputBasePath, Path.GetFileNameWithoutExtension(projectFilePath) + ".pot");
         };
 
         private static F.FluidParserFactory _liquidParseFactory;
@@ -81,13 +76,14 @@ namespace PoExtractor.Core {
         }
 
         static void Main(string[] args) {
-            if (args.Length != 2) {
+            if (args.Length < 2) {
                 WriteHelp();
                 return;
             }
 
             var basePath = args[0];
             var outputBasePath = args[1];
+            var parseLiquid = args.Length > 2 && args[2] == "--liquid";
 
             string[] projectFiles;
             if (Directory.Exists(basePath)) {
@@ -106,7 +102,7 @@ namespace PoExtractor.Core {
                     continue;
                 }
 
-                ProcessProject(projectPath, projectBasePath, OrchardOutputPathGenerator(args[0], args[1], projectFilePath));
+                ProcessProject(projectPath, projectBasePath, OrchardOutputPathGenerator(args[0], args[1], projectFilePath), parseLiquid);
             }
         }
 
@@ -116,7 +112,7 @@ namespace PoExtractor.Core {
             Console.WriteLine("    output: Path to a directory where POT files will be generated");
         }
 
-        private static void ProcessProject(string projectPath, string projectBasePath, string outputFilePath) {
+        private static void ProcessProject(string projectPath, string projectBasePath, string outputFilePath, bool parseLiquid) {
             var strings = new LocalizableStringCollection();
 
             var codeMetadataProvider = new CodeMetadataProvider(projectBasePath);
@@ -140,17 +136,19 @@ namespace PoExtractor.Core {
                 }
             }
 
-            var liquidMetadataProvider = new LiquidMetadataProvider(projectBasePath);
-            var liquidVisitor = new LiquidVisitor(new[] { new LiquidStringExtractor(liquidMetadataProvider) }, strings);
-            var liquidParser = _liquidParseFactory.CreateParser();
+            if (parseLiquid) {
+                var liquidMetadataProvider = new LiquidMetadataProvider(projectBasePath);
+                var liquidVisitor = new LiquidVisitor(new[] { new LiquidStringExtractor(liquidMetadataProvider) }, strings);
+                var liquidParser = _liquidParseFactory.CreateParser();
 
-            foreach (var file in Directory.EnumerateFiles(projectPath, "*.liquid", SearchOption.AllDirectories)) {
-                using (var stream = File.OpenRead(file)) {
-                    using (var reader = new StreamReader(stream)) {
+                foreach (var file in Directory.EnumerateFiles(projectPath, "*.liquid", SearchOption.AllDirectories)) {
+                    using (var stream = File.OpenRead(file)) {
+                        using (var reader = new StreamReader(stream)) {
 
-                        if (liquidParser.TryParse(reader.ReadToEnd(), true, out var ast, out var errors)) {
-                            foreach (var statement in ast) {
-                                liquidVisitor.Visit(new LiquidStatementContext() { Statement = statement, FilePath = file });
+                            if (liquidParser.TryParse(reader.ReadToEnd(), true, out var ast, out var errors)) {
+                                foreach (var statement in ast) {
+                                    liquidVisitor.Visit(new LiquidStatementContext() { Statement = statement, FilePath = file });
+                                }
                             }
                         }
                     }

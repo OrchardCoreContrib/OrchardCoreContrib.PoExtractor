@@ -8,6 +8,8 @@ This utility extracts translatable strings from the C# code, Razor templates and
 
 Extracts all translatable strings from projects at the specified input path and saves generated POT files at the specified output path. It creates one POT file per a project.
 
+Use `dotnet PoExtractor.dll inputpath outputpath --liquid` to include translations from .liquid files (requires Fluid.Core 1.0.0-beta-9501 or newer)
+
 ## Limitations
 
 PoExtractor assumes, the code follows several conventions:
