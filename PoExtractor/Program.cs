@@ -18,10 +18,10 @@ using F = Fluid;
 
 namespace PoExtractor.Core {
     class Program {
-        private static Func<string, string, string, string> DefaultOutputPathGenerator = (string basePath, string outputBasePath, string projectFilePath) => {
-            var projectPath = Path.GetDirectoryName(projectFilePath);
-            return Path.Combine(outputBasePath, projectPath.TrimStart(basePath + Path.DirectorySeparatorChar) + ".pot");
-        };
+        //private static Func<string, string, string, string> DefaultOutputPathGenerator = (string basePath, string outputBasePath, string projectFilePath) => {
+        //    var projectPath = Path.GetDirectoryName(projectFilePath);
+        //    return Path.Combine(outputBasePath, projectPath.TrimStart(basePath + Path.DirectorySeparatorChar) + ".pot");
+        //};
 
         private static Func<string, string, string, string> OrchardOutputPathGenerator = (string basePath, string outputBasePath, string projectFilePath) => {
             var projectPath = Path.GetDirectoryName(projectFilePath);
@@ -93,17 +93,17 @@ namespace PoExtractor.Core {
                 return;
             }
 
-            foreach (var projectFilePath in projectFiles) {
-                var projectPath = Path.GetDirectoryName(projectFilePath);
-                var projectBasePath = Path.GetDirectoryName(projectPath) + Path.DirectorySeparatorChar;
-                var projectRelativePath = projectPath.TrimStart(basePath + Path.DirectorySeparatorChar);
+            //foreach (var projectFilePath in projectFiles) {
+            //    var projectPath = Path.GetDirectoryName(projectFilePath);
+            //    var projectBasePath = Path.GetDirectoryName(projectPath) + Path.DirectorySeparatorChar;
+            //    var projectRelativePath = projectPath.TrimStart(basePath + Path.DirectorySeparatorChar);
 
-                if (ProjectBlacklist.Any(o => projectRelativePath.StartsWith(o))) {
-                    continue;
-                }
+            //    if (ProjectBlacklist.Any(o => projectRelativePath.StartsWith(o))) {
+            //        continue;
+            //    }
 
-                ProcessProject(projectPath, projectBasePath, OrchardOutputPathGenerator(args[0], args[1], projectFilePath), parseLiquid);
-            }
+            //    ProcessProject(projectPath, projectBasePath, OrchardOutputPathGenerator(args[0], args[1], projectFilePath), parseLiquid);
+            //}
         }
 
         private static void WriteHelp() {
@@ -112,77 +112,77 @@ namespace PoExtractor.Core {
             Console.WriteLine("    output: Path to a directory where POT files will be generated");
         }
 
-        private static void ProcessProject(string projectPath, string projectBasePath, string outputFilePath, bool parseLiquid) {
-            var strings = new LocalizableStringCollection();
+        //private static void ProcessProject(string projectPath, string projectBasePath, string outputFilePath, bool parseLiquid) {
+        //    var strings = new LocalizableStringCollection();
 
-            var codeMetadataProvider = new CodeMetadataProvider(projectBasePath);
-            var localizedStringsCollector = new CSharpCodeVisitor(
-                new IStringExtractor<SyntaxNode>[] {
-                    new SingularStringExtractor(codeMetadataProvider),
-                    new PluralStringExtractor(codeMetadataProvider)
-                }, strings);
+        //    var codeMetadataProvider = new CodeMetadataProvider(projectBasePath);
+        //    var localizedStringsCollector = new CSharpCodeVisitor(
+        //        new IStringExtractor<SyntaxNode>[] {
+        //            new SingularStringExtractor(codeMetadataProvider),
+        //            new PluralStringExtractor(codeMetadataProvider)
+        //        }, strings);
 
-            foreach (var file in Directory.EnumerateFiles(projectPath, "*.cs", SearchOption.AllDirectories)) {
-                if (Path.GetFileName(file).EndsWith(".g.cshtml.cs")) {
-                    continue;
-                }
+        //    foreach (var file in Directory.EnumerateFiles(projectPath, "*.cs", SearchOption.AllDirectories)) {
+        //        if (Path.GetFileName(file).EndsWith(".g.cshtml.cs")) {
+        //            continue;
+        //        }
 
-                using (var stream = File.OpenRead(file)) {
-                    using (var reader = new StreamReader(stream)) {
-                        var syntaxTree = CSharpSyntaxTree.ParseText(reader.ReadToEnd(), path: file);
+        //        using (var stream = File.OpenRead(file)) {
+        //            using (var reader = new StreamReader(stream)) {
+        //                var syntaxTree = CSharpSyntaxTree.ParseText(reader.ReadToEnd(), path: file);
 
-                        localizedStringsCollector.Visit(syntaxTree.GetRoot());
-                    }
-                }
-            }
+        //                localizedStringsCollector.Visit(syntaxTree.GetRoot());
+        //            }
+        //        }
+        //    }
 
-            if (parseLiquid) {
-                var liquidMetadataProvider = new LiquidMetadataProvider(projectBasePath);
-                var liquidVisitor = new LiquidVisitor(new[] { new LiquidStringExtractor(liquidMetadataProvider) }, strings);
-                var liquidParser = _liquidParseFactory.CreateParser();
+        //    if (parseLiquid) {
+        //        var liquidMetadataProvider = new LiquidMetadataProvider(projectBasePath);
+        //        var liquidVisitor = new LiquidVisitor(new[] { new LiquidStringExtractor(liquidMetadataProvider) }, strings);
+        //        var liquidParser = _liquidParseFactory.CreateParser();
 
-                foreach (var file in Directory.EnumerateFiles(projectPath, "*.liquid", SearchOption.AllDirectories)) {
-                    using (var stream = File.OpenRead(file)) {
-                        using (var reader = new StreamReader(stream)) {
+        //        foreach (var file in Directory.EnumerateFiles(projectPath, "*.liquid", SearchOption.AllDirectories)) {
+        //            using (var stream = File.OpenRead(file)) {
+        //                using (var reader = new StreamReader(stream)) {
 
-                            if (liquidParser.TryParse(reader.ReadToEnd(), true, out var ast, out var errors)) {
-                                foreach (var statement in ast) {
-                                    liquidVisitor.Visit(new LiquidStatementContext() { Statement = statement, FilePath = file });
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+        //                    if (liquidParser.TryParse(reader.ReadToEnd(), true, out var ast, out var errors)) {
+        //                        foreach (var statement in ast) {
+        //                            liquidVisitor.Visit(new LiquidStatementContext() { Statement = statement, FilePath = file });
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
 
-            var razorMetadataProvider = new RazorMetadataProvider(projectBasePath);
-            localizedStringsCollector.Extractors = new IStringExtractor<SyntaxNode>[] {
-                new SingularStringExtractor(razorMetadataProvider),
-                new PluralStringExtractor(razorMetadataProvider)
-            };
+        //    var razorMetadataProvider = new RazorMetadataProvider(projectBasePath);
+        //    localizedStringsCollector.Extractors = new IStringExtractor<SyntaxNode>[] {
+        //        new SingularStringExtractor(razorMetadataProvider),
+        //        new PluralStringExtractor(razorMetadataProvider)
+        //    };
 
-            var compiledViews = ViewCompiler.CompileViews(projectPath);
-            var cs = new CSharpCodeProvider();
+        //    var compiledViews = ViewCompiler.CompileViews(projectPath);
+        //    var cs = new CSharpCodeProvider();
 
-            foreach (var view in compiledViews) {
-                try {
-                    var syntaxTree = CSharpSyntaxTree.ParseText(view.GeneratedCode, path: view.FilePath);
-                    localizedStringsCollector.Visit(syntaxTree.GetRoot());
-                } catch (Exception ex) {
-                    Console.WriteLine("Compile fail for: {0}", view.FilePath);
-                }
-            }
+        //    foreach (var view in compiledViews) {
+        //        try {
+        //            var syntaxTree = CSharpSyntaxTree.ParseText(view.GeneratedCode, path: view.FilePath);
+        //            localizedStringsCollector.Visit(syntaxTree.GetRoot());
+        //        } catch (Exception ex) {
+        //            Console.WriteLine("Compile fail for: {0}", view.FilePath);
+        //        }
+        //    }
 
-            if (strings.Values.Any()) {
-                var outputDirectory = Path.GetDirectoryName(outputFilePath);
-                Directory.CreateDirectory(outputDirectory);
+        //    if (strings.Values.Any()) {
+        //        var outputDirectory = Path.GetDirectoryName(outputFilePath);
+        //        Directory.CreateDirectory(outputDirectory);
 
-                using (var potFile = new PotFile(outputFilePath)) {
-                    potFile.WriteRecord(strings.Values);
-                }
-            }
+        //        using (var potFile = new PotFile(outputFilePath)) {
+        //            potFile.WriteRecord(strings.Values);
+        //        }
+        //    }
 
-            Console.WriteLine($"{Path.GetFileName(projectPath)}: Found {strings.Values.Count()} strings.");
-        }
+        //    Console.WriteLine($"{Path.GetFileName(projectPath)}: Found {strings.Values.Count()} strings.");
+        //}
     }
 }

@@ -4,28 +4,28 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace PoExtractor.Core.MetadataProviders {
-    public class CodeMetadataProvider : IMetadataProvider<SyntaxNode> {
-        public string BasePath { get; private set; }
+    //public class CodeMetadataProvider : IMetadataProvider<SyntaxNode> {
+    //    public string BasePath { get; private set; }
 
-        public CodeMetadataProvider(string basePath) {
-            this.BasePath = basePath;
-        }
+    //    public CodeMetadataProvider(string basePath) {
+    //        this.BasePath = basePath;
+    //    }
 
-        public string GetContext(SyntaxNode node) {
-            var @namespace = node.Ancestors().OfType<NamespaceDeclarationSyntax>().FirstOrDefault()?.Name.ToString();
-            var @class = node.Ancestors().OfType<ClassDeclarationSyntax>().FirstOrDefault()?.Identifier.ValueText;
+    //    public string GetContext(SyntaxNode node) {
+    //        var @namespace = node.Ancestors().OfType<NamespaceDeclarationSyntax>().FirstOrDefault()?.Name.ToString();
+    //        var @class = node.Ancestors().OfType<ClassDeclarationSyntax>().FirstOrDefault()?.Identifier.ValueText;
 
-            return $"{@namespace}.{@class}";
-        }
+    //        return $"{@namespace}.{@class}";
+    //    }
 
-        public LocalizableStringLocation GetLocation(SyntaxNode node) {
-            var lineNumber = node.GetLocation().GetMappedLineSpan().StartLinePosition.Line;
+    //    public LocalizableStringLocation GetLocation(SyntaxNode node) {
+    //        var lineNumber = node.GetLocation().GetMappedLineSpan().StartLinePosition.Line;
 
-            return new LocalizableStringLocation {
-                SourceFileLine = lineNumber + 1,
-                SourceFile = node.SyntaxTree.FilePath.TrimStart(this.BasePath),
-                Comment = node.SyntaxTree.GetText().Lines[lineNumber].ToString().Trim()
-            };
-        }
-    }
+    //        return new LocalizableStringLocation {
+    //            SourceFileLine = lineNumber + 1,
+    //            SourceFile = node.SyntaxTree.FilePath.TrimStart(this.BasePath),
+    //            Comment = node.SyntaxTree.GetText().Lines[lineNumber].ToString().Trim()
+    //        };
+    //    }
+    //}
 }
