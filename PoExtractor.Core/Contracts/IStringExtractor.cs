@@ -1,6 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 
-namespace PoExtractor.Core {
+namespace PoExtractor.Core.Contracts {
     /// <summary>
     /// Extracts a translatable string from a node of the AST tree
     /// </summary>

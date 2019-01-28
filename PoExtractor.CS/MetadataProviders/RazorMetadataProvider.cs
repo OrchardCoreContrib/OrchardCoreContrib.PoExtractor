@@ -3,8 +3,13 @@ using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using PoExtractor.Core;
+using PoExtractor.Core.Contracts;
 
-namespace PoExtractor.Core.MetadataProviders {
+namespace PoExtractor.CS.MetadataProviders {
+    /// <summary>
+    /// Provides metadata for Razor .cshtml files
+    /// </summary>
     public class RazorMetadataProvider : IMetadataProvider<SyntaxNode> {
         private string[] _sourceCache;
         private string _sourceCachePath;

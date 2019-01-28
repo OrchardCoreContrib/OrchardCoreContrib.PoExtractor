@@ -1,13 +1,23 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using PoExtractor.Core;
+using PoExtractor.Core.Contracts;
 
-namespace PoExtractor.Core.Extractors {
+namespace PoExtractor.CS {
+    /// <summary>
+    /// Extracts <see cref="LocalizableStringOccurence"/> with the singual text from the C# AST node
+    /// </summary>
+    /// <remarks>
+    /// The localizable string is identified by the name convention - T.Plural(count, "1 book", "{0} books")
+    /// </remarks>
     public class PluralStringExtractor : LocalizableStringExtractor<SyntaxNode> {
         public PluralStringExtractor(IMetadataProvider<SyntaxNode> metadataProvider) : base(metadataProvider) {
         }
 
-        public override LocalizableStringOccurence TryExtract(SyntaxNode node) {
+        public override bool TryExtract(SyntaxNode node, out LocalizableStringOccurence result) {
+            result = null;
+
             if (node is InvocationExpressionSyntax invocation &&
                 invocation.Expression is MemberAccessExpressionSyntax accessor &&
                 accessor.Expression is IdentifierNameSyntax identifierName &&
@@ -23,19 +33,21 @@ namespace PoExtractor.Core.Extractors {
                         array.Initializer.Expressions[0] is LiteralExpressionSyntax singularLiteral && singularLiteral.IsKind(SyntaxKind.StringLiteralExpression) &&
                         array.Initializer.Expressions[1] is LiteralExpressionSyntax pluralLiteral && pluralLiteral.IsKind(SyntaxKind.StringLiteralExpression)) {
 
-                        return this.CreateLocalizedString(singularLiteral.Token.ValueText, pluralLiteral.Token.ValueText, node);
+                        result = this.CreateLocalizedString(singularLiteral.Token.ValueText, pluralLiteral.Token.ValueText, node);
+                        return true;
                     }
                 } else {
                     if (arguments.Count >= 3 &&
                         arguments[1].Expression is LiteralExpressionSyntax singularLiteral && singularLiteral.IsKind(SyntaxKind.StringLiteralExpression) &&
                         arguments[2].Expression is LiteralExpressionSyntax pluralLiteral && pluralLiteral.IsKind(SyntaxKind.StringLiteralExpression)) {
 
-                        return this.CreateLocalizedString(singularLiteral.Token.ValueText, pluralLiteral.Token.ValueText, node);
+                        result = this.CreateLocalizedString(singularLiteral.Token.ValueText, pluralLiteral.Token.ValueText, node);
+                        return true;
                     }
                 }
             }
 
-            return null;
+            return false;
         }
     }
 }

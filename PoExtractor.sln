@@ -3,11 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28516.95
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoExtractor", "PoExtractor\PoExtractor.csproj", "{A29A064D-8EB5-4D0F-A78C-2C6021340A17}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoExtractor.Core", "PoExtractor.Core\PoExtractor.Core.csproj", "{E677EF59-34AC-41A4-B9BC-C655A81017A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoExtractor.Core", "PoExtractor.Core\PoExtractor.Core.csproj", "{E677EF59-34AC-41A4-B9BC-C655A81017A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoExtractor.Core.Tests", "PoExtractor.Core.Tests\PoExtractor.Core.Tests.csproj", "{4E0AF6EC-9BD0-4D39-8123-06163362185D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoExtractor.Core.Tests", "PoExtractor.Core.Tests\PoExtractor.Core.Tests.csproj", "{4E0AF6EC-9BD0-4D39-8123-06163362185D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoExtractor.CS", "PoExtractor.CS\PoExtractor.CS.csproj", "{8964B6F8-7548-43DB-8F63-230348A40A30}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoExtractor.Liquid", "PoExtractor.Liquid\PoExtractor.Liquid.csproj", "{9DB27A54-F56F-465E-A1A9-28791C64710B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoExtractor.OrchardCore", "PoExtractor.OrchardCore\PoExtractor.OrchardCore.csproj", "{C81FF74F-5E1E-402E-A505-E4CEE495CF1A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A29A064D-8EB5-4D0F-A78C-2C6021340A17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A29A064D-8EB5-4D0F-A78C-2C6021340A17}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A29A064D-8EB5-4D0F-A78C-2C6021340A17}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A29A064D-8EB5-4D0F-A78C-2C6021340A17}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E677EF59-34AC-41A4-B9BC-C655A81017A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E677EF59-34AC-41A4-B9BC-C655A81017A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E677EF59-34AC-41A4-B9BC-C655A81017A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -27,6 +27,18 @@ Global
 		{4E0AF6EC-9BD0-4D39-8123-06163362185D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E0AF6EC-9BD0-4D39-8123-06163362185D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E0AF6EC-9BD0-4D39-8123-06163362185D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8964B6F8-7548-43DB-8F63-230348A40A30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8964B6F8-7548-43DB-8F63-230348A40A30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8964B6F8-7548-43DB-8F63-230348A40A30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8964B6F8-7548-43DB-8F63-230348A40A30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DB27A54-F56F-465E-A1A9-28791C64710B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DB27A54-F56F-465E-A1A9-28791C64710B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DB27A54-F56F-465E-A1A9-28791C64710B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DB27A54-F56F-465E-A1A9-28791C64710B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C81FF74F-5E1E-402E-A505-E4CEE495CF1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C81FF74F-5E1E-402E-A505-E4CEE495CF1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C81FF74F-5E1E-402E-A505-E4CEE495CF1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C81FF74F-5E1E-402E-A505-E4CEE495CF1A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

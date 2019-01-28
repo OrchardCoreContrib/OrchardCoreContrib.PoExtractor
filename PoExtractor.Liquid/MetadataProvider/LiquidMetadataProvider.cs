@@ -1,10 +1,14 @@
 ﻿using PoExtractor.Core;
+using PoExtractor.Core.Contracts;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace PoExtractor.MetadataProviders {
+namespace PoExtractor.Liquid.MetadataProviders {
+    /// <summary>
+    /// Provides metadata for .liquid files
+    /// </summary>
     class LiquidMetadataProvider : IMetadataProvider<LiquidExpressionContext> {
         public string BasePath { get; set; }
 

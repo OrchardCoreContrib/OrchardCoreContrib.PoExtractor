@@ -1,21 +1,27 @@
 ﻿using Fluid.Ast;
 using PoExtractor.Core;
-using System;
+using PoExtractor.Core.Contracts;
 using System.Collections.Generic;
-using System.Text;
 
-namespace PoExtractor {
-    class LiquidVisitor {
+namespace PoExtractor.Liquid {
+    /// <summary>
+    /// Traverses Fluid AST and extracts localizable strings using provided collection of <see cref="IStringExtractor{T}"/>
+    /// </summary>
+    class ExtractingLiquidWalker {
         private string _filePath;
 
-        public LocalizableStringCollection Strings { get; }
-        public IEnumerable<IStringExtractor<LiquidExpressionContext>> Extractors { get; set; }
+        private readonly LocalizableStringCollection _strings;
+        private readonly IEnumerable<IStringExtractor<LiquidExpressionContext>> _extractors;
 
-        public LiquidVisitor(IEnumerable<IStringExtractor<LiquidExpressionContext>> extractors, LocalizableStringCollection strings) {
-            this.Extractors = extractors;
-            this.Strings = strings;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ExtractingLiquidWalker"/> class
+        /// </summary>
+        /// <param name="extractors">the collection of extractors to use</param>
+        /// <param name="strings">the <see cref="LocalizableStringCollection"/> where the resuluts are saved</param>
+        public ExtractingLiquidWalker(IEnumerable<IStringExtractor<LiquidExpressionContext>> extractors, LocalizableStringCollection strings) {
+            _extractors = extractors;
+            _strings = strings;
         }
-
 
         public void Visit(LiquidStatementContext statementContext) {
             _filePath = statementContext.FilePath;
@@ -100,8 +106,10 @@ namespace PoExtractor {
         }
 
         private void ProcessFilterExpression(FilterExpression filter) {
-            foreach (var extractor in this.Extractors) {
-                this.Strings.Add(extractor.TryExtract(new LiquidExpressionContext() { Expression = filter, FilePath = _filePath }));
+            foreach (var extractor in _extractors) {
+                if (extractor.TryExtract(new LiquidExpressionContext() { Expression = filter, FilePath = _filePath }, out var result)) {
+                    _strings.Add(result);
+                }
             }
 
             this.Visit(filter.Input);

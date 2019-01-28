@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
+using PoExtractor.Core.Contracts;
 
-namespace PoExtractor.Core.Extractors {
+namespace PoExtractor.Core {
     public abstract class LocalizableStringExtractor<T> : IStringExtractor<T> {
         public IMetadataProvider<T> MetadataProvider { get; private set; }
 
@@ -8,7 +9,7 @@ namespace PoExtractor.Core.Extractors {
             this.MetadataProvider = metadataProvider;
         }
 
-        public abstract LocalizableStringOccurence TryExtract(T node);
+        public abstract bool TryExtract(T node, out LocalizableStringOccurence result);
 
         protected LocalizableStringOccurence CreateLocalizedString(string text, string textPlural, T node) {
             var result = new LocalizableStringOccurence() {

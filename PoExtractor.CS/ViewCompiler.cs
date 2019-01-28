@@ -6,7 +6,7 @@ using System.Text;
 using Microsoft.AspNetCore.Razor.Language;
 using Microsoft.AspNetCore.Razor.Language.Extensions;
 
-namespace PoExtractor {
+namespace PoExtractor.CS {
     static class ViewCompiler {
         public static IList<RazorPageGeneratorResult> CompileViews(string projectDirectory) {
             var projectEngine = CreateProjectEngine("PoExtraxtor.GeneratedCode", projectDirectory);
