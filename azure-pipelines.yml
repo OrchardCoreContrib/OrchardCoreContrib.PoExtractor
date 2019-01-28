@@ -1,0 +1,54 @@
+trigger:
+- dev
+- master
+
+pr:
+- dev
+
+pool:
+  vmImage: 'VS2017-Win2016'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+
+steps:
+- task: DotNetCoreInstaller@0
+  displayName: 'Use .NET Core sdk 2.2.103'
+  inputs:
+    version: 2.2.103
+
+- task: DotNetCoreCLI@2
+  displayName: Restore
+  inputs:
+    command: restore
+    projects: '**/*.csproj'
+    feedsToUse: config
+    nugetConfigPath: NuGet.config
+
+- task: DotNetCoreCLI@2
+  displayName: Build
+  inputs:
+    projects: '**/*.csproj'
+    arguments: '--configuration $(BuildConfiguration)'
+
+- task: DotNetCoreCLI@2
+  displayName: Test
+  inputs:
+    command: test
+    projects: '$(Parameters.TestProjects)'
+    arguments: '--configuration $(BuildConfiguration)'
+
+- task: DotNetCoreCLI@2
+
+  displayName: Pack
+  inputs:
+    command: pack
+    packagesToPack: PoExtractor.OrchardCore/PoExtractor.OrchardCore.csproj
+    nobuild: true
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact'
+  inputs:
+    PathtoPublish: '$(build.artifactstagingdirectory)'
