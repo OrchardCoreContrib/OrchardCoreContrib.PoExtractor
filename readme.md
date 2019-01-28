@@ -2,13 +2,23 @@
 
 This utility extracts translatable strings from the C# code, Razor templates and Liquid templates to POT (portable object template) files. It is designed to follow conventions used in the [OrchardCore](https://github.com/OrchardCMS/OrchardCore) project.
 
+## Installation
+
+PoExtractor is distributed as a dotnet global tool and it is available on the official NuGet.org feed. It with the following command:
+
+`dotnet tool install --global PoExtractor.OrchardCore`
+
 ## Usage
 
-`dotnet PoExtractor.dll inputpath outputpath`
+`extractpo-oc inputpath outputpath`
 
 Extracts all translatable strings from projects at the specified input path and saves generated POT files at the specified output path. It creates one POT file per a project.
 
-Use `dotnet PoExtractor.dll inputpath outputpath --liquid` to include translations from .liquid files (requires Fluid.Core 1.0.0-beta-9501 or newer)
+Use `extractpo-oc inputpath outputpath --liquid` to include translations from .liquid files
+
+## Uninstallation
+
+`dotnet tool uninstall --global PoExtractor.OrchardCore`
 
 ## Limitations
 
@@ -19,7 +29,7 @@ PoExtractor assumes, the code follows several conventions:
 * context of the localizable string is full name (with namespace) of the containing class for C# code
 * context of the localizable string is dot-delimited relative path the to view for Razor templates
 * context of the localizable string is dot-delimited relative path the to template for Liquid templates
-* 
+ 
 ## Example
 
 C# code:

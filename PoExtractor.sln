@@ -7,11 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoExtractor.Core", "PoExtra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoExtractor.Core.Tests", "PoExtractor.Core.Tests\PoExtractor.Core.Tests.csproj", "{4E0AF6EC-9BD0-4D39-8123-06163362185D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoExtractor.CS", "PoExtractor.CS\PoExtractor.CS.csproj", "{8964B6F8-7548-43DB-8F63-230348A40A30}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoExtractor.CS", "PoExtractor.CS\PoExtractor.CS.csproj", "{8964B6F8-7548-43DB-8F63-230348A40A30}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoExtractor.Liquid", "PoExtractor.Liquid\PoExtractor.Liquid.csproj", "{9DB27A54-F56F-465E-A1A9-28791C64710B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoExtractor.Liquid", "PoExtractor.Liquid\PoExtractor.Liquid.csproj", "{9DB27A54-F56F-465E-A1A9-28791C64710B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoExtractor.OrchardCore", "PoExtractor.OrchardCore\PoExtractor.OrchardCore.csproj", "{C81FF74F-5E1E-402E-A505-E4CEE495CF1A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoExtractor.OrchardCore", "PoExtractor.OrchardCore\PoExtractor.OrchardCore.csproj", "{C81FF74F-5E1E-402E-A505-E4CEE495CF1A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoExtractor", "PoExtractor\PoExtractor.csproj", "{D358C2C3-D568-4C60-BBFA-38AA2BE95C7A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{C81FF74F-5E1E-402E-A505-E4CEE495CF1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C81FF74F-5E1E-402E-A505-E4CEE495CF1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C81FF74F-5E1E-402E-A505-E4CEE495CF1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D358C2C3-D568-4C60-BBFA-38AA2BE95C7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D358C2C3-D568-4C60-BBFA-38AA2BE95C7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D358C2C3-D568-4C60-BBFA-38AA2BE95C7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D358C2C3-D568-4C60-BBFA-38AA2BE95C7A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
