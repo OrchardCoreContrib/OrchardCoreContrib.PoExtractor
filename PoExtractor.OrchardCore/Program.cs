@@ -6,6 +6,7 @@ using PoExtractor.Core.Contracts;
 using PoExtractor.CS;
 using PoExtractor.Liquid;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -31,9 +32,10 @@ namespace PoExtractor.OrchardCore {
                 return;
             }
 
-            var processors = new IProjectProcessor[] {
-                new CSharpProjectProcessor(),
-                new LiquidProjectProcessor(ConfigureFluidParser)
+            var processors = new List<IProjectProcessor>();
+            processors.Add(new CSharpProjectProcessor());
+            if (parseLiquid) {
+                processors.Add(new LiquidProjectProcessor(ConfigureFluidParser));
             };
 
             foreach (var projectFilePath in projectFiles) {
@@ -41,7 +43,7 @@ namespace PoExtractor.OrchardCore {
                 var projectBasePath = Path.GetDirectoryName(projectPath) + Path.DirectorySeparatorChar;
                 var projectRelativePath = projectPath.TrimStart(basePath + Path.DirectorySeparatorChar);
                 var outputPath = Path.Combine(outputBasePath, Path.GetFileNameWithoutExtension(projectFilePath) + ".pot");
-                               
+
                 if (ProjectBlacklist.Any(o => projectRelativePath.StartsWith(o))) {
                     continue;
                 }
@@ -64,9 +66,10 @@ namespace PoExtractor.OrchardCore {
         }
 
         private static void WriteHelp() {
-            Console.WriteLine("Usage: PoExtractor.exe input output");
-            Console.WriteLine("    input: Path to input directory, all projects at the the path will be processed");
-            Console.WriteLine("    output: Path to a directory where POT files will be generated");
+            Console.WriteLine("Usage: extractpo-oc input output --liquid");
+            Console.WriteLine("    input: path to the input directory, all projects at the the path will be processed");
+            Console.WriteLine("    output: path to a directory where POT files will be generated");
+            Console.WriteLine("    --liquid: include this flag to process .liquid files");
         }
 
         private static void ConfigureFluidParser(FluidParserFactory _liquidParseFactory) {

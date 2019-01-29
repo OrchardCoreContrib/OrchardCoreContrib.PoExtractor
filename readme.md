@@ -2,24 +2,53 @@
 
 This utility extracts translatable strings from the C# code, Razor templates and Liquid templates to POT (portable object template) files. It is designed to follow conventions used in the [OrchardCore](https://github.com/OrchardCMS/OrchardCore) project.
 
+PoExtractor is distributed as a dotnet global tool and it is available on the official NuGet.org feed in two versions:
+
+* `PoExtractor` - a general purpose utility for extracting translatable strings from  C# code and Razor views
+* `PoExtractor.OrchardCore` - the same utility with the additional support for extracting translatable strings from Liquid templates.
+  * In order to be able to parse Liquid templates, it needs to reference `OrchardCore.DisplayManagement.Liquid` package, where the Liquid filters are defined
+
+## Installation
+
+
+Install with the following command:
+
+`dotnet tool install --global PoExtractor`
+
+or
+
+`dotnet tool install --global PoExtractor.OrchardCore`
+
 ## Usage
 
-`dotnet PoExtractor.dll inputpath outputpath`
+`extractpo inputpath outputpath`
+
+or
+
+`extractpo-oc inputpath outputpath --liquid`
 
 Extracts all translatable strings from projects at the specified input path and saves generated POT files at the specified output path. It creates one POT file per a project.
 
-Use `dotnet PoExtractor.dll inputpath outputpath --liquid` to include translations from .liquid files (requires Fluid.Core 1.0.0-beta-9501 or newer)
+Use the `--liquid` flag to include also .liquid files in the processing.
+
+## Uninstallation
+
+`dotnet tool uninstall --global PoExtractor`
+
+or
+
+`dotnet tool uninstall --global PoExtractor.OrchardCore`
 
 ## Limitations
 
 PoExtractor assumes, the code follows several conventions:
 
-* `IStringLocalizer` or a derived class is accessed via property named `T`
-* Liquid templates uses a filter named `t`
-* context of the localizable string is full name (with namespace) of the containing class for C# code
-* context of the localizable string is dot-delimited relative path the to view for Razor templates
-* context of the localizable string is dot-delimited relative path the to template for Liquid templates
-* 
+* `IStringLocalizer` or a derived class is accessed via a property named `T`
+* Liquid templates use the filter named `t`
+* context of the localizable string is the full name (with namespace) of the containing class for C# code
+* context of the localizable string is the dot-delimited relative path the to view for Razor templates
+* context of the localizable string is the dot-delimited relative path the to template for Liquid templates
+ 
 ## Example
 
 C# code:
