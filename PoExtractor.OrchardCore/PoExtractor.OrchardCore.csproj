@@ -3,7 +3,15 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-    <AssemblyName>dotnet-extractpo-oc</AssemblyName>
+    <AssemblyName>PoExtractor.OrchardCore</AssemblyName>
+    <ToolCommandName>extractpo-oc</ToolCommandName>
+    <PackAsTool>true</PackAsTool>
+    <Version>0.1.0</Version>
+    <PackageId>PoExtractor.OrchardCore</PackageId>
+    <Authors>Lukas Kabrt</Authors>
+    <Company />
+    <Product />
+    <Description>.NET Core global tool for extractiong translatable strings from the OrchardCore source files.</Description>
   </PropertyGroup>
 
   <ItemGroup>
