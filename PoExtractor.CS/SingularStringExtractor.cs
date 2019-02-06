@@ -3,6 +3,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using PoExtractor.Core;
 using PoExtractor.Core.Contracts;
+using System.Linq;
 
 namespace PoExtractor.CS {
     /// <summary>
@@ -20,7 +21,7 @@ namespace PoExtractor.CS {
 
             if (node is ElementAccessExpressionSyntax accessor &&
                 accessor.Expression is IdentifierNameSyntax identifierName &&
-                identifierName.Identifier.Text == "T" &&
+                Constants.StringLocalizerIdentifiers.Contains(identifierName.Identifier.Text) &&
                 accessor.ArgumentList != null) {
 
                 var argument = accessor.ArgumentList.Arguments.FirstOrDefault();
