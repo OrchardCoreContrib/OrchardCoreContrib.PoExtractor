@@ -6,7 +6,7 @@ PoExtractor is distributed as a dotnet global tool and it is available on the of
 
 * `PoExtractor` - a general purpose utility for extracting translatable strings from  C# code and Razor views
 * `PoExtractor.OrchardCore` - the same utility with the additional support for extracting translatable strings from Liquid templates.
-  * In order to be able to parse Liquid templates, it references the `OrchardCore.DisplayManagement.Liquid` package, where Liquid filters are defined
+  * In order to be able to parse Liquid templates, it needs to reference `OrchardCore.DisplayManagement.Liquid` package, where the Liquid filters are defined
 
 ## Installation
 
