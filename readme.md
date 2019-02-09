@@ -43,7 +43,7 @@ or
 
 PoExtractor assumes, the code follows several conventions:
 
-* `IStringLocalizer` or a derived class is accessed via a property named `T`
+* `IStringLocalizer` or a derived class is accessed via a property named `T`, `S`, `TS`, `H` or `TH`
 * Liquid templates use the filter named `t`
 * context of the localizable string is the full name (with namespace) of the containing class for C# code
 * context of the localizable string is the dot-delimited relative path the to view for Razor templates
