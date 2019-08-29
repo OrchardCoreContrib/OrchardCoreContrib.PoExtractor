@@ -23,7 +23,7 @@ namespace PoExtractor.CS {
                 }, strings);
 
             foreach (var file in Directory.EnumerateFiles(path, "*.cs", SearchOption.AllDirectories)) {
-                if (Path.GetFileName(file).EndsWith(".g.cshtml.cs")) {
+                if (Path.GetFileName(file).EndsWith(".cshtml.g.cs")) {
                     continue;
                 }
 
