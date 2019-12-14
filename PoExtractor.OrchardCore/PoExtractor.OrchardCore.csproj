@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
     <AssemblyName>PoExtractor.OrchardCore</AssemblyName>
     <ToolCommandName>extractpo-oc</ToolCommandName>
     <PackAsTool>true</PackAsTool>
@@ -15,8 +15,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Fluid.Core" Version="1.0.0-beta-9513" />
-    <PackageReference Include="OrchardCore.DisplayManagement.Liquid" Version="1.0.0-beta3-70564" />
+    <PackageReference Include="Fluid.Core" Version="1.0.0-beta-9608" />
+    <PackageReference Include="OrchardCore.DisplayManagement.Liquid" Version="1.0.0-beta3-71077" />
   </ItemGroup>
 
   <ItemGroup>
