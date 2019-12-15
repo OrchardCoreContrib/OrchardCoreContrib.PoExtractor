@@ -3,9 +3,10 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using PoExtractor.Core;
 using PoExtractor.Core.Contracts;
+using PoExtractor.Languages;
 using System.Linq;
 
-namespace PoExtractor.CS {
+namespace PoExtractor.Languages.CS {
     /// <summary>
     /// Extracts <see cref="LocalizableStringOccurence"/> with the singual text from the C# AST node
     /// </summary>

@@ -4,7 +4,7 @@ using Microsoft.CodeAnalysis.VisualBasic.Syntax;
 using PoExtractor.Core;
 using PoExtractor.Core.Contracts;
 
-namespace PoExtractor.VB.MetadataProviders
+namespace PoExtractor.Languages.VB.MetadataProviders
 {
     /// <summary>
     /// Provides metadata for .vb code files

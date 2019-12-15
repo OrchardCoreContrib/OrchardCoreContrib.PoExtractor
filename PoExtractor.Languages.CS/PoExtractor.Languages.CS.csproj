@@ -6,9 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PoExtractor.Core\PoExtractor.Core.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Razor.Language" Version="2.2.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis" Version="2.10.0" />
+    <ProjectReference Include="..\PoExtractor.Languages\PoExtractor.Languages.csproj" />
   </ItemGroup>
 </Project>

@@ -6,7 +6,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using PoExtractor.Core;
 using PoExtractor.Core.Contracts;
 
-namespace PoExtractor.CS.MetadataProviders {
+namespace PoExtractor.Languages.MetadataProviders {
     /// <summary>
     /// Provides metadata for Razor .cshtml files
     /// </summary>

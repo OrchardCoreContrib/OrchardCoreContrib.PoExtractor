@@ -1,7 +1,7 @@
 ﻿using PoExtractor.Core;
 using PoExtractor.Core.Contracts;
-using PoExtractor.CS;
-using PoExtractor.VB;
+using PoExtractor.Languages.CS;
+using PoExtractor.Languages.VB;
 using System;
 using System.IO;
 using System.Linq;

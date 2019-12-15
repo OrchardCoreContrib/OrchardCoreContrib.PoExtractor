@@ -1,19 +1,20 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.VisualBasic;
 using PoExtractor.Core;
 using PoExtractor.Core.Contracts;
-using PoExtractor.VB.MetadataProviders;
+using PoExtractor.Languages;
+using PoExtractor.Languages.MetadataProviders;
+using PoExtractor.Languages.VB.MetadataProviders;
 
-namespace PoExtractor.VB
+namespace PoExtractor.Languages.VB
 {
     /// <summary>
     /// Extracts localizable strings from all *.vb files in the project path and *.cshtml files in the folde Views under the project path
     /// </summary>
-    public class VisualBasicProjectProcessor : IProjectProcessor {
-        public void Process(string path, string basePath, LocalizableStringCollection strings)
+    public class VisualBasicProjectProcessor : RazorViewsProcessor
+    {
+        public override void Process(string path, string basePath, LocalizableStringCollection strings)
         {
             /* VB */
             var codeMetadataProvider = new CodeMetadataProvider(basePath);
@@ -42,28 +43,14 @@ namespace PoExtractor.VB
                 }
             }
 
-            /* CSHTML */
-            var razorMetadataProvider = new RazorMetadataProvider(basePath);
-            var razorWalker = new ExtractingCodeWalker(
-                new IStringExtractor<SyntaxNode>[] {
-                        new SingularStringExtractor(razorMetadataProvider),
-                        new PluralStringExtractor(razorMetadataProvider)
-                }, strings);
-
-            var compiledViews = ViewCompiler.CompileViews(path);
-
-            foreach (var view in compiledViews)
-            {
-                try
-                {
-                    var syntaxTree = CSharpSyntaxTree.ParseText(view.GeneratedCode, path: view.FilePath);
-                    razorWalker.Visit(syntaxTree.GetRoot());
-                }
-                catch
-                {
-                    Console.WriteLine("Process failed for: {0}", view.FilePath);
-                }
-            }
+            base.Process(path, basePath, strings);
         }
+
+        protected override IStringExtractor<SyntaxNode>[] GetStringExtractors(RazorMetadataProvider razorMetadataProvider)
+            =>  new IStringExtractor<SyntaxNode>[]
+            {
+                new SingularStringExtractor(razorMetadataProvider),
+                new PluralStringExtractor(razorMetadataProvider)
+            };
     }
 }

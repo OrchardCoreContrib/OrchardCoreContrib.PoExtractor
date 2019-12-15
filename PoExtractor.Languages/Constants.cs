@@ -1,4 +1,4 @@
-﻿namespace PoExtractor.VB
+﻿namespace PoExtractor.Languages
 {
     public static class Constants
     {

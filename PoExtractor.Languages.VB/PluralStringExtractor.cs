@@ -3,9 +3,10 @@ using Microsoft.CodeAnalysis.VisualBasic;
 using Microsoft.CodeAnalysis.VisualBasic.Syntax;
 using PoExtractor.Core;
 using PoExtractor.Core.Contracts;
+using PoExtractor.Languages;
 using System.Linq;
 
-namespace PoExtractor.VB
+namespace PoExtractor.Languages.VB
 {
     /// <summary>
     /// Extracts <see cref="LocalizableStringOccurence"/> with the singual text from the VB AST node

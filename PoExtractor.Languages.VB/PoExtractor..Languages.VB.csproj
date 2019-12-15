@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PoExtractor.Core\PoExtractor.Core.csproj" />
+    <ProjectReference Include="..\PoExtractor.Languages\PoExtractor.Languages.csproj" />
+  </ItemGroup>
+</Project>
