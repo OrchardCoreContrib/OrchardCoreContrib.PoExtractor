@@ -23,6 +23,7 @@
     <ProjectReference Include="..\PoExtractor.Core\PoExtractor.Core.csproj" />
     <ProjectReference Include="..\PoExtractor.CS\PoExtractor.CS.csproj" />
     <ProjectReference Include="..\PoExtractor.Liquid\PoExtractor.Liquid.csproj" />
+    <ProjectReference Include="..\PoExtractor.VB\PoExtractor.VB.csproj" />
   </ItemGroup>
 
 </Project>

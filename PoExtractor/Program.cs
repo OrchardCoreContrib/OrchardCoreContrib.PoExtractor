@@ -1,6 +1,7 @@
 ﻿using PoExtractor.Core;
 using PoExtractor.Core.Contracts;
 using PoExtractor.CS;
+using PoExtractor.VB;
 using System;
 using System.IO;
 using System.Linq;
@@ -18,14 +19,16 @@ namespace PoExtractor {
 
             string[] projectFiles;
             if (Directory.Exists(basePath)) {
-                projectFiles = Directory.EnumerateFiles(basePath, "*.csproj", SearchOption.AllDirectories).ToArray();
+                projectFiles = Directory.EnumerateFiles(basePath, "*.csproj", SearchOption.AllDirectories)
+                    .Union(Directory.EnumerateFiles(basePath, "*.vbproj", SearchOption.AllDirectories)).ToArray();
             } else {
                 WriteHelp();
                 return;
             }
 
             var processors = new IProjectProcessor[] {
-                new CSharpProjectProcessor()
+                new CSharpProjectProcessor(),
+                new VisualBasicProjectProcessor()
             };
 
             foreach (var projectFilePath in projectFiles) {

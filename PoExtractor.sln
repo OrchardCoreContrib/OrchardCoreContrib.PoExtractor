@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoExtractor.Liquid", "PoExt
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoExtractor.OrchardCore", "PoExtractor.OrchardCore\PoExtractor.OrchardCore.csproj", "{C81FF74F-5E1E-402E-A505-E4CEE495CF1A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoExtractor", "PoExtractor\PoExtractor.csproj", "{D358C2C3-D568-4C60-BBFA-38AA2BE95C7A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoExtractor", "PoExtractor\PoExtractor.csproj", "{D358C2C3-D568-4C60-BBFA-38AA2BE95C7A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoExtractor.VB", "PoExtractor.VB\PoExtractor.VB.csproj", "{9F3B6D54-9441-42F0-96B8-D48D39E601FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{D358C2C3-D568-4C60-BBFA-38AA2BE95C7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D358C2C3-D568-4C60-BBFA-38AA2BE95C7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D358C2C3-D568-4C60-BBFA-38AA2BE95C7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F3B6D54-9441-42F0-96B8-D48D39E601FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F3B6D54-9441-42F0-96B8-D48D39E601FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F3B6D54-9441-42F0-96B8-D48D39E601FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F3B6D54-9441-42F0-96B8-D48D39E601FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
