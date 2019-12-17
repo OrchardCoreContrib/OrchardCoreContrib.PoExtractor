@@ -12,8 +12,6 @@ using System.Linq;
 
 namespace PoExtractor.OrchardCore {
     class Program {
-        private static string[] ProjectBlacklist = new[] { "test", "src\\OrchardCore.Cms.Web", "src\\OrchardCore.Mvc.Web", "src\\OrchardCore.Nancy.Web" };
-
         static void Main(string[] args) {
             if (args.Length < 2) {
                 WriteHelp();
@@ -44,7 +42,7 @@ namespace PoExtractor.OrchardCore {
                 var projectRelativePath = projectPath.TrimStart(basePath + Path.DirectorySeparatorChar);
                 var outputPath = Path.Combine(outputBasePath, Path.GetFileNameWithoutExtension(projectFilePath) + ".pot");
 
-                if (ProjectBlacklist.Any(o => projectRelativePath.StartsWith(o))) {
+                if (IgnoredProject.ToList().Any(o => projectRelativePath.StartsWith(o))) {
                     continue;
                 }
 
