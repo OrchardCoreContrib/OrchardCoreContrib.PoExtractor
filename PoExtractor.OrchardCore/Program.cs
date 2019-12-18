@@ -1,14 +1,15 @@
-﻿using Fluid;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using Fluid;
 using OrchardCore.DisplayManagement.Liquid.Tags;
 using OrchardCore.DynamicCache.Liquid;
 using PoExtractor.Core;
 using PoExtractor.Core.Contracts;
-using PoExtractor.CS;
+using PoExtractor.DotNet.CS;
 using PoExtractor.Liquid;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+using PoExtractor.DotNet.VB;
 
 namespace PoExtractor.OrchardCore {
     class Program {
@@ -24,14 +25,19 @@ namespace PoExtractor.OrchardCore {
 
             string[] projectFiles;
             if (Directory.Exists(basePath)) {
-                projectFiles = Directory.EnumerateFiles(basePath, "*.csproj", SearchOption.AllDirectories).ToArray();
+                projectFiles = Directory.EnumerateFiles(basePath, "*.csproj", SearchOption.AllDirectories)
+                    .Union(Directory.EnumerateFiles(basePath, "*.vbproj", SearchOption.AllDirectories)).ToArray();
             } else {
                 WriteHelp();
                 return;
             }
 
-            var processors = new List<IProjectProcessor>();
-            processors.Add(new CSharpProjectProcessor());
+            var processors = new List<IProjectProcessor>
+            {
+                new CSharpProjectProcessor(),
+                new VisualBasicProjectProcessor()
+            };
+
             if (parseLiquid) {
                 processors.Add(new LiquidProjectProcessor(ConfigureFluidParser));
             };

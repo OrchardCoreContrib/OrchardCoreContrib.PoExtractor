@@ -1,11 +1,11 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using System.Linq;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using PoExtractor.Core;
 using PoExtractor.Core.Contracts;
-using System.Linq;
 
-namespace PoExtractor.CS {
+namespace PoExtractor.DotNet.CS {
     /// <summary>
     /// Extracts <see cref="LocalizableStringOccurence"/> with the singual text from the C# AST node
     /// </summary>
