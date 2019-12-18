@@ -1,10 +1,10 @@
-﻿using PoExtractor.Core;
-using PoExtractor.Core.Contracts;
-using PoExtractor.Languages.CS;
-using PoExtractor.Languages.VB;
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
+using PoExtractor.Core;
+using PoExtractor.Core.Contracts;
+using PoExtractor.DotNet.CS;
+using PoExtractor.DotNet.VB;
 
 namespace PoExtractor {
     class Program {

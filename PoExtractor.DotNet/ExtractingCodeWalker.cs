@@ -3,7 +3,7 @@ using Microsoft.CodeAnalysis;
 using PoExtractor.Core;
 using PoExtractor.Core.Contracts;
 
-namespace PoExtractor.Languages {
+namespace PoExtractor.DotNet {
     /// <summary>
     /// Traverses C# & VB AST and extracts localizable strings using provided collection of <see cref="IStringExtractor{T}"/>
     /// </summary>

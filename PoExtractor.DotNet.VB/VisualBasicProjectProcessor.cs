@@ -3,11 +3,11 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.VisualBasic;
 using PoExtractor.Core;
 using PoExtractor.Core.Contracts;
-using PoExtractor.Languages;
-using PoExtractor.Languages.MetadataProviders;
-using PoExtractor.Languages.VB.MetadataProviders;
+using PoExtractor.Razor;
+using PoExtractor.Razor.MetadataProviders;
+using PoExtractor.DotNet.VB.MetadataProviders;
 
-namespace PoExtractor.Languages.VB
+namespace PoExtractor.DotNet.VB
 {
     /// <summary>
     /// Extracts localizable strings from all *.vb files in the project path and *.cshtml files in the folde Views under the project path

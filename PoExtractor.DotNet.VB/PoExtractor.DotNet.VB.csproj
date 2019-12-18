@@ -6,6 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PoExtractor.Core\PoExtractor.Core.csproj" />
-    <ProjectReference Include="..\PoExtractor.Languages\PoExtractor.Languages.csproj" />
+    <ProjectReference Include="..\PoExtractor.Razor\PoExtractor.Razor.csproj" />
   </ItemGroup>
 </Project>

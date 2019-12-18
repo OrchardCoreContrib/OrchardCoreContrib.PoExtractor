@@ -1,12 +1,11 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using System.Linq;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.VisualBasic;
 using Microsoft.CodeAnalysis.VisualBasic.Syntax;
 using PoExtractor.Core;
 using PoExtractor.Core.Contracts;
-using PoExtractor.Languages;
-using System.Linq;
 
-namespace PoExtractor.Languages.VB
+namespace PoExtractor.DotNet.VB
 {
     /// <summary>
     /// Extracts <see cref="LocalizableStringOccurence"/> with the singual text from the VB AST node

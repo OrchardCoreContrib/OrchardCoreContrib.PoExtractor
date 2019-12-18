@@ -1,4 +1,4 @@
-﻿namespace PoExtractor.Languages
+﻿namespace PoExtractor.DotNet
 {
     public static class Constants
     {

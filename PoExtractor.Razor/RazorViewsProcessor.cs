@@ -3,9 +3,10 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using PoExtractor.Core;
 using PoExtractor.Core.Contracts;
-using PoExtractor.Languages.MetadataProviders;
+using PoExtractor.DotNet;
+using PoExtractor.Razor.MetadataProviders;
 
-namespace PoExtractor.Languages
+namespace PoExtractor.Razor
 {
     /// <summary>
     /// Extracts localizable strings from all *.cshtml files in the folde Views under the project path

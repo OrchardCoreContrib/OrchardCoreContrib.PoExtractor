@@ -1,4 +1,4 @@
-﻿namespace PoExtractor.Languages
+﻿namespace PoExtractor.Razor
 {
     public class RazorPageGeneratorResult {
         public string FilePath { get; set; }

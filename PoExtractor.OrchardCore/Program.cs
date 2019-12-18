@@ -1,15 +1,15 @@
-﻿using Fluid;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using Fluid;
 using OrchardCore.DisplayManagement.Liquid.Tags;
 using OrchardCore.DynamicCache.Liquid;
 using PoExtractor.Core;
 using PoExtractor.Core.Contracts;
-using PoExtractor.Languages.CS;
+using PoExtractor.DotNet.CS;
 using PoExtractor.Liquid;
-using PoExtractor.Languages.VB;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+using PoExtractor.DotNet.VB;
 
 namespace PoExtractor.OrchardCore {
     class Program {

@@ -4,7 +4,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Razor.Language;
 using Microsoft.AspNetCore.Razor.Language.Extensions;
 
-namespace PoExtractor.Languages
+namespace PoExtractor.Razor
 {
     public static class ViewCompiler
     {

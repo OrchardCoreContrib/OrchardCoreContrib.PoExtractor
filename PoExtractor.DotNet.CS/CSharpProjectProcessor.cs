@@ -3,10 +3,11 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using PoExtractor.Core;
 using PoExtractor.Core.Contracts;
-using PoExtractor.Languages.CS.MetadataProviders;
-using PoExtractor.Languages.MetadataProviders;
+using PoExtractor.DotNet.CS.MetadataProviders;
+using PoExtractor.Razor;
+using PoExtractor.Razor.MetadataProviders;
 
-namespace PoExtractor.Languages.CS {
+namespace PoExtractor.DotNet.CS {
     /// <summary>
     /// Extracts localizable strings from all *.cs files in the project path
     /// </summary>
