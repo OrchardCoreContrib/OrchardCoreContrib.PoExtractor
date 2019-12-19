@@ -7,8 +7,9 @@ using OrchardCore.DisplayManagement.Liquid.Tags;
 using OrchardCore.DynamicCache.Liquid;
 using PoExtractor.Core;
 using PoExtractor.Core.Contracts;
-using PoExtractor.DotNet.CS;
 using PoExtractor.Liquid;
+using PoExtractor.DotNet;
+using PoExtractor.DotNet.CS;
 using PoExtractor.DotNet.VB;
 
 namespace PoExtractor.OrchardCore {
@@ -25,8 +26,8 @@ namespace PoExtractor.OrchardCore {
 
             string[] projectFiles;
             if (Directory.Exists(basePath)) {
-                projectFiles = Directory.EnumerateFiles(basePath, "*.csproj", SearchOption.AllDirectories)
-                    .Union(Directory.EnumerateFiles(basePath, "*.vbproj", SearchOption.AllDirectories)).ToArray();
+                projectFiles = Directory.EnumerateFiles(basePath, $"*{ProjectExtension.CS}", SearchOption.AllDirectories)
+                    .Union(Directory.EnumerateFiles(basePath, $"*{ProjectExtension.VB}", SearchOption.AllDirectories)).ToArray();
             } else {
                 WriteHelp();
                 return;
@@ -46,7 +47,7 @@ namespace PoExtractor.OrchardCore {
                 var projectPath = Path.GetDirectoryName(projectFilePath);
                 var projectBasePath = Path.GetDirectoryName(projectPath) + Path.DirectorySeparatorChar;
                 var projectRelativePath = projectPath.TrimStart(basePath + Path.DirectorySeparatorChar);
-                var outputPath = Path.Combine(outputBasePath, Path.GetFileNameWithoutExtension(projectFilePath) + ".pot");
+                var outputPath = Path.Combine(outputBasePath, Path.GetFileNameWithoutExtension(projectFilePath) + PoWriter.PortaleObjectTemplateExtension);
 
                 if (IgnoredProject.ToList().Any(o => projectRelativePath.StartsWith(o))) {
                     continue;
