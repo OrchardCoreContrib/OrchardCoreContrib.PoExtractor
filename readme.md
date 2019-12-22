@@ -19,6 +19,10 @@ or
 
 `dotnet tool install --global PoExtractor.OrchardCore`
 
+> There is a version mismatch in dependencies between PoExtractor.OrchardCore-0.2.0 and OrchardCore 1.0.0-RC1. If you want to use PoExtractor with OrchardCore 1.0.0-RC1 please use version 0.2.0-rc1
+>
+> `dotnet tool install --global PoExtractor.OrchardCore --version 0.2.0-rc1`
+
 ## Usage
 
 `extractpo inputpath outputpath`
