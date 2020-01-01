@@ -60,12 +60,12 @@ C# code:
 ```csharp
 namespace OrchardCore.ContentFields.Fields { 
     public class LinkFieldDisplayDriver : ContentFieldDisplayDriver<LinkField> {
+        private IStringLocalizer S;
+
         public LinkFieldDisplayDriver(IStringLocalizer<LinkFieldDisplayDriver> localizer) {
-            T = localizer;
+            S = localizer;
         }
 
-        public IStringLocalizer T { get; set; }
-        
         public override async Task<IDisplayResult> UpdateAsync(LinkField field, IUpdateModel updater, UpdateFieldEditorContext context) {
             bool modelUpdated = await updater.TryUpdateModelAsync(field, Prefix, f => f.Url, f => f.Text);
 
@@ -75,7 +75,7 @@ namespace OrchardCore.ContentFields.Fields {
 
                 if (settings.Required && String.IsNullOrWhiteSpace(field.Url))
                 {
-                    updater.ModelState.AddModelError(Prefix, T["The url is required for {0}.", context.PartFieldDefinition.DisplayName()]);
+                    updater.ModelState.AddModelError(Prefix, S["The url is required for {0}.", context.PartFieldDefinition.DisplayName()]);
                 }
             }
 
@@ -90,7 +90,7 @@ VB code:
 Namespace OrchardCore.Modules.GreetingModule 
     Public Class Greeting
         private readonly S As IStringLocalizer(Of Greeting)
-        
+
         Public Sub New(ByVal localizer As IStringLocalizer(Of Greeting))
             S = localizer
         End Sub
