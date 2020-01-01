@@ -47,8 +47,9 @@ or
 
 PoExtractor assumes, the code follows several conventions:
 
-* `IStringLocalizer` or a derived class is accessed via a property named `T`, `S`, `TS`, `H` or `TH`
-* Liquid templates use the filter named `t`
+* `IStringLocalizer` or a derived class is accessed via a field named `S` (This is a convention used in Orchard Core)
+* `IHtmlLocalizer` or a derived class is accessed via a field named `H` (This is a convention used in Orchard Core)
+* Liquid templates use the filter named `t` (This is a convention used in Fluid)
 * context of the localizable string is the full name (with namespace) of the containing class for C# or VB code
 * context of the localizable string is the dot-delimited relative path the to view for Razor templates
 * context of the localizable string is the dot-delimited relative path the to template for Liquid templates

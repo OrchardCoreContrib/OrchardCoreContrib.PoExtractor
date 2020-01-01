@@ -26,7 +26,7 @@ namespace PoExtractor.DotNet.VB
 
             if (node is InvocationExpressionSyntax accessor &&
                 accessor.Expression is IdentifierNameSyntax identifierName &&
-                Constants.StringLocalizerIdentifiers.Contains(identifierName.Identifier.Text) &&
+                LocalizerAccessors.StringLocalizerIdentifiers.Contains(identifierName.Identifier.Text) &&
                 accessor.ArgumentList != null)
             {
                 var argument = accessor.ArgumentList.Arguments.FirstOrDefault();
