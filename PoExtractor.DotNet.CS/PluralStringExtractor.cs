@@ -22,7 +22,7 @@ namespace PoExtractor.DotNet.CS {
             if (node is InvocationExpressionSyntax invocation &&
                 invocation.Expression is MemberAccessExpressionSyntax accessor &&
                 accessor.Expression is IdentifierNameSyntax identifierName &&
-                LocalizerAccessors.StringLocalizerIdentifiers.Contains(identifierName.Identifier.Text) &&
+                LocalizerAccessors.LocalizerIdentifiers.Contains(identifierName.Identifier.Text) &&
                 accessor.Name.Identifier.Text == "Plural") {
 
                 var arguments = invocation.ArgumentList.Arguments;
