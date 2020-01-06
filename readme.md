@@ -47,8 +47,9 @@ or
 
 PoExtractor assumes, the code follows several conventions:
 
-* `IStringLocalizer` or a derived class is accessed via a property named `T`, `S`, `TS`, `H` or `TH`
-* Liquid templates use the filter named `t`
+* `IStringLocalizer` or a derived class is accessed via a field named `S` (This is a convention used in Orchard Core)
+* `IHtmlLocalizer` or a derived class is accessed via a field named `H` (This is a convention used in Orchard Core)
+* Liquid templates use the filter named `t` (This is a convention used in Fluid)
 * context of the localizable string is the full name (with namespace) of the containing class for C# or VB code
 * context of the localizable string is the dot-delimited relative path the to view for Razor templates
 * context of the localizable string is the dot-delimited relative path the to template for Liquid templates
@@ -59,12 +60,12 @@ C# code:
 ```csharp
 namespace OrchardCore.ContentFields.Fields { 
     public class LinkFieldDisplayDriver : ContentFieldDisplayDriver<LinkField> {
+        private IStringLocalizer S;
+
         public LinkFieldDisplayDriver(IStringLocalizer<LinkFieldDisplayDriver> localizer) {
-            T = localizer;
+            S = localizer;
         }
 
-        public IStringLocalizer T { get; set; }
-        
         public override async Task<IDisplayResult> UpdateAsync(LinkField field, IUpdateModel updater, UpdateFieldEditorContext context) {
             bool modelUpdated = await updater.TryUpdateModelAsync(field, Prefix, f => f.Url, f => f.Text);
 
@@ -74,7 +75,7 @@ namespace OrchardCore.ContentFields.Fields {
 
                 if (settings.Required && String.IsNullOrWhiteSpace(field.Url))
                 {
-                    updater.ModelState.AddModelError(Prefix, T["The url is required for {0}.", context.PartFieldDefinition.DisplayName()]);
+                    updater.ModelState.AddModelError(Prefix, S["The url is required for {0}.", context.PartFieldDefinition.DisplayName()]);
                 }
             }
 
@@ -89,7 +90,7 @@ VB code:
 Namespace OrchardCore.Modules.GreetingModule 
     Public Class Greeting
         private readonly S As IStringLocalizer(Of Greeting)
-        
+
         Public Sub New(ByVal localizer As IStringLocalizer(Of Greeting))
             S = localizer
         End Sub
