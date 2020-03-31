@@ -17,7 +17,8 @@ namespace PoExtractor.DotNet.CS {
             var csharpWalker = new ExtractingCodeWalker(
                 new IStringExtractor<SyntaxNode>[] {
                         new SingularStringExtractor(codeMetadataProvider),
-                        new PluralStringExtractor(codeMetadataProvider)
+                        new PluralStringExtractor(codeMetadataProvider),
+                        new DataAnnotationStringExtractor(codeMetadataProvider)
                 }, strings);
 
             foreach (var file in Directory.EnumerateFiles(path, "*.cs", SearchOption.AllDirectories)) {
@@ -41,7 +42,8 @@ namespace PoExtractor.DotNet.CS {
             => new IStringExtractor<SyntaxNode>[]
             {
                 new SingularStringExtractor(razorMetadataProvider),
-                new PluralStringExtractor(razorMetadataProvider)
+                new PluralStringExtractor(razorMetadataProvider),
+                new DataAnnotationStringExtractor(razorMetadataProvider)
             };
     }
 }

@@ -21,8 +21,9 @@ namespace PoExtractor.DotNet.VB
             var csharpWalker = new ExtractingCodeWalker(
                 new IStringExtractor<SyntaxNode>[]
                 {
-                        new SingularStringExtractor(codeMetadataProvider),
-                        new PluralStringExtractor(codeMetadataProvider)
+                    new SingularStringExtractor(codeMetadataProvider),
+                    new PluralStringExtractor(codeMetadataProvider),
+                    new DataAnnotationStringExtractor(codeMetadataProvider)
                 }, strings);
 
             foreach (var file in Directory.EnumerateFiles(path, "*.vb", SearchOption.AllDirectories))
@@ -47,10 +48,11 @@ namespace PoExtractor.DotNet.VB
         }
 
         protected override IStringExtractor<SyntaxNode>[] GetStringExtractors(RazorMetadataProvider razorMetadataProvider)
-            =>  new IStringExtractor<SyntaxNode>[]
+            => new IStringExtractor<SyntaxNode>[]
             {
                 new SingularStringExtractor(razorMetadataProvider),
-                new PluralStringExtractor(razorMetadataProvider)
+                new PluralStringExtractor(razorMetadataProvider),
+                new DataAnnotationStringExtractor(razorMetadataProvider)
             };
     }
 }

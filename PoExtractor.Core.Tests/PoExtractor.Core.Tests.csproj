@@ -14,6 +14,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PoExtractor.Core\PoExtractor.Core.csproj" />
+    <ProjectReference Include="..\PoExtractor.DotNet.CS\PoExtractor.DotNet.CS.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="ProjectFiles\LoginViewModel.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
   </ItemGroup>
 
 </Project>
