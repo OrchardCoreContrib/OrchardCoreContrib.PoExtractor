@@ -11,14 +11,33 @@ namespace PoExtractor.Core.Tests
         {
             // Arrange
             var csProjectProcessor = new FakeCSharpProjectProcessor();
-            var localizedStrings = new LocalizableStringCollection();
+            var localizableStringCollection = new LocalizableStringCollection();
             
             // Act
-            csProjectProcessor.Process(string.Empty, string.Empty, localizedStrings);
+            csProjectProcessor.Process(string.Empty, string.Empty, localizableStringCollection);
 
             // Assert
-            Assert.NotEmpty(localizedStrings.Values);
-            Assert.Equal("The username is required.", localizedStrings.Values.First().Text);
+            var localizedStrings = localizableStringCollection.Values.Select(s => s.Text).ToList();
+
+            Assert.NotEmpty(localizedStrings);
+            Assert.Equal(2, localizedStrings.Count());
+            Assert.Contains(localizedStrings, s => s == "The username is required.");
+        }
+
+        [Fact]
+        public void DataAnnotationsExtractorShouldRespectErrorMessageOrder()
+        {
+            // Arrange
+            var csProjectProcessor = new FakeCSharpProjectProcessor();
+            var localizableStringCollection = new LocalizableStringCollection();
+
+            // Act
+            csProjectProcessor.Process(string.Empty, string.Empty, localizableStringCollection);
+
+            // Assert
+            var localizedStrings = localizableStringCollection.Values.Select(s => s.Text).ToList();
+
+            Assert.Contains(localizedStrings, s => s == "Age should be in the range [15-45].");
         }
     }
 }

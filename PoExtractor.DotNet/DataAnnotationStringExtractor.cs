@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using System.Linq;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using PoExtractor.Core;
@@ -8,6 +9,8 @@ namespace PoExtractor.DotNet
 {
     public class DataAnnotationStringExtractor : LocalizableStringExtractor<SyntaxNode>
     {
+        private const string ErrorMessageAttributeName = "ErrorMessage";
+
         public DataAnnotationStringExtractor(IMetadataProvider<SyntaxNode> metadataProvider)
             : base(metadataProvider)
         {
@@ -20,7 +23,9 @@ namespace PoExtractor.DotNet
 
             if (node is AttributeSyntax accessor && accessor.ArgumentList != null)
             {
-                var argument = accessor.ArgumentList.Arguments.FirstOrDefault();
+                var argument = accessor.ArgumentList.Arguments
+                    .Where(a => a.Expression.Parent.ToFullString().StartsWith(ErrorMessageAttributeName))
+                    .FirstOrDefault();
                 if (argument != null && argument.Expression is LiteralExpressionSyntax literal && literal.IsKind(SyntaxKind.StringLiteralExpression))
                 {
                     result = new LocalizableStringOccurence()
