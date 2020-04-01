@@ -15,7 +15,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Fluid.Core" Version="1.0.0-beta-9608" />
+    <PackageReference Include="Fluid.Core" Version="1.0.0-beta-9637" />
     <PackageReference Include="OrchardCore.DisplayManagement.Liquid" Version="1.0.0-beta3-71077" />
   </ItemGroup>
 
