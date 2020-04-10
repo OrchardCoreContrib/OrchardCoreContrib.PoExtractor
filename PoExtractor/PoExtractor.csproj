@@ -6,13 +6,13 @@
     <AssemblyName>PoExtractor</AssemblyName>
     <ToolCommandName>extractpo</ToolCommandName>
     <PackAsTool>true</PackAsTool>
-    <Version>0.2.0</Version>
+    <Version>0.3.0</Version>
     <PackageId>PoExtractor</PackageId>
     <Authors>Lukas Kabrt</Authors>
     <Company />
     <Product />
     <Description>.NET Core global tool for extractiong translatable strings from the .cs and .cshtml files.</Description>
-    <AssemblyVersion>0.2.0.0</AssemblyVersion>
+    <AssemblyVersion>0.3.0.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
