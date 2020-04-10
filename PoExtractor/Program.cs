@@ -1,9 +1,11 @@
-﻿using PoExtractor.Core;
-using PoExtractor.Core.Contracts;
-using PoExtractor.CS;
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
+using PoExtractor.Core;
+using PoExtractor.Core.Contracts;
+using PoExtractor.DotNet;
+using PoExtractor.DotNet.CS;
+using PoExtractor.DotNet.VB;
 
 namespace PoExtractor {
     class Program {
@@ -18,21 +20,23 @@ namespace PoExtractor {
 
             string[] projectFiles;
             if (Directory.Exists(basePath)) {
-                projectFiles = Directory.EnumerateFiles(basePath, "*.csproj", SearchOption.AllDirectories).ToArray();
+                projectFiles = Directory.EnumerateFiles(basePath, $"*{ProjectExtension.CS}", SearchOption.AllDirectories)
+                    .Union(Directory.EnumerateFiles(basePath, $"*{ProjectExtension.VB}", SearchOption.AllDirectories)).ToArray();
             } else {
                 WriteHelp();
                 return;
             }
 
             var processors = new IProjectProcessor[] {
-                new CSharpProjectProcessor()
+                new CSharpProjectProcessor(),
+                new VisualBasicProjectProcessor()
             };
 
             foreach (var projectFilePath in projectFiles) {
                 var projectPath = Path.GetDirectoryName(projectFilePath);
                 var projectBasePath = Path.GetDirectoryName(projectPath) + Path.DirectorySeparatorChar;
                 var projectRelativePath = projectPath.TrimStart(basePath + Path.DirectorySeparatorChar);
-                var outputPath = Path.Combine(outputBasePath, Path.GetFileNameWithoutExtension(projectFilePath) + ".pot");
+                var outputPath = Path.Combine(outputBasePath, Path.GetFileNameWithoutExtension(projectFilePath) + PoWriter.PortaleObjectTemplateExtension);
 
                 var strings = new LocalizableStringCollection();
                 foreach (var processor in processors) {

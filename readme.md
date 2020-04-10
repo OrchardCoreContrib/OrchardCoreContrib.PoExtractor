@@ -1,10 +1,10 @@
 # PoExtractor
 
-This utility extracts translatable strings from the C# code, Razor templates and Liquid templates to POT (portable object template) files. It is designed to follow conventions used in the [OrchardCore](https://github.com/OrchardCMS/OrchardCore) project.
+This utility extracts translatable strings from the C# and VB code, Razor templates and Liquid templates to POT (portable object template) files. It is designed to follow conventions used in the [OrchardCore](https://github.com/OrchardCMS/OrchardCore) project.
 
 PoExtractor is distributed as a dotnet global tool and it is available on the official NuGet.org feed in two versions:
 
-* `PoExtractor` - a general purpose utility for extracting translatable strings from  C# code and Razor views
+* `PoExtractor` - a general purpose utility for extracting translatable strings from  C#, VB code and Razor views
 * `PoExtractor.OrchardCore` - the same utility with the additional support for extracting translatable strings from Liquid templates.
   * In order to be able to parse Liquid templates, it needs to reference `OrchardCore.DisplayManagement.Liquid` package, where the Liquid filters are defined
 
@@ -18,6 +18,10 @@ Install with the following command:
 or
 
 `dotnet tool install --global PoExtractor.OrchardCore`
+
+> There is a version mismatch in dependencies between PoExtractor.OrchardCore-0.2.0 and OrchardCore 1.0.0-RC1. If you want to use PoExtractor with OrchardCore 1.0.0-RC1 please use version 0.2.0-rc1
+>
+> `dotnet tool install --global PoExtractor.OrchardCore --version 0.2.0-rc1`
 
 ## Usage
 
@@ -43,9 +47,10 @@ or
 
 PoExtractor assumes, the code follows several conventions:
 
-* `IStringLocalizer` or a derived class is accessed via a property named `T`, `S`, `TS`, `H` or `TH`
-* Liquid templates use the filter named `t`
-* context of the localizable string is the full name (with namespace) of the containing class for C# code
+* `IStringLocalizer` or a derived class is accessed via a field named `S` (This is a convention used in Orchard Core)
+* `IHtmlLocalizer` or a derived class is accessed via a field named `H` (This is a convention used in Orchard Core)
+* Liquid templates use the filter named `t` (This is a convention used in Fluid)
+* context of the localizable string is the full name (with namespace) of the containing class for C# or VB code
 * context of the localizable string is the dot-delimited relative path the to view for Razor templates
 * context of the localizable string is the dot-delimited relative path the to template for Liquid templates
  
@@ -55,12 +60,12 @@ C# code:
 ```csharp
 namespace OrchardCore.ContentFields.Fields { 
     public class LinkFieldDisplayDriver : ContentFieldDisplayDriver<LinkField> {
+        private IStringLocalizer S;
+
         public LinkFieldDisplayDriver(IStringLocalizer<LinkFieldDisplayDriver> localizer) {
-            T = localizer;
+            S = localizer;
         }
 
-        public IStringLocalizer T { get; set; }
-        
         public override async Task<IDisplayResult> UpdateAsync(LinkField field, IUpdateModel updater, UpdateFieldEditorContext context) {
             bool modelUpdated = await updater.TryUpdateModelAsync(field, Prefix, f => f.Url, f => f.Text);
 
@@ -70,7 +75,7 @@ namespace OrchardCore.ContentFields.Fields {
 
                 if (settings.Required && String.IsNullOrWhiteSpace(field.Url))
                 {
-                    updater.ModelState.AddModelError(Prefix, T["The url is required for {0}.", context.PartFieldDefinition.DisplayName()]);
+                    updater.ModelState.AddModelError(Prefix, S["The url is required for {0}.", context.PartFieldDefinition.DisplayName()]);
                 }
             }
 
@@ -78,6 +83,23 @@ namespace OrchardCore.ContentFields.Fields {
         }
     }
 }
+```
+
+VB code:
+```vb
+Namespace OrchardCore.Modules.GreetingModule 
+    Public Class Greeting
+        private readonly S As IStringLocalizer(Of Greeting)
+
+        Public Sub New(ByVal localizer As IStringLocalizer(Of Greeting))
+            S = localizer
+        End Sub
+
+        Public Sub Saulation(byVal name As String)
+            Console.WriteLine(S("Hi {0} ...", name))
+        End Sub
+    End Class
+End Namespace
 ```
 
 Razor view:
@@ -113,6 +135,12 @@ Generated POT file:
 #. updater.ModelState.AddModelError(Prefix, T["The url is required for {0}.", context.PartFieldDefinition.DisplayName()]);
 msgctxt "OrchardCore.ContentFields.Fields.LinkFieldDisplayDriver"
 msgid "The url is required for {0}."
+msgstr ""
+
+#: OrchardCore.Modules.GreetingModule\Greeting.vb:94
+#. Console.WriteLine(S("Hi {0} ...", name))
+msgctxt "OrchardCore.Modules.GreetingModule.Greeting"
+msgid "Hi {0} ..."
 msgstr ""
 
 #: OrchardCore.ContentFields\Views\LinkField.Edit.cshtml:32

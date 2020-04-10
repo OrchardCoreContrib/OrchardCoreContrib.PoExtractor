@@ -3,9 +3,9 @@ using Microsoft.CodeAnalysis;
 using PoExtractor.Core;
 using PoExtractor.Core.Contracts;
 
-namespace PoExtractor.CS {
+namespace PoExtractor.DotNet {
     /// <summary>
-    /// Traverses C# AST and extracts localizable strings using provided collection of <see cref="IStringExtractor{T}"/>
+    /// Traverses C# & VB AST and extracts localizable strings using provided collection of <see cref="IStringExtractor{T}"/>
     /// </summary>
     public class ExtractingCodeWalker : SyntaxWalker {
         private readonly LocalizableStringCollection _strings;
@@ -15,7 +15,7 @@ namespace PoExtractor.CS {
         /// Initializes a new instance of the <see cref="ExtractingCodeWalker"/> class
         /// </summary>
         /// <param name="extractors">the collection of extractors to use</param>
-        /// <param name="strings">the <see cref="LocalizableStringCollection"/> where the resuluts are saved</param>
+        /// <param name="strings">the <see cref="LocalizableStringCollection"/> where the results are saved</param>
         public ExtractingCodeWalker(IEnumerable<IStringExtractor<SyntaxNode>> extractors, LocalizableStringCollection strings) {
             _extractors = extractors;
             _strings = strings;

@@ -8,6 +8,8 @@ namespace PoExtractor.Core {
     /// Writes <see cref="LocalizableString"/> objects in the <see href="https://www.gnu.org/software/gettext/manual/html_node/PO-Files.html">Portable Object format</see> to a stream
     /// </summary>
     public class PoWriter : IDisposable {
+        public const string PortaleObjectTemplateExtension = ".pot";
+
         private TextWriter _writer;
 
         /// <summary>

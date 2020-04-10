@@ -17,7 +17,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PoExtractor.Core\PoExtractor.Core.csproj" />
-    <ProjectReference Include="..\PoExtractor.CS\PoExtractor.CS.csproj" />
+    <ProjectReference Include="..\PoExtractor.DotNet.CS\PoExtractor.DotNet.CS.csproj" />
+    <ProjectReference Include="..\PoExtractor.DotNet.VB\PoExtractor.DotNet.VB.csproj" />
   </ItemGroup>
 
 </Project>

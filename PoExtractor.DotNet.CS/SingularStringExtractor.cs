@@ -1,11 +1,11 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using System.Linq;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using PoExtractor.Core;
 using PoExtractor.Core.Contracts;
-using System.Linq;
 
-namespace PoExtractor.CS {
+namespace PoExtractor.DotNet.CS {
     /// <summary>
     /// Extracts <see cref="LocalizableStringOccurence"/> with the singual text from the C# AST node
     /// </summary>
@@ -21,7 +21,7 @@ namespace PoExtractor.CS {
 
             if (node is ElementAccessExpressionSyntax accessor &&
                 accessor.Expression is IdentifierNameSyntax identifierName &&
-                Constants.StringLocalizerIdentifiers.Contains(identifierName.Identifier.Text) &&
+                LocalizerAccessors.LocalizerIdentifiers.Contains(identifierName.Identifier.Text) &&
                 accessor.ArgumentList != null) {
 
                 var argument = accessor.ArgumentList.Arguments.FirstOrDefault();

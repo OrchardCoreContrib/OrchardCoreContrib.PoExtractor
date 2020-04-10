@@ -1,19 +1,19 @@
-﻿using Fluid;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using Fluid;
 using OrchardCore.DisplayManagement.Liquid.Tags;
 using OrchardCore.DynamicCache.Liquid;
 using PoExtractor.Core;
 using PoExtractor.Core.Contracts;
-using PoExtractor.CS;
 using PoExtractor.Liquid;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+using PoExtractor.DotNet;
+using PoExtractor.DotNet.CS;
+using PoExtractor.DotNet.VB;
 
 namespace PoExtractor.OrchardCore {
     class Program {
-        private static string[] ProjectBlacklist = new[] { "test", "src\\OrchardCore.Cms.Web", "src\\OrchardCore.Mvc.Web", "src\\OrchardCore.Nancy.Web" };
-
         static void Main(string[] args) {
             if (args.Length < 2) {
                 WriteHelp();
@@ -26,14 +26,19 @@ namespace PoExtractor.OrchardCore {
 
             string[] projectFiles;
             if (Directory.Exists(basePath)) {
-                projectFiles = Directory.EnumerateFiles(basePath, "*.csproj", SearchOption.AllDirectories).ToArray();
+                projectFiles = Directory.EnumerateFiles(basePath, $"*{ProjectExtension.CS}", SearchOption.AllDirectories)
+                    .Union(Directory.EnumerateFiles(basePath, $"*{ProjectExtension.VB}", SearchOption.AllDirectories)).ToArray();
             } else {
                 WriteHelp();
                 return;
             }
 
-            var processors = new List<IProjectProcessor>();
-            processors.Add(new CSharpProjectProcessor());
+            var processors = new List<IProjectProcessor>
+            {
+                new CSharpProjectProcessor(),
+                new VisualBasicProjectProcessor()
+            };
+
             if (parseLiquid) {
                 processors.Add(new LiquidProjectProcessor(ConfigureFluidParser));
             };
@@ -42,9 +47,9 @@ namespace PoExtractor.OrchardCore {
                 var projectPath = Path.GetDirectoryName(projectFilePath);
                 var projectBasePath = Path.GetDirectoryName(projectPath) + Path.DirectorySeparatorChar;
                 var projectRelativePath = projectPath.TrimStart(basePath + Path.DirectorySeparatorChar);
-                var outputPath = Path.Combine(outputBasePath, Path.GetFileNameWithoutExtension(projectFilePath) + ".pot");
+                var outputPath = Path.Combine(outputBasePath, Path.GetFileNameWithoutExtension(projectFilePath) + PoWriter.PortaleObjectTemplateExtension);
 
-                if (ProjectBlacklist.Any(o => projectRelativePath.StartsWith(o))) {
+                if (IgnoredProject.ToList().Any(o => projectRelativePath.StartsWith(o))) {
                     continue;
                 }
 

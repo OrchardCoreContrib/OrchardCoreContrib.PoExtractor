@@ -15,14 +15,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Fluid.Core" Version="1.0.0-beta-9608" />
+    <PackageReference Include="Fluid.Core" Version="1.0.0-beta-9637" />
     <PackageReference Include="OrchardCore.DisplayManagement.Liquid" Version="1.0.0-beta3-71077" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\PoExtractor.Core\PoExtractor.Core.csproj" />
-    <ProjectReference Include="..\PoExtractor.CS\PoExtractor.CS.csproj" />
+    <ProjectReference Include="..\PoExtractor.DotNet.CS\PoExtractor.DotNet.CS.csproj" />
     <ProjectReference Include="..\PoExtractor.Liquid\PoExtractor.Liquid.csproj" />
+    <ProjectReference Include="..\PoExtractor.DotNet.VB\PoExtractor.DotNet.VB.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,11 +1,10 @@
-﻿using System.IO;
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using PoExtractor.Core;
 using PoExtractor.Core.Contracts;
 
-namespace PoExtractor.CS.MetadataProviders {
+namespace PoExtractor.DotNet.CS.MetadataProviders {
     /// <summary>
     /// Provides metadata for .cs code files
     /// </summary>
