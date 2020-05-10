@@ -1,9 +1,8 @@
 trigger:
-- dev
 - master
 
 pr:
-- dev
+- master
 
 pool:
   vmImage: 'VS2017-Win2016'
