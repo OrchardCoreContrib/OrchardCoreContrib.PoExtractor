@@ -6,7 +6,7 @@
     <AssemblyName>PoExtractor.OrchardCore</AssemblyName>
     <ToolCommandName>extractpo-oc</ToolCommandName>
     <PackAsTool>true</PackAsTool>
-    <Version>0.3.0-beta3-71077</Version>
+    <Version>0.3.1-beta3-71077</Version>
     <PackageId>PoExtractor.OrchardCore</PackageId>
     <Authors>Lukas Kabrt</Authors>
     <Company />
