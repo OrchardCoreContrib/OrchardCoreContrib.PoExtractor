@@ -22,6 +22,10 @@ or
 > The latest version of PoExtractor.OrchardCore is build against OrchardCore 1.0.0-beta3-71077. If you want to use PoExtractor with OrchardCore 1.0.0-RC1 please use version 0.2.0-rc1
 >
 > `dotnet tool install --global PoExtractor.OrchardCore --version 0.2.0-rc1`
+> 
+> If you cant to use PoExtractor with the preview version of OrchardCore, please use version 0.4.0-rc1-13272
+>
+> `dotnet tool install --global PoExtractor.OrchardCore --version 0.4.0-rc1-13272`
 
 ## Usage
 
