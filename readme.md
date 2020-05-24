@@ -29,11 +29,9 @@ or
 
 or
 
-`extractpo-oc inputpath outputpath --liquid`
+`extractpo-oc inputpath outputpath`
 
-Extracts all translatable strings from projects at the specified input path and saves generated POT files at the specified output path. It creates one POT file per a project.
-
-Use the `--liquid` flag to include also .liquid files in the processing.
+Extracts all translatable strings from projects at the specified input path and saves generated POT files at the specified output path. It creates one POT file per a project. This includes liquid views.
 
 ## Uninstallation
 

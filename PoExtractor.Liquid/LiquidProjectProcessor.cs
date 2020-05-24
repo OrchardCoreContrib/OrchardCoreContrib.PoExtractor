@@ -1,11 +1,9 @@
 ﻿using Fluid;
+using OrchardCore.DisplayManagement.Liquid;
 using PoExtractor.Core;
 using PoExtractor.Core.Contracts;
 using PoExtractor.Liquid.MetadataProviders;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace PoExtractor.Liquid {
     /// <summary>
@@ -17,11 +15,8 @@ namespace PoExtractor.Liquid {
         /// <summary>
         /// Initializes a new instance of the <see cref="LiquidProjectProcessor"/>
         /// </summary>
-        /// <param name="configurationAction">the action used to configure <see cref="FluidParserFactory"/>. Custom filters should be registered in the configuration action.</param>
-        public LiquidProjectProcessor(Action<FluidParserFactory> configurationAction) {
-            var parserFactory = new FluidParserFactory();
-            configurationAction?.Invoke(parserFactory);
-
+        public LiquidProjectProcessor() {
+            var parserFactory = LiquidViewTemplate.Factory;
             _parser = parserFactory.CreateParser();
         }
 

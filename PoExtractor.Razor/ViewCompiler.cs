@@ -40,10 +40,11 @@ namespace PoExtractor.Razor
                     .ConfigureClass((document, @class) => {
                         @class.ClassName = Path.GetFileNameWithoutExtension(document.Source.FilePath);
                     });
-
+#if NETSTANDARD2_0
                 FunctionsDirective.Register(builder);
                 InheritsDirective.Register(builder);
                 SectionDirective.Register(builder);
+#endif
             });
 
             return projectEngine;
