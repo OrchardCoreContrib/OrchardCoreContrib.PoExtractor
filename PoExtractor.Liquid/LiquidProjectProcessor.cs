@@ -15,10 +15,8 @@ namespace PoExtractor.Liquid {
         /// <summary>
         /// Initializes a new instance of the <see cref="LiquidProjectProcessor"/>
         /// </summary>
-        /// <param name="configurationAction">the action used to configure <see cref="FluidParserFactory"/>. Custom filters should be registered in the configuration action.</param>
         public LiquidProjectProcessor() {
             var parserFactory = LiquidViewTemplate.Factory;
-
             _parser = parserFactory.CreateParser();
         }
 
