@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Fluid;
-using OrchardCore.DisplayManagement.Liquid.Tags;
-using OrchardCore.DynamicCache.Liquid;
 using PoExtractor.Core;
 using PoExtractor.Core.Contracts;
 using PoExtractor.Liquid;
@@ -22,7 +19,6 @@ namespace PoExtractor.OrchardCore {
 
             var basePath = args[0];
             var outputBasePath = args[1];
-            var parseLiquid = args.Length > 2 && args[2] == "--liquid";
 
             string[] projectFiles;
             if (Directory.Exists(basePath)) {
@@ -39,9 +35,7 @@ namespace PoExtractor.OrchardCore {
                 new VisualBasicProjectProcessor()
             };
 
-            if (parseLiquid) {
-                processors.Add(new LiquidProjectProcessor(ConfigureFluidParser));
-            };
+            processors.Add(new LiquidProjectProcessor());
 
             foreach (var projectFilePath in projectFiles) {
                 var projectPath = Path.GetDirectoryName(projectFilePath);
@@ -75,48 +69,6 @@ namespace PoExtractor.OrchardCore {
             Console.WriteLine("    input: path to the input directory, all projects at the the path will be processed");
             Console.WriteLine("    output: path to a directory where POT files will be generated");
             Console.WriteLine("    --liquid: include this flag to process .liquid files");
-        }
-
-        private static void ConfigureFluidParser(FluidParserFactory _liquidParseFactory) {
-            _liquidParseFactory.RegisterTag<RenderBodyTag>("render_body");
-            _liquidParseFactory.RegisterTag<RenderSectionTag>("render_section");
-            _liquidParseFactory.RegisterTag<RenderTitleSegmentsTag>("page_title");
-            _liquidParseFactory.RegisterTag<AntiForgeryTokenTag>("antiforgerytoken");
-            _liquidParseFactory.RegisterTag<LayoutTag>("layout");
-
-            _liquidParseFactory.RegisterTag<ClearAlternatesTag>("shape_clear_alternates");
-            _liquidParseFactory.RegisterTag<AddAlternatesTag>("shape_add_alternates");
-            _liquidParseFactory.RegisterTag<ClearWrappers>("shape_clear_wrappers");
-            _liquidParseFactory.RegisterTag<AddWrappersTag>("shape_add_wrappers");
-            _liquidParseFactory.RegisterTag<ClearClassesTag>("shape_clear_classes");
-            _liquidParseFactory.RegisterTag<AddClassesTag>("shape_add_classes");
-            _liquidParseFactory.RegisterTag<ClearAttributesTag>("shape_clear_attributes");
-            _liquidParseFactory.RegisterTag<AddAttributesTag>("shape_add_attributes");
-            _liquidParseFactory.RegisterTag<ShapeTypeTag>("shape_type");
-            _liquidParseFactory.RegisterTag<ShapeDisplayTypeTag>("shape_display_type");
-            _liquidParseFactory.RegisterTag<ShapePositionTag>("shape_position");
-            _liquidParseFactory.RegisterTag<ShapeTabTag>("shape_tab");
-            _liquidParseFactory.RegisterTag<ShapeRemoveItemTag>("shape_remove_item");
-            _liquidParseFactory.RegisterTag<ShapePagerTag>("shape_pager");
-
-            _liquidParseFactory.RegisterTag<HelperTag>("helper");
-            _liquidParseFactory.RegisterTag<NamedHelperTag>("shape");
-            _liquidParseFactory.RegisterTag<NamedHelperTag>("link");
-            _liquidParseFactory.RegisterTag<NamedHelperTag>("meta");
-            _liquidParseFactory.RegisterTag<NamedHelperTag>("resources");
-            _liquidParseFactory.RegisterTag<NamedHelperTag>("script");
-            _liquidParseFactory.RegisterTag<NamedHelperTag>("style");
-
-            _liquidParseFactory.RegisterBlock<HelperBlock>("block");
-            _liquidParseFactory.RegisterBlock<NamedHelperBlock>("a");
-            _liquidParseFactory.RegisterBlock<NamedHelperBlock>("zone");
-            _liquidParseFactory.RegisterBlock<NamedHelperBlock>("scriptblock");
-
-            _liquidParseFactory.RegisterBlock<CacheBlock>("cache");
-            _liquidParseFactory.RegisterTag<CacheDependencyTag>("cache_dependency");
-            _liquidParseFactory.RegisterTag<CacheExpiresOnTag>("cache_expires_on");
-            _liquidParseFactory.RegisterTag<CacheExpiresAfterTag>("cache_expires_after");
-            _liquidParseFactory.RegisterTag<CacheExpiresSlidingTag>("cache_expires_sliding");
         }
     }
 }
