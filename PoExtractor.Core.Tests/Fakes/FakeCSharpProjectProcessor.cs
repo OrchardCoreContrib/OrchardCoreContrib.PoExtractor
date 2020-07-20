@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using PoExtractor.Core.Contracts;
@@ -32,7 +33,7 @@ namespace PoExtractor.Core.Tests.Fakes
                         new DataAnnotationStringExtractor(codeMetadataProvider)
                 }, strings);
 
-            foreach (var file in Directory.EnumerateFiles(path, "*.cs", SearchOption.AllDirectories))
+            foreach (var file in Directory.EnumerateFiles(path, "*.cs", SearchOption.AllDirectories).OrderBy(file => file))
             {
                 using (var stream = File.OpenRead(file))
                 {

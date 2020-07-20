@@ -4,6 +4,7 @@ using PoExtractor.Core;
 using PoExtractor.Core.Contracts;
 using PoExtractor.Liquid.MetadataProviders;
 using System.IO;
+using System.Linq;
 
 namespace PoExtractor.Liquid {
     /// <summary>
@@ -24,7 +25,7 @@ namespace PoExtractor.Liquid {
             var liquidMetadataProvider = new LiquidMetadataProvider(basePath);
             var liquidVisitor = new ExtractingLiquidWalker(new[] { new LiquidStringExtractor(liquidMetadataProvider) }, strings);
             
-            foreach (var file in Directory.EnumerateFiles(path, "*.liquid", SearchOption.AllDirectories)) {
+            foreach (var file in Directory.EnumerateFiles(path, "*.liquid", SearchOption.AllDirectories).OrderBy(file => file)) {
                 using (var stream = File.OpenRead(file)) {
                     using (var reader = new StreamReader(stream)) {
 
