@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using PoExtractor.Core;
@@ -21,7 +22,7 @@ namespace PoExtractor.DotNet.CS {
                         new DataAnnotationStringExtractor(codeMetadataProvider)
                 }, strings);
 
-            foreach (var file in Directory.EnumerateFiles(path, "*.cs", SearchOption.AllDirectories)) {
+            foreach (var file in Directory.EnumerateFiles(path, "*.cs", SearchOption.AllDirectories).OrderBy(file => file)) {
                 if (Path.GetFileName(file).EndsWith(".cshtml.g.cs")) {
                     continue;
                 }
