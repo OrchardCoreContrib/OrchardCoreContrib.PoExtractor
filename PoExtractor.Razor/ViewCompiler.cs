@@ -10,15 +10,15 @@ namespace PoExtractor.Razor
     {
         public static IList<RazorPageGeneratorResult> CompileViews(string projectDirectory)
         {
-            var projectEngine = CreateProjectEngine("PoExtraxtor.GeneratedCode", projectDirectory);
+            var projectEngine = CreateProjectEngine("PoExtractor.GeneratedCode", projectDirectory);
 
             var results = new List<RazorPageGeneratorResult>();
 
-            var viewDirectories = Directory.EnumerateDirectories(projectDirectory, "Views", SearchOption.AllDirectories);
+            var viewDirectories = Directory.EnumerateDirectories(projectDirectory, "Views", SearchOption.AllDirectories).OrderBy(dirName => dirName);
             foreach (var viewDir in viewDirectories)
             {
                 var viewDirPath = viewDir.Substring(projectDirectory.Length).Replace('\\', '/');
-                var viewFiles = projectEngine.FileSystem.EnumerateItems(viewDirPath);
+                var viewFiles = projectEngine.FileSystem.EnumerateItems(viewDirPath).OrderBy(rzrProjItem => rzrProjItem.FileName);
 
                 foreach (var item in viewFiles.Where(o => o.Extension == ".cshtml"))
                 {
