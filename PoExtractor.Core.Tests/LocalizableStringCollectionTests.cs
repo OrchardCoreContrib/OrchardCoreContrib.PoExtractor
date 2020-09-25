@@ -5,7 +5,7 @@ using System.Text;
 using Xunit;
 
 namespace PoExtractor.Core.Tests {
-    public class LocalizableStringCollcationTests {
+    public class LocalizableStringCollectionTests {
         private LocalizableStringOccurence s1 = new LocalizableStringOccurence() { Text = "Computer", Location = new LocalizableStringLocation() { SourceFileLine = 1 } };
         private LocalizableStringOccurence s2 = new LocalizableStringOccurence() { Text = "Computer", Location = new LocalizableStringLocation() { SourceFileLine = 1 } };
         private LocalizableStringOccurence otherS = new LocalizableStringOccurence() { Text = "Keyboard", Location = new LocalizableStringLocation() { SourceFileLine = 1 } };
