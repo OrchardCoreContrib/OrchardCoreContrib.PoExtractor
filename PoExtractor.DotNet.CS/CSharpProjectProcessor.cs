@@ -19,7 +19,11 @@ namespace PoExtractor.DotNet.CS {
                 new IStringExtractor<SyntaxNode>[] {
                         new SingularStringExtractor(codeMetadataProvider),
                         new PluralStringExtractor(codeMetadataProvider),
-                        new DataAnnotationStringExtractor(codeMetadataProvider)
+                        new ErrorMessageAnnotationStringExtractor(codeMetadataProvider),
+                        new DisplayAttributeDescriptionStringExtractor(codeMetadataProvider),
+                        new DisplayAttributeNameStringExtractor(codeMetadataProvider),
+                        new DisplayAttributeGroupNameStringExtractor(codeMetadataProvider),
+                        new DisplayAttributeShortNameStringExtractor(codeMetadataProvider)
                 }, strings);
 
             foreach (var file in Directory.EnumerateFiles(path, "*.cs", SearchOption.AllDirectories).OrderBy(file => file)) {
@@ -44,7 +48,11 @@ namespace PoExtractor.DotNet.CS {
             {
                 new SingularStringExtractor(razorMetadataProvider),
                 new PluralStringExtractor(razorMetadataProvider),
-                new DataAnnotationStringExtractor(razorMetadataProvider)
+                new ErrorMessageAnnotationStringExtractor(razorMetadataProvider),
+                new DisplayAttributeDescriptionStringExtractor(razorMetadataProvider),
+                new DisplayAttributeNameStringExtractor(razorMetadataProvider),
+                new DisplayAttributeGroupNameStringExtractor(razorMetadataProvider),
+                new DisplayAttributeShortNameStringExtractor(razorMetadataProvider)
             };
     }
 }

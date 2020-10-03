@@ -4,15 +4,15 @@ using Xunit;
 
 namespace PoExtractor.Core.Tests
 {
-    public class DataAnnotationStringExtractorTests
+    public class ErrorMessageAnnotationStringExtractorTests
     {
         [Fact]
-        public void ExtractlocalizedStringsFromDataAnnotations()
+        public void ExtractLocalizedStringsFromDataAnnotations()
         {
             // Arrange
             var csProjectProcessor = new FakeCSharpProjectProcessor();
             var localizableStringCollection = new LocalizableStringCollection();
-            
+
             // Act
             csProjectProcessor.Process(string.Empty, string.Empty, localizableStringCollection);
 
@@ -20,7 +20,7 @@ namespace PoExtractor.Core.Tests
             var localizedStrings = localizableStringCollection.Values.Select(s => s.Text).ToList();
 
             Assert.NotEmpty(localizedStrings);
-            Assert.Equal(2, localizedStrings.Count());
+            Assert.Equal(6, localizedStrings.Count());
             Assert.Contains(localizedStrings, s => s == "The username is required.");
         }
 

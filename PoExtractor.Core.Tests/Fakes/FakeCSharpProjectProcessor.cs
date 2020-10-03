@@ -30,7 +30,11 @@ namespace PoExtractor.Core.Tests.Fakes
                 new IStringExtractor<SyntaxNode>[] {
                         new SingularStringExtractor(codeMetadataProvider),
                         new PluralStringExtractor(codeMetadataProvider),
-                        new DataAnnotationStringExtractor(codeMetadataProvider)
+                        new ErrorMessageAnnotationStringExtractor(codeMetadataProvider),
+                        new DisplayAttributeDescriptionStringExtractor(codeMetadataProvider),
+                        new DisplayAttributeNameStringExtractor(codeMetadataProvider),
+                        new DisplayAttributeGroupNameStringExtractor(codeMetadataProvider),
+                        new DisplayAttributeShortNameStringExtractor(codeMetadataProvider)
                 }, strings);
 
             foreach (var file in Directory.EnumerateFiles(path, "*.cs", SearchOption.AllDirectories).OrderBy(file => file))
