@@ -65,10 +65,9 @@ namespace PoExtractor.OrchardCore {
         }
 
         private static void WriteHelp() {
-            Console.WriteLine("Usage: extractpo-oc input output --liquid");
+            Console.WriteLine("Usage: extractpo-oc input output");
             Console.WriteLine("    input: path to the input directory, all projects at the the path will be processed");
             Console.WriteLine("    output: path to a directory where POT files will be generated");
-            Console.WriteLine("    --liquid: include this flag to process .liquid files");
         }
     }
 }
