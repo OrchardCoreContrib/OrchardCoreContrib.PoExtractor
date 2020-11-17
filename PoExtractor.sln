@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoExtractor.DotNet.CS", "Po
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoExtractor.DotNet.VB", "PoExtractor.DotNet.VB\PoExtractor.DotNet.VB.csproj", "{458FE156-43B6-4DB9-965D-672A7D318B90}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoExtractor.Liquid.Tests", "PoExtractor.Liquid.Tests\PoExtractor.Liquid.Tests.csproj", "{042754CC-2E1A-4ED9-8944-E51708A43515}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{458FE156-43B6-4DB9-965D-672A7D318B90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{458FE156-43B6-4DB9-965D-672A7D318B90}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{458FE156-43B6-4DB9-965D-672A7D318B90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{042754CC-2E1A-4ED9-8944-E51708A43515}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{042754CC-2E1A-4ED9-8944-E51708A43515}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{042754CC-2E1A-4ED9-8944-E51708A43515}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{042754CC-2E1A-4ED9-8944-E51708A43515}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
