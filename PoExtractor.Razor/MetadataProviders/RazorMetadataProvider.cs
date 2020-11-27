@@ -22,7 +22,7 @@ namespace PoExtractor.Razor.MetadataProviders {
 
         public string GetContext(SyntaxNode node) {
             var path = node.SyntaxTree.FilePath.TrimStart(this.BasePath);
-            return path.Replace('\\', '.').Replace(".cshtml", string.Empty);
+            return path.Replace(Path.PathSeparator, '.').Replace(".cshtml", string.Empty);
         }
 
         public LocalizableStringLocation GetLocation(SyntaxNode node) {
