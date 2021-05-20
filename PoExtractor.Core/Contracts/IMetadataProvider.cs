@@ -2,7 +2,7 @@
 
 namespace PoExtractor.Core.Contracts {
     /// <summary>
-    /// Provides metadata of the translatable text baseed on information from the AST node
+    /// Provides metadata of the translatable text based on information from the AST node
     /// </summary>
     /// <typeparam name="T">type of the node</typeparam>
     public interface IMetadataProvider<T> {

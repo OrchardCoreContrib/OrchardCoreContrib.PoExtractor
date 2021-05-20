@@ -11,7 +11,7 @@ namespace PoExtractor.Core.Contracts {
         /// </summary>
         /// <param name="node">the AST node</param>
         /// <param name="result">the extracted localizable string</param>
-        /// <returns>true if a localizable string was successfully extracted, oterwise returns false</returns>
+        /// <returns>true if a localizable string was successfully extracted, otherwise returns false</returns>
         bool TryExtract(T node, out LocalizableStringOccurence result);
     }
 }

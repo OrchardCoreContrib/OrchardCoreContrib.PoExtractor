@@ -7,7 +7,7 @@ using PoExtractor.Core.Contracts;
 
 namespace PoExtractor.DotNet.CS {
     /// <summary>
-    /// Extracts <see cref="LocalizableStringOccurence"/> with the singual text from the C# AST node
+    /// Extracts <see cref="LocalizableStringOccurence"/> with the singular text from the C# AST node
     /// </summary>
     /// <remarks>
     /// The localizable string is identified by the name convention - T["TEXT TO TRANSLATE"]

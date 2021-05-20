@@ -1,6 +1,6 @@
 ﻿namespace PoExtractor.Core {
     /// <summary>
-    /// Represents the specific occurence of the localizable string in the project
+    /// Represents the specific occurrence of the localizable string in the project
     /// </summary>
     public class LocalizableStringOccurence {
         public string Context { get; set; }

@@ -11,7 +11,7 @@ using PoExtractor.DotNet.VB.MetadataProviders;
 namespace PoExtractor.DotNet.VB
 {
     /// <summary>
-    /// Extracts localizable strings from all *.vb files in the project path and *.cshtml files in the folde Views under the project path
+    /// Extracts localizable strings from all *.vb files in the project path and *.cshtml files in the folder Views under the project path
     /// </summary>
     public class VisualBasicProjectProcessor : RazorViewsProcessor
     {
