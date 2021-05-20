@@ -1,6 +1,6 @@
 ﻿namespace PoExtractor.Core {
     /// <summary>
-    /// Represents a location of the localizable string occurence in the source code
+    /// Represents a location of the localizable string occurrence in the source code
     /// </summary>
     public class LocalizableStringLocation {
         /// <summary>
@@ -14,7 +14,7 @@
         public int SourceFileLine { get; set; }
 
         /// <summary>
-        /// Gets or sets a cmment for the occurence
+        /// Gets or sets a comment for the occurrence
         /// </summary>
         /// <remarks>
         /// Typically used to provide better understanding for translators, e.g. copy of the whole line from the source code

@@ -60,7 +60,7 @@ namespace PoExtractor.Core {
         /// <summary>
         /// Writes a collection of <see cref="LocalizableString"/> objects to the output
         /// </summary>
-        /// <param name="records">the collection to wrtie</param>
+        /// <param name="records">the collection to write</param>
         public void WriteRecord(IEnumerable<LocalizableString> records) {
             foreach (var record in records) {
                 this.WriteRecord(record);

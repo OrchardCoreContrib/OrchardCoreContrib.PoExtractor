@@ -2,7 +2,7 @@
 
 namespace PoExtractor.Core {
     /// <summary>
-    /// Represents a localizable text with all it's occurences in the project
+    /// Represents a localizable text with all it's occurrences in the project
     /// </summary>
     public class LocalizableString {
 

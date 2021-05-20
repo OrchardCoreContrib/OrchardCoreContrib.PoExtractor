@@ -9,7 +9,7 @@ using PoExtractor.Razor.MetadataProviders;
 namespace PoExtractor.Razor
 {
     /// <summary>
-    /// Extracts localizable strings from all *.cshtml files in the folde Views under the project path
+    /// Extracts localizable strings from all *.cshtml files in the folder Views under the project path
     /// </summary>
     public abstract class RazorViewsProcessor : IProjectProcessor
     {

@@ -8,7 +8,7 @@ using PoExtractor.Core.Contracts;
 namespace PoExtractor.DotNet.VB
 {
     /// <summary>
-    /// Extracts <see cref="LocalizableStringOccurence"/> with the singual text from the VB AST node
+    /// Extracts <see cref="LocalizableStringOccurence"/> with the singular text from the VB AST node
     /// </summary>
     /// <remarks>
     /// The localizable string is identified by the name convention - T.Plural(count, "1 book", "{0} books")

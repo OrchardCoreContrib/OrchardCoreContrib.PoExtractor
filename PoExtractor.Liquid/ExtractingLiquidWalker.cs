@@ -17,7 +17,7 @@ namespace PoExtractor.Liquid {
         /// Initializes a new instance of the <see cref="ExtractingLiquidWalker"/> class
         /// </summary>
         /// <param name="extractors">the collection of extractors to use</param>
-        /// <param name="strings">the <see cref="LocalizableStringCollection"/> where the resuluts are saved</param>
+        /// <param name="strings">the <see cref="LocalizableStringCollection"/> where the results are saved</param>
         public ExtractingLiquidWalker(IEnumerable<IStringExtractor<LiquidExpressionContext>> extractors, LocalizableStringCollection strings) {
             _extractors = extractors;
             _strings = strings;
@@ -39,7 +39,7 @@ namespace PoExtractor.Liquid {
                     break;
                 case CycleStatement cycle:
                     this.Visit(cycle.Group);
-                    this.Visit(cycle.Values);
+                    this.Visit(cycle.Values2);
                     break;
                 case ElseIfStatement elseIf:
                     this.Visit(elseIf.Condition);
