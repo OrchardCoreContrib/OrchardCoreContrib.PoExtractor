@@ -18,7 +18,7 @@ namespace PoExtractor.Liquid.MetadataProviders {
 
         public string GetContext(LiquidExpressionContext expressionContext) {
             var path = expressionContext.FilePath.TrimStart(this.BasePath);
-            return path.Replace(Path.PathSeparator, '.').Replace(".liquid", string.Empty);
+            return path.Replace(Path.DirectorySeparatorChar, '.').Replace(".liquid", string.Empty);
         }
 
         public LocalizableStringLocation GetLocation(LiquidExpressionContext expressionContext) {
