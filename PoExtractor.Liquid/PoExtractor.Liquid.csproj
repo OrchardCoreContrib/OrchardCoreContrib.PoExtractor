@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <AssemblyName>PoExtractor.Liquid</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Fluid.Core" Version="2.0.13" />
-    <PackageReference Include="OrchardCore.DisplayManagement.Liquid" Version="1.0.0" />
+    <PackageReference Include="Fluid.Core" Version="2.2.15" />
+    <PackageReference Include="OrchardCore.DisplayManagement.Liquid" Version="1.4.0" />
   </ItemGroup>
 
   <ItemGroup>
