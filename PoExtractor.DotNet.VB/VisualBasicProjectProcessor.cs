@@ -15,6 +15,13 @@ namespace PoExtractor.DotNet.VB
     /// </summary>
     public class VisualBasicProjectProcessor : RazorViewsProcessor
     {
+        private readonly string identifier;
+
+        public VisualBasicProjectProcessor(string identifier)
+        {
+            this.identifier = identifier;
+        }
+
         public override void Process(string path, string basePath, LocalizableStringCollection strings)
         {
             /* VB */
@@ -22,8 +29,8 @@ namespace PoExtractor.DotNet.VB
             var csharpWalker = new ExtractingCodeWalker(
                 new IStringExtractor<SyntaxNode>[]
                 {
-                    new SingularStringExtractor(codeMetadataProvider),
-                    new PluralStringExtractor(codeMetadataProvider),
+                    new SingularStringExtractor(codeMetadataProvider, identifier),
+                    new PluralStringExtractor(codeMetadataProvider, identifier),
                     new ErrorMessageAnnotationStringExtractor(codeMetadataProvider),
                     new DisplayAttributeDescriptionStringExtractor(codeMetadataProvider),
                     new DisplayAttributeNameStringExtractor(codeMetadataProvider),
@@ -55,8 +62,8 @@ namespace PoExtractor.DotNet.VB
         protected override IStringExtractor<SyntaxNode>[] GetStringExtractors(RazorMetadataProvider razorMetadataProvider)
             => new IStringExtractor<SyntaxNode>[]
             {
-                new SingularStringExtractor(razorMetadataProvider),
-                new PluralStringExtractor(razorMetadataProvider),
+                new SingularStringExtractor(razorMetadataProvider, identifier),
+                new PluralStringExtractor(razorMetadataProvider, identifier),
                 new ErrorMessageAnnotationStringExtractor(razorMetadataProvider),
                 new DisplayAttributeDescriptionStringExtractor(razorMetadataProvider),
                 new DisplayAttributeNameStringExtractor(razorMetadataProvider),

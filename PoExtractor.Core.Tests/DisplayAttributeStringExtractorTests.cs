@@ -10,7 +10,7 @@ namespace PoExtractor.Core.Tests
         public void ExtractLocalizedNameFromDisplayAttribute()
         {
             // Arrange
-            var csProjectProcessor = new FakeCSharpProjectProcessor();
+            var csProjectProcessor = new FakeCSharpProjectProcessor("Loc");
             var localizableStringCollection = new LocalizableStringCollection();
 
             // Act
@@ -26,7 +26,7 @@ namespace PoExtractor.Core.Tests
         public void ExtractLocalizedShortNameFromDisplayAttribute()
         {
             // Arrange
-            var csProjectProcessor = new FakeCSharpProjectProcessor();
+            var csProjectProcessor = new FakeCSharpProjectProcessor("Loc");
             var localizableStringCollection = new LocalizableStringCollection();
 
             // Act
@@ -42,7 +42,7 @@ namespace PoExtractor.Core.Tests
         public void ExtractLocalizedGroupNameFromDisplayAttribute()
         {
             // Arrange
-            var csProjectProcessor = new FakeCSharpProjectProcessor();
+            var csProjectProcessor = new FakeCSharpProjectProcessor("Loc");
             var localizableStringCollection = new LocalizableStringCollection();
 
             // Act
@@ -58,7 +58,7 @@ namespace PoExtractor.Core.Tests
         public void ExtractLocalizedDescriptionFromDisplayAttribute()
         {
             // Arrange
-            var csProjectProcessor = new FakeCSharpProjectProcessor();
+            var csProjectProcessor = new FakeCSharpProjectProcessor("Loc");
             var localizableStringCollection = new LocalizableStringCollection();
 
             // Act

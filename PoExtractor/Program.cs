@@ -17,6 +17,7 @@ namespace PoExtractor {
 
             var basePath = args[0];
             var outputBasePath = args[1];
+            var identifier = args[2];
 
             string[] projectFiles;
             if (Directory.Exists(basePath)) {
@@ -28,8 +29,8 @@ namespace PoExtractor {
             }
 
             var processors = new IProjectProcessor[] {
-                new CSharpProjectProcessor(),
-                new VisualBasicProjectProcessor()
+                new CSharpProjectProcessor(identifier),
+                new VisualBasicProjectProcessor(identifier)
             };
 
             foreach (var projectFilePath in projectFiles) {

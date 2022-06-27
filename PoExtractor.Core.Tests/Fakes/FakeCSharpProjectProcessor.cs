@@ -13,6 +13,13 @@ namespace PoExtractor.Core.Tests.Fakes
     {
         private static readonly string _defaultPath = "ProjectFiles";
 
+        private readonly string identifier;
+
+        public FakeCSharpProjectProcessor(string identifier)
+        {
+            this.identifier = identifier;
+        }
+
         public void Process(string path, string basePath, LocalizableStringCollection strings)
         {
             if (string.IsNullOrEmpty(path))
@@ -28,8 +35,8 @@ namespace PoExtractor.Core.Tests.Fakes
             var codeMetadataProvider = new CodeMetadataProvider(basePath);
             var csharpWalker = new ExtractingCodeWalker(
                 new IStringExtractor<SyntaxNode>[] {
-                        new SingularStringExtractor(codeMetadataProvider),
-                        new PluralStringExtractor(codeMetadataProvider),
+                        new SingularStringExtractor(codeMetadataProvider, identifier),
+                        new PluralStringExtractor(codeMetadataProvider, identifier),
                         new ErrorMessageAnnotationStringExtractor(codeMetadataProvider),
                         new DisplayAttributeDescriptionStringExtractor(codeMetadataProvider),
                         new DisplayAttributeNameStringExtractor(codeMetadataProvider),

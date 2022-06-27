@@ -10,7 +10,7 @@ namespace PoExtractor.Core.Tests
         public void ExtractLocalizedStringsFromDataAnnotations()
         {
             // Arrange
-            var csProjectProcessor = new FakeCSharpProjectProcessor();
+            var csProjectProcessor = new FakeCSharpProjectProcessor("Loc");
             var localizableStringCollection = new LocalizableStringCollection();
 
             // Act
@@ -28,7 +28,7 @@ namespace PoExtractor.Core.Tests
         public void DataAnnotationsExtractorShouldRespectErrorMessageOrder()
         {
             // Arrange
-            var csProjectProcessor = new FakeCSharpProjectProcessor();
+            var csProjectProcessor = new FakeCSharpProjectProcessor("Loc");
             var localizableStringCollection = new LocalizableStringCollection();
 
             // Act

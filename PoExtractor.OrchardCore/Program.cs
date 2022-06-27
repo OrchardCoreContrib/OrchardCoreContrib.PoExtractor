@@ -19,6 +19,7 @@ namespace PoExtractor.OrchardCore {
 
             var basePath = args[0];
             var outputBasePath = args[1];
+            var identifier = args[2];
 
             string[] projectFiles;
             if (Directory.Exists(basePath)) {
@@ -31,8 +32,8 @@ namespace PoExtractor.OrchardCore {
 
             var processors = new List<IProjectProcessor>
             {
-                new CSharpProjectProcessor(),
-                new VisualBasicProjectProcessor()
+                new CSharpProjectProcessor(identifier),
+                new VisualBasicProjectProcessor(identifier)
             };
 
             processors.Add(new LiquidProjectProcessor());

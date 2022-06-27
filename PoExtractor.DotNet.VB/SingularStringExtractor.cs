@@ -15,9 +15,11 @@ namespace PoExtractor.DotNet.VB
     /// </remarks>
     public class SingularStringExtractor : LocalizableStringExtractor<SyntaxNode>
     {
-        public SingularStringExtractor(IMetadataProvider<SyntaxNode> metadataProvider) : base(metadataProvider)
-        {
+        private string[] localizerIdentifiers;
 
+        public SingularStringExtractor(IMetadataProvider<SyntaxNode> metadataProvider, string identifier) : base(metadataProvider)
+        {
+            localizerIdentifiers = LocalizerAccessors.LocalizerIdentifiers.Append(identifier).ToArray();
         }
 
         public override bool TryExtract(SyntaxNode node, out LocalizableStringOccurence result)
@@ -26,7 +28,7 @@ namespace PoExtractor.DotNet.VB
 
             if (node is InvocationExpressionSyntax accessor &&
                 accessor.Expression is IdentifierNameSyntax identifierName &&
-                LocalizerAccessors.LocalizerIdentifiers.Contains(identifierName.Identifier.Text) &&
+                localizerIdentifiers.Contains(identifierName.Identifier.Text) &&
                 accessor.ArgumentList != null)
             {
                 var argument = accessor.ArgumentList.Arguments.FirstOrDefault();

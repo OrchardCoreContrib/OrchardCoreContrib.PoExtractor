@@ -15,9 +15,11 @@ namespace PoExtractor.DotNet.VB
     /// </remarks>
     public class PluralStringExtractor : LocalizableStringExtractor<SyntaxNode>
     {
-        public PluralStringExtractor(IMetadataProvider<SyntaxNode> metadataProvider) : base(metadataProvider)
-        {
+        private string[] localizerIdentifiers;
 
+        public PluralStringExtractor(IMetadataProvider<SyntaxNode> metadataProvider, string identifier) : base(metadataProvider)
+        {
+            localizerIdentifiers = LocalizerAccessors.LocalizerIdentifiers.Append(identifier).ToArray();
         }
 
         public override bool TryExtract(SyntaxNode node, out LocalizableStringOccurence result)
@@ -27,7 +29,7 @@ namespace PoExtractor.DotNet.VB
             if (node is InvocationExpressionSyntax invocation &&
                 invocation.Expression is MemberAccessExpressionSyntax accessor &&
                 accessor.Expression is IdentifierNameSyntax identifierName &&
-                LocalizerAccessors.LocalizerIdentifiers.Contains(identifierName.Identifier.Text) &&
+                localizerIdentifiers.Contains(identifierName.Identifier.Text) &&
                 accessor.Name.Identifier.Text == "Plural")
             {
                 var arguments = invocation.ArgumentList.Arguments;
