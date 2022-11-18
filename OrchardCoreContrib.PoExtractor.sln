@@ -1,27 +1,31 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28516.95
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33103.184
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrchardCoreContrib.PoExtractor.Core", "OrchardCoreContrib.PoExtractor.Core\OrchardCoreContrib.PoExtractor.Core.csproj", "{E677EF59-34AC-41A4-B9BC-C655A81017A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrchardCoreContrib.PoExtractor.Core", "src\OrchardCoreContrib.PoExtractor.Core\OrchardCoreContrib.PoExtractor.Core.csproj", "{E677EF59-34AC-41A4-B9BC-C655A81017A5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrchardCoreContrib.PoExtractor.Core.Tests", "OrchardCoreContrib.PoExtractor.Core.Tests\OrchardCoreContrib.PoExtractor.Core.Tests.csproj", "{4E0AF6EC-9BD0-4D39-8123-06163362185D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrchardCoreContrib.PoExtractor.Core.Tests", "test\OrchardCoreContrib.PoExtractor.Core.Tests\OrchardCoreContrib.PoExtractor.Core.Tests.csproj", "{4E0AF6EC-9BD0-4D39-8123-06163362185D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrchardCoreContrib.PoExtractor.Liquid", "OrchardCoreContrib.PoExtractor.Liquid\OrchardCoreContrib.PoExtractor.Liquid.csproj", "{9DB27A54-F56F-465E-A1A9-28791C64710B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrchardCoreContrib.PoExtractor.Liquid", "src\OrchardCoreContrib.PoExtractor.Liquid\OrchardCoreContrib.PoExtractor.Liquid.csproj", "{9DB27A54-F56F-465E-A1A9-28791C64710B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrchardCoreContrib.PoExtractor.OrchardCore", "OrchardCoreContrib.PoExtractor.OrchardCore\OrchardCoreContrib.PoExtractor.OrchardCore.csproj", "{C81FF74F-5E1E-402E-A505-E4CEE495CF1A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrchardCoreContrib.PoExtractor.OrchardCore", "src\OrchardCoreContrib.PoExtractor.OrchardCore\OrchardCoreContrib.PoExtractor.OrchardCore.csproj", "{C81FF74F-5E1E-402E-A505-E4CEE495CF1A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrchardCoreContrib.PoExtractor", "OrchardCoreContrib.PoExtractor\OrchardCoreContrib.PoExtractor.csproj", "{D358C2C3-D568-4C60-BBFA-38AA2BE95C7A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrchardCoreContrib.PoExtractor", "src\OrchardCoreContrib.PoExtractor\OrchardCoreContrib.PoExtractor.csproj", "{D358C2C3-D568-4C60-BBFA-38AA2BE95C7A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrchardCoreContrib.PoExtractor.Razor", "OrchardCoreContrib.PoExtractor.Razor\OrchardCoreContrib.PoExtractor.Razor.csproj", "{D871D2E9-FBD0-4C32-AE1A-0FBC89356345}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrchardCoreContrib.PoExtractor.Razor", "src\OrchardCoreContrib.PoExtractor.Razor\OrchardCoreContrib.PoExtractor.Razor.csproj", "{D871D2E9-FBD0-4C32-AE1A-0FBC89356345}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrchardCoreContrib.PoExtractor.DotNet", "OrchardCoreContrib.PoExtractor.DotNet\OrchardCoreContrib.PoExtractor.DotNet.csproj", "{B86D3896-8371-47DF-94B4-634AA7C7A1C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrchardCoreContrib.PoExtractor.DotNet", "src\OrchardCoreContrib.PoExtractor.DotNet\OrchardCoreContrib.PoExtractor.DotNet.csproj", "{B86D3896-8371-47DF-94B4-634AA7C7A1C7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrchardCoreContrib.PoExtractor.DotNet.CS", "OrchardCoreContrib.PoExtractor.DotNet.CS\OrchardCoreContrib.PoExtractor.DotNet.CS.csproj", "{F12A2C3B-728B-4AEC-9495-3FB56300D941}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrchardCoreContrib.PoExtractor.DotNet.CS", "src\OrchardCoreContrib.PoExtractor.DotNet.CS\OrchardCoreContrib.PoExtractor.DotNet.CS.csproj", "{F12A2C3B-728B-4AEC-9495-3FB56300D941}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrchardCoreContrib.PoExtractor.DotNet.VB", "OrchardCoreContrib.PoExtractor.DotNet.VB\OrchardCoreContrib.PoExtractor.DotNet.VB.csproj", "{458FE156-43B6-4DB9-965D-672A7D318B90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrchardCoreContrib.PoExtractor.DotNet.VB", "src\OrchardCoreContrib.PoExtractor.DotNet.VB\OrchardCoreContrib.PoExtractor.DotNet.VB.csproj", "{458FE156-43B6-4DB9-965D-672A7D318B90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrchardCoreContrib.PoExtractor.Liquid.Tests", "OrchardCoreContrib.PoExtractor.Liquid.Tests\OrchardCoreContrib.PoExtractor.Liquid.Tests.csproj", "{042754CC-2E1A-4ED9-8944-E51708A43515}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrchardCoreContrib.PoExtractor.Liquid.Tests", "test\OrchardCoreContrib.PoExtractor.Liquid.Tests\OrchardCoreContrib.PoExtractor.Liquid.Tests.csproj", "{042754CC-2E1A-4ED9-8944-E51708A43515}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{FCA7649D-2A78-4580-8866-A00571045744}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{D1336C32-75A4-411A-90D3-E011D2CEB076}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -72,6 +76,18 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E677EF59-34AC-41A4-B9BC-C655A81017A5} = {FCA7649D-2A78-4580-8866-A00571045744}
+		{4E0AF6EC-9BD0-4D39-8123-06163362185D} = {D1336C32-75A4-411A-90D3-E011D2CEB076}
+		{9DB27A54-F56F-465E-A1A9-28791C64710B} = {FCA7649D-2A78-4580-8866-A00571045744}
+		{C81FF74F-5E1E-402E-A505-E4CEE495CF1A} = {FCA7649D-2A78-4580-8866-A00571045744}
+		{D358C2C3-D568-4C60-BBFA-38AA2BE95C7A} = {FCA7649D-2A78-4580-8866-A00571045744}
+		{D871D2E9-FBD0-4C32-AE1A-0FBC89356345} = {FCA7649D-2A78-4580-8866-A00571045744}
+		{B86D3896-8371-47DF-94B4-634AA7C7A1C7} = {FCA7649D-2A78-4580-8866-A00571045744}
+		{F12A2C3B-728B-4AEC-9495-3FB56300D941} = {FCA7649D-2A78-4580-8866-A00571045744}
+		{458FE156-43B6-4DB9-965D-672A7D318B90} = {FCA7649D-2A78-4580-8866-A00571045744}
+		{042754CC-2E1A-4ED9-8944-E51708A43515} = {D1336C32-75A4-411A-90D3-E011D2CEB076}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {694D0244-80FF-47D4-A54D-2DB1356B72A1}
