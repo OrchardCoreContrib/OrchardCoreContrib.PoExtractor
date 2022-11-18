@@ -1,6 +1,6 @@
 ﻿using Xunit;
 
-namespace OrchardCoreContrib.PoExtractor.Core.Tests
+namespace OrchardCoreContrib.PoExtractor.Core.Tests.Extensions
 {
     public class StringExtensionsTests
     {

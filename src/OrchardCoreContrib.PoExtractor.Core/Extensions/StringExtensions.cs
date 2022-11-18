@@ -1,4 +1,4 @@
-﻿namespace OrchardCoreContrib.PoExtractor.Extensions
+﻿namespace OrchardCoreContrib.PoExtractor
 {
     /// <summary>
     /// Extension methods for <see cref="string"/>.
@@ -10,7 +10,6 @@
         /// </summary>
         /// <param name="text">The </param>
         /// <param name="value">The value to be removed.</param>
-        public static string TrimStart(this string text, string value)
-            => text.StartsWith(value) ? text.Remove(0, value.Length) : text;
+        public static string TrimStart(this string text, string value) => text.TrimStart(value.ToCharArray());
     }
 }

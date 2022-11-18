@@ -31,7 +31,8 @@ namespace OrchardCoreContrib.PoExtractor.Razor.MetadataProviders
         /// <inheritdoc/>
         public string GetContext(SyntaxNode node)
         {
-            var path = node.SyntaxTree.FilePath.TrimStart(this.BasePath);
+            var path = node.SyntaxTree.FilePath.TrimStart(BasePath);
+            
             return path.Replace(Path.DirectorySeparatorChar, '.').Replace(".cshtml", string.Empty);
         }
 
@@ -40,7 +41,7 @@ namespace OrchardCoreContrib.PoExtractor.Razor.MetadataProviders
         {
             var result = new LocalizableStringLocation
             {
-                SourceFile = node.SyntaxTree.FilePath.TrimStart(this.BasePath)
+                SourceFile = node.SyntaxTree.FilePath.TrimStart(BasePath)
             };
 
             var statement = node.Ancestors().OfType<ExpressionStatementSyntax>().FirstOrDefault();
