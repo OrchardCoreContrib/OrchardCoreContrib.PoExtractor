@@ -1,11 +1,11 @@
-﻿using Microsoft.CodeAnalysis;
-
-namespace OrchardCoreContrib.PoExtractor.Core.Contracts {
+﻿namespace OrchardCoreContrib.PoExtractor.Core.Contracts
+{
     /// <summary>
     /// Extracts a translatable string from a node of the AST tree
     /// </summary>
     /// <typeparam name="T">type of the node</typeparam>
-    public interface IStringExtractor<T> {
+    public interface IStringExtractor<T>
+    {
         /// <summary>
         /// Tries to extract a localizable string from the AST node
         /// </summary>

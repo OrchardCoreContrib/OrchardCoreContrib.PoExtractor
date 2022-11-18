@@ -8,29 +8,37 @@ using OrchardCoreContrib.PoExtractor.Liquid.MetadataProviders;
 using System.IO;
 using System.Linq;
 
-namespace OrchardCoreContrib.PoExtractor.Liquid {
+namespace OrchardCoreContrib.PoExtractor.Liquid
+{
     /// <summary>
     /// Extracts localizable strings from all *.liquid files in the project path
     /// </summary>
-    public class LiquidProjectProcessor : IProjectProcessor {
+    public class LiquidProjectProcessor : IProjectProcessor
+    {
         private readonly LiquidViewParser _parser;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LiquidProjectProcessor"/>
         /// </summary>
-        public LiquidProjectProcessor() {
+        public LiquidProjectProcessor()
+        {
             var parserOptions = Options.Create(new LiquidViewOptions());
             _parser = new LiquidViewParser(parserOptions);
         }
 
-        public void Process(string path, string basePath, LocalizableStringCollection strings) {
+        public void Process(string path, string basePath, LocalizableStringCollection strings)
+        {
             var liquidMetadataProvider = new LiquidMetadataProvider(basePath);
             var liquidVisitor = new ExtractingLiquidWalker(new[] { new LiquidStringExtractor(liquidMetadataProvider) }, strings);
-            
-            foreach (var file in Directory.EnumerateFiles(path, "*.liquid", SearchOption.AllDirectories).OrderBy(file => file)) {
-                using (var stream = File.OpenRead(file)) {
-                    using (var reader = new StreamReader(stream)) {
-                        if (_parser.TryParse(reader.ReadToEnd(), out var template, out var errors)) {
+
+            foreach (var file in Directory.EnumerateFiles(path, "*.liquid", SearchOption.AllDirectories).OrderBy(file => file))
+            {
+                using (var stream = File.OpenRead(file))
+                {
+                    using (var reader = new StreamReader(stream))
+                    {
+                        if (_parser.TryParse(reader.ReadToEnd(), out var template, out var errors))
+                        {
                             ProcessTemplate(template, liquidVisitor, file);
                         }
                     }

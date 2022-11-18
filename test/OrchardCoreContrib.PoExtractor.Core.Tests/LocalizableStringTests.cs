@@ -1,17 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
+﻿using Xunit;
 
-namespace OrchardCoreContrib.PoExtractor.Core.Tests {
-    public class LocalizableStringTests {
+namespace OrchardCoreContrib.PoExtractor.Core.Tests
+{
+    public class LocalizableStringTests
+    {
         [Fact]
-        public void Constructor_PopulatesProperties() {
-            var source = new LocalizableStringOccurence() {
+        public void Constructor_PopulatesProperties()
+        {
+            var source = new LocalizableStringOccurence()
+            {
                 Context = "OrchardCoreContrib.PoExtractor",
                 Text = "Computer",
                 TextPlural = "Computers",
-                Location = new LocalizableStringLocation() {
+                Location = new LocalizableStringLocation()
+                {
                     Comment = "Comment",
                     SourceFile = "Test.cs",
                     SourceFileLine = 1

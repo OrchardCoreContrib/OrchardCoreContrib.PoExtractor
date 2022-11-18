@@ -1,24 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using Xunit;
 
-namespace OrchardCoreContrib.PoExtractor.Core.Tests {
-    public class LocalizableStringCollectionTests {
+namespace OrchardCoreContrib.PoExtractor.Core.Tests
+{
+    public class LocalizableStringCollectionTests
+    {
         private LocalizableStringOccurence s1 = new LocalizableStringOccurence() { Text = "Computer", Location = new LocalizableStringLocation() { SourceFileLine = 1 } };
         private LocalizableStringOccurence s2 = new LocalizableStringOccurence() { Text = "Computer", Location = new LocalizableStringLocation() { SourceFileLine = 1 } };
         private LocalizableStringOccurence otherS = new LocalizableStringOccurence() { Text = "Keyboard", Location = new LocalizableStringLocation() { SourceFileLine = 1 } };
 
         [Fact]
-        public void WhenCreated_ValuesCollectionIsEmpty() {
+        public void WhenCreated_ValuesCollectionIsEmpty()
+        {
             var sut = new LocalizableStringCollection();
 
             Assert.Empty(sut.Values);
         }
 
         [Fact]
-        public void Add_CreatesNewLocalizableString_IfTheCollectionIsEmpty() {
+        public void Add_CreatesNewLocalizableString_IfTheCollectionIsEmpty()
+        {
             var sut = new LocalizableStringCollection();
 
             sut.Add(s1);
@@ -31,7 +32,8 @@ namespace OrchardCoreContrib.PoExtractor.Core.Tests {
         }
 
         [Fact]
-        public void Add_AddsLocationToLocalizableString_IfTheCollectionContainsSameString() {
+        public void Add_AddsLocationToLocalizableString_IfTheCollectionContainsSameString()
+        {
             var sut = new LocalizableStringCollection();
 
             sut.Add(s1);
@@ -46,7 +48,8 @@ namespace OrchardCoreContrib.PoExtractor.Core.Tests {
         }
 
         [Fact]
-        public void Add_CreatesNewLocalizableString_IfTheCollectionDoesntContainSameString() {
+        public void Add_CreatesNewLocalizableString_IfTheCollectionDoesntContainSameString()
+        {
             var sut = new LocalizableStringCollection();
 
             sut.Add(s1);

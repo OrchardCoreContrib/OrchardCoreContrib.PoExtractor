@@ -1,16 +1,20 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using OrchardCoreContrib.PoExtractor.Core;
+﻿using OrchardCoreContrib.PoExtractor.Core;
 using OrchardCoreContrib.PoExtractor.Core.Contracts;
 using OrchardCoreContrib.PoExtractor.DotNet;
 using OrchardCoreContrib.PoExtractor.DotNet.CS;
 using OrchardCoreContrib.PoExtractor.DotNet.VB;
+using System;
+using System.IO;
+using System.Linq;
 
-namespace OrchardCoreContrib.PoExtractor {
-    class Program {
-        static void Main(string[] args) {
-            if (args.Length < 2) {
+namespace OrchardCoreContrib.PoExtractor
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            if (args.Length < 2)
+            {
                 WriteHelp();
                 return;
             }
@@ -19,10 +23,13 @@ namespace OrchardCoreContrib.PoExtractor {
             var outputBasePath = args[1];
 
             string[] projectFiles;
-            if (Directory.Exists(basePath)) {
+            if (Directory.Exists(basePath))
+            {
                 projectFiles = Directory.EnumerateFiles(basePath, $"*{ProjectExtension.CS}", SearchOption.AllDirectories).OrderBy(file => file)
                     .Union(Directory.EnumerateFiles(basePath, $"*{ProjectExtension.VB}", SearchOption.AllDirectories).OrderBy(file => file)).ToArray();
-            } else {
+            }
+            else
+            {
                 WriteHelp();
                 return;
             }
@@ -32,21 +39,25 @@ namespace OrchardCoreContrib.PoExtractor {
                 new VisualBasicProjectProcessor()
             };
 
-            foreach (var projectFilePath in projectFiles) {
+            foreach (var projectFilePath in projectFiles)
+            {
                 var projectPath = Path.GetDirectoryName(projectFilePath);
                 var projectBasePath = Path.GetDirectoryName(projectPath) + Path.DirectorySeparatorChar;
                 var projectRelativePath = projectPath.TrimStart(basePath + Path.DirectorySeparatorChar);
                 var outputPath = Path.Combine(outputBasePath, Path.GetFileNameWithoutExtension(projectFilePath) + PoWriter.PortaleObjectTemplateExtension);
 
                 var strings = new LocalizableStringCollection();
-                foreach (var processor in processors) {
+                foreach (var processor in processors)
+                {
                     processor.Process(projectPath, projectBasePath, strings);
                 }
 
-                if (strings.Values.Any()) {
+                if (strings.Values.Any())
+                {
                     Directory.CreateDirectory(Path.GetDirectoryName(outputPath));
 
-                    using (var potFile = new PoWriter(outputPath)) {
+                    using (var potFile = new PoWriter(outputPath))
+                    {
                         potFile.WriteRecord(strings.Values);
                     }
                 }
@@ -55,7 +66,8 @@ namespace OrchardCoreContrib.PoExtractor {
             }
         }
 
-        private static void WriteHelp() {
+        private static void WriteHelp()
+        {
             Console.WriteLine("Usage: extractpo input output");
             Console.WriteLine("    input: path to the input directory, all projects at the the path will be processed");
             Console.WriteLine("    output: path to a directory where POT files will be generated");

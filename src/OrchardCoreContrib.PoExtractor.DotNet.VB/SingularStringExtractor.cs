@@ -1,9 +1,9 @@
-﻿using System.Linq;
-using Microsoft.CodeAnalysis;
+﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.VisualBasic;
 using Microsoft.CodeAnalysis.VisualBasic.Syntax;
 using OrchardCoreContrib.PoExtractor.Core;
 using OrchardCoreContrib.PoExtractor.Core.Contracts;
+using System.Linq;
 
 namespace OrchardCoreContrib.PoExtractor.DotNet.VB
 {

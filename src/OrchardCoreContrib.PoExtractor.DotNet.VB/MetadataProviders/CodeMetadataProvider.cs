@@ -1,8 +1,8 @@
-﻿using System.Linq;
-using Microsoft.CodeAnalysis;
+﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.VisualBasic.Syntax;
 using OrchardCoreContrib.PoExtractor.Core;
 using OrchardCoreContrib.PoExtractor.Core.Contracts;
+using System.Linq;
 
 namespace OrchardCoreContrib.PoExtractor.DotNet.VB.MetadataProviders
 {
@@ -22,7 +22,7 @@ namespace OrchardCoreContrib.PoExtractor.DotNet.VB.MetadataProviders
         {
             var @namespace = node.Ancestors().OfType<NamespaceStatementSyntax>().FirstOrDefault()?.Name.ToString();
             var @class = node.Ancestors().OfType<ClassStatementSyntax>().FirstOrDefault()?.Identifier.ValueText;
-            
+
             return $"{@namespace}.{@class}";
         }
 

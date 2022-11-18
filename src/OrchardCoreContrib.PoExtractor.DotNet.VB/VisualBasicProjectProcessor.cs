@@ -1,12 +1,12 @@
-﻿using System.IO;
-using System.Linq;
-using Microsoft.CodeAnalysis;
+﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.VisualBasic;
 using OrchardCoreContrib.PoExtractor.Core;
 using OrchardCoreContrib.PoExtractor.Core.Contracts;
+using OrchardCoreContrib.PoExtractor.DotNet.VB.MetadataProviders;
 using OrchardCoreContrib.PoExtractor.Razor;
 using OrchardCoreContrib.PoExtractor.Razor.MetadataProviders;
-using OrchardCoreContrib.PoExtractor.DotNet.VB.MetadataProviders;
+using System.IO;
+using System.Linq;
 
 namespace OrchardCoreContrib.PoExtractor.DotNet.VB
 {

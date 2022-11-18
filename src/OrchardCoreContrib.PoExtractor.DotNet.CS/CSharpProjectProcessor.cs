@@ -1,19 +1,22 @@
-﻿using System.IO;
-using System.Linq;
-using Microsoft.CodeAnalysis;
+﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using OrchardCoreContrib.PoExtractor.Core;
 using OrchardCoreContrib.PoExtractor.Core.Contracts;
 using OrchardCoreContrib.PoExtractor.DotNet.CS.MetadataProviders;
 using OrchardCoreContrib.PoExtractor.Razor;
 using OrchardCoreContrib.PoExtractor.Razor.MetadataProviders;
+using System.IO;
+using System.Linq;
 
-namespace OrchardCoreContrib.PoExtractor.DotNet.CS {
+namespace OrchardCoreContrib.PoExtractor.DotNet.CS
+{
     /// <summary>
     /// Extracts localizable strings from all *.cs files in the project path
     /// </summary>
-    public class CSharpProjectProcessor : RazorViewsProcessor {
-        public override void Process(string path, string basePath, LocalizableStringCollection strings) {
+    public class CSharpProjectProcessor : RazorViewsProcessor
+    {
+        public override void Process(string path, string basePath, LocalizableStringCollection strings)
+        {
             var codeMetadataProvider = new CodeMetadataProvider(basePath);
             var csharpWalker = new ExtractingCodeWalker(
                 new IStringExtractor<SyntaxNode>[] {
@@ -26,13 +29,17 @@ namespace OrchardCoreContrib.PoExtractor.DotNet.CS {
                         new DisplayAttributeShortNameStringExtractor(codeMetadataProvider)
                 }, strings);
 
-            foreach (var file in Directory.EnumerateFiles(path, "*.cs", SearchOption.AllDirectories).OrderBy(file => file)) {
-                if (Path.GetFileName(file).EndsWith(".cshtml.g.cs")) {
+            foreach (var file in Directory.EnumerateFiles(path, "*.cs", SearchOption.AllDirectories).OrderBy(file => file))
+            {
+                if (Path.GetFileName(file).EndsWith(".cshtml.g.cs"))
+                {
                     continue;
                 }
 
-                using (var stream = File.OpenRead(file)) {
-                    using (var reader = new StreamReader(stream)) {
+                using (var stream = File.OpenRead(file))
+                {
+                    using (var reader = new StreamReader(stream))
+                    {
                         var syntaxTree = CSharpSyntaxTree.ParseText(reader.ReadToEnd(), path: file);
 
                         csharpWalker.Visit(syntaxTree.GetRoot());

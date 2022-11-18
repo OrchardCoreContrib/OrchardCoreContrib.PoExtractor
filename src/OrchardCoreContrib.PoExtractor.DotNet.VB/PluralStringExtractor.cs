@@ -1,9 +1,9 @@
-﻿using System.Linq;
-using Microsoft.CodeAnalysis;
+﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.VisualBasic;
 using Microsoft.CodeAnalysis.VisualBasic.Syntax;
 using OrchardCoreContrib.PoExtractor.Core;
 using OrchardCoreContrib.PoExtractor.Core.Contracts;
+using System.Linq;
 
 namespace OrchardCoreContrib.PoExtractor.DotNet.VB
 {
@@ -32,21 +32,25 @@ namespace OrchardCoreContrib.PoExtractor.DotNet.VB
             {
                 var arguments = invocation.ArgumentList.Arguments;
                 if (arguments.Count >= 2 &&
-                    arguments[1].GetExpression() is ArrayCreationExpressionSyntax array) {
+                    arguments[1].GetExpression() is ArrayCreationExpressionSyntax array)
+                {
                     if (array.Type is PredefinedTypeSyntax arrayType &&
                         arrayType.Keyword.Text == "String" &&
                         array.Initializer.Initializers.Count >= 2 &&
                         array.Initializer.Initializers.ElementAt(0) is LiteralExpressionSyntax singularLiteral && singularLiteral.IsKind(SyntaxKind.StringLiteralExpression) &&
-                        array.Initializer.Initializers.ElementAt(1) is LiteralExpressionSyntax pluralLiteral && pluralLiteral.IsKind(SyntaxKind.StringLiteralExpression)) {
+                        array.Initializer.Initializers.ElementAt(1) is LiteralExpressionSyntax pluralLiteral && pluralLiteral.IsKind(SyntaxKind.StringLiteralExpression))
+                    {
 
                         result = this.CreateLocalizedString(singularLiteral.Token.ValueText, pluralLiteral.Token.ValueText, node);
                         return true;
                     }
-                } else
+                }
+                else
                 {
                     if (arguments.Count >= 3 &&
                         arguments[1].GetExpression() is LiteralExpressionSyntax singularLiteral && singularLiteral.IsKind(SyntaxKind.StringLiteralExpression) &&
-                        arguments[2].GetExpression() is LiteralExpressionSyntax pluralLiteral && pluralLiteral.IsKind(SyntaxKind.StringLiteralExpression)) {
+                        arguments[2].GetExpression() is LiteralExpressionSyntax pluralLiteral && pluralLiteral.IsKind(SyntaxKind.StringLiteralExpression))
+                    {
 
                         result = this.CreateLocalizedString(singularLiteral.Token.ValueText, pluralLiteral.Token.ValueText, node);
                         return true;

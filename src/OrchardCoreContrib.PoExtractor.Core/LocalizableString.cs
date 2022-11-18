@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 
-namespace OrchardCoreContrib.PoExtractor.Core {
+namespace OrchardCoreContrib.PoExtractor.Core
+{
     /// <summary>
     /// Represents a localizable text with all it's occurrences in the project
     /// </summary>
-    public class LocalizableString {
+    public class LocalizableString
+    {
 
         /// <summary>
         /// Gets or sets context of the 
@@ -29,7 +31,8 @@ namespace OrchardCoreContrib.PoExtractor.Core {
         /// <summary>
         /// Creates a new instance of the <see cref="LocalizableString" class />
         /// </summary>
-        public LocalizableString() {
+        public LocalizableString()
+        {
             this.Locations = new List<LocalizableStringLocation>();
         }
 
@@ -37,7 +40,8 @@ namespace OrchardCoreContrib.PoExtractor.Core {
         /// Creates a new instance of the <see cref="LocalizableString"/> and properties with data from the source
         /// </summary>
         /// <param name="source">the <see cref="LocalizableStringOccurence"/> with the data</param>
-        public LocalizableString(LocalizableStringOccurence source) {
+        public LocalizableString(LocalizableStringOccurence source)
+        {
             this.Text = source.Text;
             this.TextPlural = source.TextPlural;
             this.Context = source.Context;

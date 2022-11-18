@@ -1,6 +1,4 @@
 using OrchardCoreContrib.PoExtractor.Core;
-using System;
-using System.Linq;
 using Xunit;
 
 namespace OrchardCoreContrib.PoExtractor.Liquid.Tests
@@ -8,7 +6,7 @@ namespace OrchardCoreContrib.PoExtractor.Liquid.Tests
     public class LiquidProjectProcessorTests
     {
         readonly LiquidProjectProcessor processor = new();
-        readonly LocalizableStringCollection strings = new ();
+        readonly LocalizableStringCollection strings = new();
 
         [Fact]
         public void ExtractsStringFromLiquidProperty()
@@ -17,7 +15,7 @@ namespace OrchardCoreContrib.PoExtractor.Liquid.Tests
 
             Assert.Contains(strings.Values, s => s.Text == "string in variable");
         }
-        
+
         [Fact]
         public void ExtractsStringFromLiquidExpression()
         {

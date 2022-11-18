@@ -3,11 +3,13 @@ using OrchardCoreContrib.PoExtractor.Core;
 using OrchardCoreContrib.PoExtractor.Core.Contracts;
 using System.Collections.Generic;
 
-namespace OrchardCoreContrib.PoExtractor.Liquid {
+namespace OrchardCoreContrib.PoExtractor.Liquid
+{
     /// <summary>
     /// Traverses Fluid AST and extracts localizable strings using provided collection of <see cref="IStringExtractor{T}"/>
     /// </summary>
-    class ExtractingLiquidWalker {
+    class ExtractingLiquidWalker
+    {
         private string _filePath;
 
         private readonly LocalizableStringCollection _strings;
@@ -18,18 +20,22 @@ namespace OrchardCoreContrib.PoExtractor.Liquid {
         /// </summary>
         /// <param name="extractors">the collection of extractors to use</param>
         /// <param name="strings">the <see cref="LocalizableStringCollection"/> where the results are saved</param>
-        public ExtractingLiquidWalker(IEnumerable<IStringExtractor<LiquidExpressionContext>> extractors, LocalizableStringCollection strings) {
+        public ExtractingLiquidWalker(IEnumerable<IStringExtractor<LiquidExpressionContext>> extractors, LocalizableStringCollection strings)
+        {
             _extractors = extractors;
             _strings = strings;
         }
 
-        public void Visit(LiquidStatementContext statementContext) {
+        public void Visit(LiquidStatementContext statementContext)
+        {
             _filePath = statementContext.FilePath;
             this.Visit(statementContext.Statement);
         }
 
-        private void Visit(Statement node) {
-            switch (node) {
+        private void Visit(Statement node)
+        {
+            switch (node)
+            {
                 case AssignStatement assign: this.Visit(assign.Value); break;
                 case CaseStatement @case:
                     this.Visit(@case.Statements);
@@ -64,8 +70,10 @@ namespace OrchardCoreContrib.PoExtractor.Liquid {
                     this.Visit(when.Statements);
                     break;
                 case TagStatement tag:
-                    if (tag.Statements != null) {
-                        foreach (var item in tag.Statements) {
+                    if (tag.Statements != null)
+                    {
+                        foreach (var item in tag.Statements)
+                        {
                             this.Visit(item);
                         }
                     }
@@ -73,17 +81,22 @@ namespace OrchardCoreContrib.PoExtractor.Liquid {
             }
         }
 
-        private void Visit(IEnumerable<Statement> statements) {
-            if (statements == null) {
+        private void Visit(IEnumerable<Statement> statements)
+        {
+            if (statements == null)
+            {
                 return;
             }
 
-            foreach (var statement in statements) {
+            foreach (var statement in statements)
+            {
                 this.Visit(statement);
             }
         }
-        private void Visit(Expression expression) {
-            switch (expression) {
+        private void Visit(Expression expression)
+        {
+            switch (expression)
+            {
                 case BinaryExpression binary:
                     this.Visit(binary.Left);
                     this.Visit(binary.Right);
@@ -95,19 +108,25 @@ namespace OrchardCoreContrib.PoExtractor.Liquid {
             }
         }
 
-        private void Visit(IEnumerable<Expression> expressions) {
-            if (expressions == null) {
+        private void Visit(IEnumerable<Expression> expressions)
+        {
+            if (expressions == null)
+            {
                 return;
             }
 
-            foreach (var expression in expressions) {
+            foreach (var expression in expressions)
+            {
                 this.Visit(expression);
             }
         }
 
-        private void ProcessFilterExpression(FilterExpression filter) {
-            foreach (var extractor in _extractors) {
-                if (extractor.TryExtract(new LiquidExpressionContext() { Expression = filter, FilePath = _filePath }, out var result)) {
+        private void ProcessFilterExpression(FilterExpression filter)
+        {
+            foreach (var extractor in _extractors)
+            {
+                if (extractor.TryExtract(new LiquidExpressionContext() { Expression = filter, FilePath = _filePath }, out var result))
+                {
                     _strings.Add(result);
                 }
             }

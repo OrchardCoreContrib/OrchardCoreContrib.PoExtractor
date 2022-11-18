@@ -1,6 +1,7 @@
 ﻿namespace OrchardCoreContrib.PoExtractor.Razor
 {
-    public class RazorPageGeneratorResult {
+    public class RazorPageGeneratorResult
+    {
         public string FilePath { get; set; }
         public string GeneratedCode { get; set; }
     }

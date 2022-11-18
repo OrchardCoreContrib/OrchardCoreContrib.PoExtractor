@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Razor.Language;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Microsoft.AspNetCore.Razor.Language;
-using Microsoft.AspNetCore.Razor.Language.Extensions;
 
 namespace OrchardCoreContrib.PoExtractor.Razor
 {
@@ -26,7 +25,8 @@ namespace OrchardCoreContrib.PoExtractor.Razor
 
                 builder
                     .SetNamespace(rootNamespace)
-                    .ConfigureClass((document, @class) => {
+                    .ConfigureClass((document, @class) =>
+                    {
                         @class.ClassName = Path.GetFileNameWithoutExtension(document.Source.FilePath);
                     });
 #if NETSTANDARD2_0

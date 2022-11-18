@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace OrchardCoreContrib.PoExtractor.Core {
+namespace OrchardCoreContrib.PoExtractor.Core
+{
     /// <summary>
     /// Writes <see cref="LocalizableString"/> objects in the <see href="https://www.gnu.org/software/gettext/manual/html_node/PO-Files.html">Portable Object format</see> to a stream
     /// </summary>
-    public class PoWriter : IDisposable {
+    public class PoWriter : IDisposable
+    {
         public const string PortaleObjectTemplateExtension = ".pot";
 
         private TextWriter _writer;
@@ -17,7 +19,8 @@ namespace OrchardCoreContrib.PoExtractor.Core {
         /// </summary>
         /// <param name="path">the path to the file</param>
         /// <remarks>This function creates a new file or overwrites the existing file, if it already exists</remarks>
-        public PoWriter(string path) {
+        public PoWriter(string path)
+        {
             _writer = new StreamWriter(File.Create(path));
         }
 
@@ -25,7 +28,8 @@ namespace OrchardCoreContrib.PoExtractor.Core {
         /// Creates a new instance of the <see cref="PoWriter"/>, that writes records to the stream
         /// </summary>
         /// <param name="stream"></param>
-        public PoWriter(Stream stream) {
+        public PoWriter(Stream stream)
+        {
             _writer = new StreamWriter(stream);
         }
 
@@ -33,22 +37,29 @@ namespace OrchardCoreContrib.PoExtractor.Core {
         /// Writes a <see cref="LocalizableString"/> object to the output
         /// </summary>
         /// <param name="record">the object to write</param>
-        public void WriteRecord(LocalizableString record) {
-            foreach (var location in record.Locations) {
+        public void WriteRecord(LocalizableString record)
+        {
+            foreach (var location in record.Locations)
+            {
                 _writer.WriteLine($"#: {location.SourceFile}:{location.SourceFileLine}");
-                if (!string.IsNullOrEmpty(location.Comment)) {
+                if (!string.IsNullOrEmpty(location.Comment))
+                {
                     _writer.WriteLine($"#. {location.Comment}");
                 }
             }
 
-            if (!string.IsNullOrEmpty(record.Context)) {
+            if (!string.IsNullOrEmpty(record.Context))
+            {
                 _writer.WriteLine($"msgctxt \"{this.Escape(record.Context)}\"");
             }
 
             _writer.WriteLine($"msgid \"{this.Escape(record.Text)}\"");
-            if (string.IsNullOrEmpty(record.TextPlural)) {
+            if (string.IsNullOrEmpty(record.TextPlural))
+            {
                 _writer.WriteLine($"msgstr \"\"");
-            } else {
+            }
+            else
+            {
                 _writer.WriteLine($"msgid_plural \"{this.Escape(record.TextPlural)}\"");
                 _writer.WriteLine($"msgstr[0] \"\"");
             }
@@ -61,25 +72,31 @@ namespace OrchardCoreContrib.PoExtractor.Core {
         /// Writes a collection of <see cref="LocalizableString"/> objects to the output
         /// </summary>
         /// <param name="records">the collection to write</param>
-        public void WriteRecord(IEnumerable<LocalizableString> records) {
-            foreach (var record in records) {
+        public void WriteRecord(IEnumerable<LocalizableString> records)
+        {
+            foreach (var record in records)
+            {
                 this.WriteRecord(record);
             }
         }
 
-        public void Dispose() {
+        public void Dispose()
+        {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
-        protected virtual void Dispose(bool disposing) {
-            if (disposing) {
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
                 _writer.Close();
                 _writer.Dispose();
             }
         }
 
-        private string Escape(string text) {
+        private string Escape(string text)
+        {
             var sb = new StringBuilder(text);
             sb.Replace("\\", "\\\\"); // \ -> \\
             sb.Replace("\"", "\\\""); // " -> \"

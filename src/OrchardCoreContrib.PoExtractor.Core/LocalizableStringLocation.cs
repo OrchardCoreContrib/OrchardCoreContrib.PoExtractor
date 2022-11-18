@@ -1,8 +1,10 @@
-﻿namespace OrchardCoreContrib.PoExtractor.Core {
+﻿namespace OrchardCoreContrib.PoExtractor.Core
+{
     /// <summary>
     /// Represents a location of the localizable string occurrence in the source code
     /// </summary>
-    public class LocalizableStringLocation {
+    public class LocalizableStringLocation
+    {
         /// <summary>
         /// Gets or sets the name of the source file
         /// </summary>
