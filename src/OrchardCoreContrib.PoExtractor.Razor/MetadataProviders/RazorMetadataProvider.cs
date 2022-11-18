@@ -7,26 +7,35 @@ using System.Linq;
 namespace OrchardCoreContrib.PoExtractor.Razor.MetadataProviders
 {
     /// <summary>
-    /// Provides metadata for Razor .cshtml files
+    /// Provides metadata for Razor .cshtml files.
     /// </summary>
     public class RazorMetadataProvider : IMetadataProvider<SyntaxNode>
     {
         private string[] _sourceCache;
         private string _sourceCachePath;
 
-        public string BasePath { get; set; }
-
+        /// <summary>
+        /// Creates a new instance of a <see cref="RazorMetadataProvider"/>.
+        /// </summary>
+        /// <param name="basePath">The base path.</param>
         public RazorMetadataProvider(string basePath)
         {
             this.BasePath = basePath;
         }
 
+        /// <summary>
+        /// Gets or sets base path.
+        /// </summary>
+        public string BasePath { get; set; }
+
+        /// <inheritdoc/>
         public string GetContext(SyntaxNode node)
         {
             var path = node.SyntaxTree.FilePath.TrimStart(this.BasePath);
             return path.Replace(Path.DirectorySeparatorChar, '.').Replace(".cshtml", string.Empty);
         }
 
+        /// <inheritdoc/>
         public LocalizableStringLocation GetLocation(SyntaxNode node)
         {
             var result = new LocalizableStringLocation

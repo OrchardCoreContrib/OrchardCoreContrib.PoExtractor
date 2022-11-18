@@ -3,18 +3,18 @@
 namespace OrchardCoreContrib.PoExtractor.Liquid
 {
     /// <summary>
-    /// Represents a liquid statement context.
+    /// Represents a liquid expression context.
     /// </summary>
-    public class LiquidStatementContext
+    public class LiquidExpressionContext
     {
         /// <summary>
-        /// Gets or sets liquid file path.
+        /// Gets or sets the liquid file path.
         /// </summary>
         public string FilePath { get; set; }
 
         /// <summary>
-        /// Gets or sets the liquid statement.
+        /// Gets or sets the expression.
         /// </summary>
-        public Statement Statement { get; set; }
+        public FilterExpression Expression { get; set; }
     }
 }

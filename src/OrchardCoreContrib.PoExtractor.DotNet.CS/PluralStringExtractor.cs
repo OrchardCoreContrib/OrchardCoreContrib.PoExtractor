@@ -13,10 +13,15 @@ namespace OrchardCoreContrib.PoExtractor.DotNet.CS
     /// </remarks>
     public class PluralStringExtractor : LocalizableStringExtractor<SyntaxNode>
     {
+        /// <summary>
+        /// Creates a new instance of a <see cref="PluralStringExtractor"/>.
+        /// </summary>
+        /// <param name="metadataProvider">The <see cref="IMetadataProvider{T}"/>.</param>
         public PluralStringExtractor(IMetadataProvider<SyntaxNode> metadataProvider) : base(metadataProvider)
         {
         }
 
+        /// <inheritdoc/>
         public override bool TryExtract(SyntaxNode node, out LocalizableStringOccurence result)
         {
             result = null;

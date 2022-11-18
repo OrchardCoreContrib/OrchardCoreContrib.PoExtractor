@@ -13,6 +13,7 @@ namespace OrchardCoreContrib.PoExtractor.DotNet.VB
     /// </summary>
     public class VisualBasicProjectProcessor : RazorViewsProcessor
     {
+        /// <inheritdoc/>
         public override void Process(string path, string basePath, LocalizableStringCollection strings)
         {
             /* VB */

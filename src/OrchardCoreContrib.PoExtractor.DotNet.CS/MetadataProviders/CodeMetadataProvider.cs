@@ -9,13 +9,21 @@ namespace OrchardCoreContrib.PoExtractor.DotNet.CS.MetadataProviders
     /// </summary>
     public class CodeMetadataProvider : IMetadataProvider<SyntaxNode>
     {
-        public string BasePath { get; private set; }
-
+        /// <summary>
+        /// Creates a new instance of a <see cref="CodeMetadataProvider"/>.
+        /// </summary>
+        /// <param name="basePath">The base path.</param>
         public CodeMetadataProvider(string basePath)
         {
             this.BasePath = basePath;
         }
 
+        /// <summary>
+        /// Gets or sets the base path.
+        /// </summary>
+        public string BasePath { get; private set; }
+
+        /// <inheritdoc/>
         public string GetContext(SyntaxNode node)
         {
             var @namespace = node.Ancestors().OfType<NamespaceDeclarationSyntax>().FirstOrDefault()?.Name.ToString();
@@ -24,6 +32,7 @@ namespace OrchardCoreContrib.PoExtractor.DotNet.CS.MetadataProviders
             return $"{@namespace}.{@class}";
         }
 
+        /// <inheritdoc/>
         public LocalizableStringLocation GetLocation(SyntaxNode node)
         {
             var lineNumber = node.GetLocation().GetMappedLineSpan().StartLinePosition.Line;

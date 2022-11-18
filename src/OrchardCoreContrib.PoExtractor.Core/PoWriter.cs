@@ -80,6 +80,8 @@ namespace OrchardCoreContrib.PoExtractor
             }
         }
 
+
+        /// <inheritdoc/>
         public void Dispose()
         {
             Dispose(true);

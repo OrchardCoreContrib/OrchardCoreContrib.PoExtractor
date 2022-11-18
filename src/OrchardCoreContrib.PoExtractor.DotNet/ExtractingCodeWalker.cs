@@ -22,6 +22,7 @@ namespace OrchardCoreContrib.PoExtractor.DotNet
             _strings = strings;
         }
 
+        /// <inheritdoc/>
         public override void Visit(SyntaxNode node)
         {
             base.Visit(node);

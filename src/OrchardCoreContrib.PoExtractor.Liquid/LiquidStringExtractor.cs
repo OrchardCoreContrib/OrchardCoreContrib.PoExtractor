@@ -10,10 +10,15 @@ namespace OrchardCoreContrib.PoExtractor.Liquid
     /// </remarks>
     class LiquidStringExtractor : LocalizableStringExtractor<LiquidExpressionContext>
     {
+        /// <summary>
+        /// Creates a new instance of a <see cref="LiquidStringExtractor"/>.
+        /// </summary>
+        /// <param name="metadataProvider">The <see cref="IMetadataProvider{T}"/>.</param>
         public LiquidStringExtractor(IMetadataProvider<LiquidExpressionContext> metadataProvider) : base(metadataProvider)
         {
         }
 
+        /// <inheritdoc/>
         public override bool TryExtract(LiquidExpressionContext expressionContext, out LocalizableStringOccurence result)
         {
             result = null;

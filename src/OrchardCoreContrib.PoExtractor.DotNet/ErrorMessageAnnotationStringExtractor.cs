@@ -5,16 +5,24 @@ using System.Linq;
 
 namespace OrchardCoreContrib.PoExtractor.DotNet
 {
+    /// <summary>
+    /// Extracts localizable string from data annotations error messages.
+    /// </summary>
     public class ErrorMessageAnnotationStringExtractor : LocalizableStringExtractor<SyntaxNode>
     {
         private const string ErrorMessageAttributeName = "ErrorMessage";
 
+        /// <summary>
+        /// Creates a new instance of a <see cref="ErrorMessageAnnotationStringExtractor"/>.
+        /// </summary>
+        /// <param name="metadataProvider">The <see cref="IMetadataProvider{T}"/>.</param>
         public ErrorMessageAnnotationStringExtractor(IMetadataProvider<SyntaxNode> metadataProvider)
             : base(metadataProvider)
         {
 
         }
 
+        /// <inheritdoc/>
         public override bool TryExtract(SyntaxNode node, out LocalizableStringOccurence result)
         {
             result = null;

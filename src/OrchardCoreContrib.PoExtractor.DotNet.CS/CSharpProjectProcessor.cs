@@ -13,6 +13,7 @@ namespace OrchardCoreContrib.PoExtractor.DotNet.CS
     /// </summary>
     public class CSharpProjectProcessor : RazorViewsProcessor
     {
+        /// <inheritdoc/>
         public override void Process(string path, string basePath, LocalizableStringCollection strings)
         {
             var codeMetadataProvider = new CodeMetadataProvider(basePath);
@@ -48,6 +49,10 @@ namespace OrchardCoreContrib.PoExtractor.DotNet.CS
             base.Process(path, basePath, strings);
         }
 
+        /// <summary>
+        /// Gets the string extractors
+        /// </summary>
+        /// <param name="razorMetadataProvider">The <see cref="RazorMetadataProvider"/>.</param>
         protected override IStringExtractor<SyntaxNode>[] GetStringExtractors(RazorMetadataProvider razorMetadataProvider)
             => new IStringExtractor<SyntaxNode>[]
             {

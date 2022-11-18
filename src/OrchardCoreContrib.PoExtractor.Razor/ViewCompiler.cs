@@ -5,8 +5,15 @@ using System.Linq;
 
 namespace OrchardCoreContrib.PoExtractor.Razor
 {
+    /// <summary>
+    /// Represents a utility class to compile razor views.
+    /// </summary>
     public static class ViewCompiler
     {
+        /// <summary>
+        /// Complies the views on a given project.
+        /// </summary>
+        /// <param name="projectDirectory">The project directory.</param>
         public static IEnumerable<RazorPageGeneratorResult> CompileViews(string projectDirectory)
         {
             var projectEngine = CreateProjectEngine("OrchardCoreContrib.PoExtractor.GeneratedCode", projectDirectory);

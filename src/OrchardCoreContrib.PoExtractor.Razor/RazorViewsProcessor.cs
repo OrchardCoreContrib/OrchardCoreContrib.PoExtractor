@@ -11,6 +11,7 @@ namespace OrchardCoreContrib.PoExtractor.Razor
     /// </summary>
     public abstract class RazorViewsProcessor : IProjectProcessor
     {
+        /// <inheritdoc/>
         public virtual void Process(string path, string basePath, LocalizableStringCollection strings)
         {
             var razorMetadataProvider = new RazorMetadataProvider(basePath);
@@ -31,6 +32,10 @@ namespace OrchardCoreContrib.PoExtractor.Razor
             }
         }
 
+        /// <summary>
+        /// Gets the string extractors.
+        /// </summary>
+        /// <param name="razorMetadataProvider">The <see cref="RazorMetadataProvider"/>.</param>
         protected abstract IStringExtractor<SyntaxNode>[] GetStringExtractors(RazorMetadataProvider razorMetadataProvider);
     }
 }

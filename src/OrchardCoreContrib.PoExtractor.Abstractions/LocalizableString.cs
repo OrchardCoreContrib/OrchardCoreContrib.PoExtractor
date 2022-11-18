@@ -7,7 +7,6 @@ namespace OrchardCoreContrib.PoExtractor
     /// </summary>
     public class LocalizableString
     {
-
         /// <summary>
         /// Gets or sets context of the 
         /// </summary>
@@ -33,7 +32,7 @@ namespace OrchardCoreContrib.PoExtractor
         /// </summary>
         public LocalizableString()
         {
-            this.Locations = new List<LocalizableStringLocation>();
+            Locations = new List<LocalizableStringLocation>();
         }
 
         /// <summary>
@@ -42,12 +41,12 @@ namespace OrchardCoreContrib.PoExtractor
         /// <param name="source">the <see cref="LocalizableStringOccurence"/> with the data</param>
         public LocalizableString(LocalizableStringOccurence source)
         {
-            this.Text = source.Text;
-            this.TextPlural = source.TextPlural;
-            this.Context = source.Context;
+            Text = source.Text;
+            TextPlural = source.TextPlural;
+            Context = source.Context;
 
-            this.Locations = new List<LocalizableStringLocation>();
-            this.Locations.Add(source.Location);
+            Locations = new List<LocalizableStringLocation>();
+            Locations.Add(source.Location);
         }
     }
 }

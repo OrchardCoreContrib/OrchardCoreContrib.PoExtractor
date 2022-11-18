@@ -24,6 +24,7 @@ namespace OrchardCoreContrib.PoExtractor.Liquid
             _parser = new LiquidViewParser(parserOptions);
         }
 
+        /// <inheritdoc/>
         public void Process(string path, string basePath, LocalizableStringCollection strings)
         {
             var liquidMetadataProvider = new LiquidMetadataProvider(basePath);

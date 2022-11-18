@@ -6,7 +6,7 @@ namespace OrchardCoreContrib.PoExtractor.Liquid
     /// <summary>
     /// Traverses Fluid AST and extracts localizable strings using provided collection of <see cref="IStringExtractor{T}"/>
     /// </summary>
-    class ExtractingLiquidWalker
+    public class ExtractingLiquidWalker
     {
         private string _filePath;
 
@@ -24,10 +24,15 @@ namespace OrchardCoreContrib.PoExtractor.Liquid
             _strings = strings;
         }
 
+        /// <summary>
+        /// Visits liquid statement.
+        /// </summary>
+        /// <param name="statementContext">The statement context.</param>
         public void Visit(LiquidStatementContext statementContext)
         {
             _filePath = statementContext.FilePath;
-            this.Visit(statementContext.Statement);
+            
+            Visit(statementContext.Statement);
         }
 
         private void Visit(Statement node)
