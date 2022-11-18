@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <AssemblyName>OrchardCoreContrib.PoExtractor.OrchardCore</AssemblyName>
+    <ToolCommandName>extractpo-oc</ToolCommandName>
+    <PackAsTool>true</PackAsTool>
+    <Version>0.5.0-rc2-16220</Version>
+    <PackageId>OrchardCoreContrib.PoExtractor.OrchardCore</PackageId>
+    <Authors>Lukas Kabrt</Authors>
+    <Company />
+    <Product />
+    <Description>.NET Core global tool for extracting translatable strings from the OrchardCore source files.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OrchardCoreContrib.PoExtractor.Core\OrchardCoreContrib.PoExtractor.Core.csproj" />
+    <ProjectReference Include="..\OrchardCoreContrib.PoExtractor.DotNet.CS\OrchardCoreContrib.PoExtractor.DotNet.CS.csproj" />
+    <ProjectReference Include="..\OrchardCoreContrib.PoExtractor.Liquid\OrchardCoreContrib.PoExtractor.Liquid.csproj" />
+    <ProjectReference Include="..\OrchardCoreContrib.PoExtractor.DotNet.VB\OrchardCoreContrib.PoExtractor.DotNet.VB.csproj" />
+  </ItemGroup>
+
+</Project>

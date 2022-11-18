@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "PoExtractor": {
-      "commandName": "Project",
-      "commandLineArgs": "c:\\Users\\Lukas\\Source\\Repos\\OrchardCore c:\\Temp\\Test"
-    }
-  }
-}
