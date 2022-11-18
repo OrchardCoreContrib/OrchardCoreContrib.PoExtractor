@@ -27,6 +27,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{FCA7649D-2A7
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{D1336C32-75A4-411A-90D3-E011D2CEB076}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrchardCoreContrib.PoExtractor.Abstractions", "src\OrchardCoreContrib.PoExtractor.Abstractions\OrchardCoreContrib.PoExtractor.Abstractions.csproj", "{3CEF8D52-49EB-49C9-A421-64A59C031B61}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +75,10 @@ Global
 		{042754CC-2E1A-4ED9-8944-E51708A43515}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{042754CC-2E1A-4ED9-8944-E51708A43515}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{042754CC-2E1A-4ED9-8944-E51708A43515}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CEF8D52-49EB-49C9-A421-64A59C031B61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CEF8D52-49EB-49C9-A421-64A59C031B61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CEF8D52-49EB-49C9-A421-64A59C031B61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CEF8D52-49EB-49C9-A421-64A59C031B61}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -88,6 +94,7 @@ Global
 		{F12A2C3B-728B-4AEC-9495-3FB56300D941} = {FCA7649D-2A78-4580-8866-A00571045744}
 		{458FE156-43B6-4DB9-965D-672A7D318B90} = {FCA7649D-2A78-4580-8866-A00571045744}
 		{042754CC-2E1A-4ED9-8944-E51708A43515} = {D1336C32-75A4-411A-90D3-E011D2CEB076}
+		{3CEF8D52-49EB-49C9-A421-64A59C031B61} = {FCA7649D-2A78-4580-8866-A00571045744}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {694D0244-80FF-47D4-A54D-2DB1356B72A1}

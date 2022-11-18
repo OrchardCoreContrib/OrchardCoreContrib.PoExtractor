@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace OrchardCoreContrib.PoExtractor.Core
+namespace OrchardCoreContrib.PoExtractor
 {
     /// <summary>
     /// Writes <see cref="LocalizableString"/> objects in the <see href="https://www.gnu.org/software/gettext/manual/html_node/PO-Files.html">Portable Object format</see> to a stream

@@ -1,6 +1,4 @@
-﻿using OrchardCoreContrib.PoExtractor.Core;
-using OrchardCoreContrib.PoExtractor.Core.Contracts;
-using System;
+﻿using System;
 using System.IO;
 
 namespace OrchardCoreContrib.PoExtractor.Liquid.MetadataProviders

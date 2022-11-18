@@ -1,6 +1,4 @@
-﻿using OrchardCoreContrib.PoExtractor.Core;
-using OrchardCoreContrib.PoExtractor.Core.Contracts;
-using OrchardCoreContrib.PoExtractor.DotNet;
+﻿using OrchardCoreContrib.PoExtractor.DotNet;
 using OrchardCoreContrib.PoExtractor.DotNet.CS;
 using OrchardCoreContrib.PoExtractor.DotNet.VB;
 using OrchardCoreContrib.PoExtractor.Liquid;

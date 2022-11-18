@@ -1,4 +1,3 @@
-using OrchardCoreContrib.PoExtractor.Core;
 using Xunit;
 
 namespace OrchardCoreContrib.PoExtractor.Liquid.Tests

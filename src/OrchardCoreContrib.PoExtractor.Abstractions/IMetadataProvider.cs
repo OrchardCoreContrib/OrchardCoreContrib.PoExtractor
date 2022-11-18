@@ -1,4 +1,4 @@
-﻿namespace OrchardCoreContrib.PoExtractor.Core.Contracts
+﻿namespace OrchardCoreContrib.PoExtractor
 {
     /// <summary>
     /// Provides metadata of the translatable text based on information from the AST node

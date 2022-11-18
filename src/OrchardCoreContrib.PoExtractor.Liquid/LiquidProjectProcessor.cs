@@ -2,8 +2,6 @@
 using Fluid.Parser;
 using Microsoft.Extensions.Options;
 using OrchardCore.DisplayManagement.Liquid;
-using OrchardCoreContrib.PoExtractor.Core;
-using OrchardCoreContrib.PoExtractor.Core.Contracts;
 using OrchardCoreContrib.PoExtractor.Liquid.MetadataProviders;
 using System.IO;
 using System.Linq;

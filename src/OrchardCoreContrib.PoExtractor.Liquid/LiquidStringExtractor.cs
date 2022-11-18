@@ -1,6 +1,4 @@
 ﻿using Fluid.Ast;
-using OrchardCoreContrib.PoExtractor.Core;
-using OrchardCoreContrib.PoExtractor.Core.Contracts;
 
 namespace OrchardCoreContrib.PoExtractor.Liquid
 {

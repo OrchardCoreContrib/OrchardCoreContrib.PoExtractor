@@ -1,6 +1,4 @@
 ﻿using Microsoft.CodeAnalysis;
-using OrchardCoreContrib.PoExtractor.Core;
-using OrchardCoreContrib.PoExtractor.Core.Contracts;
 using System.Collections.Generic;
 
 namespace OrchardCoreContrib.PoExtractor.DotNet

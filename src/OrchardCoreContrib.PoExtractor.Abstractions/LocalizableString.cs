@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace OrchardCoreContrib.PoExtractor.Core
+namespace OrchardCoreContrib.PoExtractor
 {
     /// <summary>
     /// Represents a localizable text with all it's occurrences in the project

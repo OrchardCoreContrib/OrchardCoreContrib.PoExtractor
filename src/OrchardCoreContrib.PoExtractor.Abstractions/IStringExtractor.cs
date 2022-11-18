@@ -1,4 +1,4 @@
-﻿namespace OrchardCoreContrib.PoExtractor.Core.Contracts
+﻿namespace OrchardCoreContrib.PoExtractor
 {
     /// <summary>
     /// Extracts a translatable string from a node of the AST tree

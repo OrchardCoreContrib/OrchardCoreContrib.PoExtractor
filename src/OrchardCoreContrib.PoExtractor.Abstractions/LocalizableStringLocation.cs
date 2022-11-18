@@ -1,4 +1,4 @@
-﻿namespace OrchardCoreContrib.PoExtractor.Core
+﻿namespace OrchardCoreContrib.PoExtractor
 {
     /// <summary>
     /// Represents a location of the localizable string occurrence in the source code

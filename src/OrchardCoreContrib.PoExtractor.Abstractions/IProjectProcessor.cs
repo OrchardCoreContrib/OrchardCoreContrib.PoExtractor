@@ -1,4 +1,4 @@
-namespace OrchardCoreContrib.PoExtractor.Core.Contracts
+namespace OrchardCoreContrib.PoExtractor
 {
     public interface IProjectProcessor
     {

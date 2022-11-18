@@ -1,5 +1,5 @@
 using Microsoft.CodeAnalysis;
-using OrchardCoreContrib.PoExtractor.Core.Contracts;
+using OrchardCoreContrib.PoExtractor;
 
 namespace OrchardCoreContrib.PoExtractor.DotNet
 {

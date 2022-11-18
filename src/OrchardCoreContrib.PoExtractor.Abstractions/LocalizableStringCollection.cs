@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace OrchardCoreContrib.PoExtractor.Core
+namespace OrchardCoreContrib.PoExtractor
 {
     /// <summary>
     /// Represents collection of the all localizable strings in the project. Localizable strings with the same values are merged.

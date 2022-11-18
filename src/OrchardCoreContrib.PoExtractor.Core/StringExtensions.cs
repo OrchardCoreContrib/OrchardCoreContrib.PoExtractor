@@ -1,4 +1,4 @@
-﻿namespace OrchardCoreContrib.PoExtractor.Core
+﻿namespace OrchardCoreContrib.PoExtractor
 {
     public static class StringExtensions
     {

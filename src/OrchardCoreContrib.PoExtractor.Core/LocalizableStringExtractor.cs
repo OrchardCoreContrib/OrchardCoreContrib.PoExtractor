@@ -1,6 +1,4 @@
-﻿using OrchardCoreContrib.PoExtractor.Core.Contracts;
-
-namespace OrchardCoreContrib.PoExtractor.Core
+﻿namespace OrchardCoreContrib.PoExtractor
 {
     public abstract class LocalizableStringExtractor<T> : IStringExtractor<T>
     {
