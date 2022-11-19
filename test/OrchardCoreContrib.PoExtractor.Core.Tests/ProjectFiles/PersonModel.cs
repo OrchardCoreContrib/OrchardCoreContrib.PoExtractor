@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace OrchardCoreContrib.PoExtractor.Core.Tests.ProjectFiles
+namespace OrchardCoreContrib.PoExtractor.Tests.ProjectFiles
 {
     public class PersonModel
     {

@@ -6,7 +6,7 @@ using OrchardCoreContrib.PoExtractor.DotNet;
 using OrchardCoreContrib.PoExtractor.DotNet.CS;
 using OrchardCoreContrib.PoExtractor.DotNet.CS.MetadataProviders;
 
-namespace OrchardCoreContrib.PoExtractor.Core.Tests.Fakes
+namespace OrchardCoreContrib.PoExtractor.Tests.Fakes
 {
     public class FakeCSharpProjectProcessor : IProjectProcessor
     {

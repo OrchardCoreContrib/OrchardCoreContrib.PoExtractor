@@ -1,8 +1,7 @@
 ﻿using System;
 using System.IO;
-using Xunit;
 
-namespace OrchardCoreContrib.PoExtractor.Core.Tests
+namespace OrchardCoreContrib.PoExtractor.Tests
 {
     public class PoWriterTests
     {

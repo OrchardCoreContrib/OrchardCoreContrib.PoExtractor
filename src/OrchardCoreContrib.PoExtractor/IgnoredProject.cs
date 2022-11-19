@@ -1,4 +1,4 @@
-﻿namespace OrchardCoreContrib.PoExtractor.OrchardCore
+﻿namespace OrchardCoreContrib.PoExtractor
 {
     public class IgnoredProject
     {

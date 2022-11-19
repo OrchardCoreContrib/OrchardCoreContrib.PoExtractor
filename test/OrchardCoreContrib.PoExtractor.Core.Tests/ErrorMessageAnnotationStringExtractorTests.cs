@@ -1,8 +1,8 @@
-﻿using OrchardCoreContrib.PoExtractor.Core.Tests.Fakes;
+﻿using OrchardCoreContrib.PoExtractor.Tests.Fakes;
 using System.Linq;
 using Xunit;
 
-namespace OrchardCoreContrib.PoExtractor.Core.Tests
+namespace OrchardCoreContrib.PoExtractor.Tests
 {
     public class ErrorMessageAnnotationStringExtractorTests
     {
