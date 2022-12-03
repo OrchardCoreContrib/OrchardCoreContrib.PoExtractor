@@ -1,7 +1,9 @@
 ﻿using OrchardCoreContrib.PoExtractor.DotNet;
 using OrchardCoreContrib.PoExtractor.DotNet.CS;
 using OrchardCoreContrib.PoExtractor.DotNet.VB;
+using OrchardCoreContrib.PoExtractor.Liquid;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -32,10 +34,13 @@ namespace OrchardCoreContrib.PoExtractor
                 return;
             }
 
-            var processors = new IProjectProcessor[] {
+            var processors = new List<IProjectProcessor>
+            {
                 new CSharpProjectProcessor(),
                 new VisualBasicProjectProcessor()
             };
+
+            processors.Add(new LiquidProjectProcessor());
 
             foreach (var projectFilePath in projectFiles)
             {
@@ -43,6 +48,11 @@ namespace OrchardCoreContrib.PoExtractor
                 var projectBasePath = Path.GetDirectoryName(projectPath) + Path.DirectorySeparatorChar;
                 var projectRelativePath = projectPath.TrimStart(basePath + Path.DirectorySeparatorChar);
                 var outputPath = Path.Combine(outputBasePath, Path.GetFileNameWithoutExtension(projectFilePath) + PoWriter.PortaleObjectTemplateExtension);
+
+                if (IgnoredProject.ToList().Any(o => projectRelativePath.StartsWith(o)))
+                {
+                    continue;
+                }
 
                 var strings = new LocalizableStringCollection();
                 foreach (var processor in processors)
@@ -66,7 +76,7 @@ namespace OrchardCoreContrib.PoExtractor
 
         private static void WriteHelp()
         {
-            Console.WriteLine("Usage: extractpo input output");
+            Console.WriteLine("Usage: extractpo-oc input output");
             Console.WriteLine("    input: path to the input directory, all projects at the the path will be processed");
             Console.WriteLine("    output: path to a directory where POT files will be generated");
         }

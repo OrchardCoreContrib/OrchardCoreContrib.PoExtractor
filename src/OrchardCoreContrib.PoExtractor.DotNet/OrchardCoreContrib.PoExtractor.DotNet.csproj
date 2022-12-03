@@ -3,11 +3,10 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\OrchardCoreContrib.PoExtractor.Core\OrchardCoreContrib.PoExtractor.Core.csproj" />
-  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis" Version="3.9.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OrchardCoreContrib.PoExtractor.Abstractions\OrchardCoreContrib.PoExtractor.Abstractions.csproj" />
   </ItemGroup>
 </Project>

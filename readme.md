@@ -1,49 +1,22 @@
 # OrchardCoreContrib.PoExtractor
 
-This utility extracts translatable strings from the C# and VB code, Razor templates and Liquid templates to POT (portable object template) files. It is designed to follow conventions used in the [OrchardCore](https://github.com/OrchardCMS/OrchardCore) project.
-
-OrchardCoreContrib.PoExtractor is distributed as a dotnet global tool and it is available on the official NuGet.org feed in two versions:
-
-* `OrchardCoreContrib.PoExtractor` - a general purpose utility for extracting translatable strings from  C#, VB code and Razor views
-* `OrchardCoreContrib.PoExtractor.OrchardCore` - the same utility with the additional support for extracting translatable strings from Liquid templates.
-  * In order to be able to parse Liquid templates, it needs to reference `OrchardCore.DisplayManagement.Liquid` package, where the Liquid filters are defined
+`OrchardCoreContrib.PoExtractor` is distributed as a dotnet global tool to extracts translatable strings from the C# and VB code, Razor templates and Liquid templates to POT (portable object template) files. It is designed to follow conventions used in the [OrchardCore](https://github.com/OrchardCMS/OrchardCore) project.
 
 ## Installation
-
 
 Install with the following command:
 
 `dotnet tool install --global OrchardCoreContrib.PoExtractor`
 
-or
-
-`dotnet tool install --global OrchardCoreContrib.PoExtractor.OrchardCore`
-
-> The latest version of OrchardCoreContrib.PoExtractor.OrchardCore is build against OrchardCore 1.0.0-beta3-71077. If you want to use OrchardCoreContrib.PoExtractor with OrchardCore 1.0.0-RC1 please use version 0.2.0-rc1
->
-> `dotnet tool install --global OrchardCoreContrib.PoExtractor.OrchardCore --version 0.2.0-rc1`
-> 
-> If you cant to use OrchardCoreContrib.PoExtractor with the preview version of OrchardCore, please use version 0.4.0-rc1-13272
->
-> `dotnet tool install --global OrchardCoreContrib.PoExtractor.OrchardCore --version 0.4.0-rc1-13272`
-
 ## Usage
 
 `extractpo inputpath outputpath`
-
-or
-
-`extractpo-oc inputpath outputpath`
 
 Extracts all translatable strings from projects at the specified input path and saves generated POT files at the specified output path. It creates one POT file per a project. This includes liquid views.
 
 ## Uninstallation
 
 `dotnet tool uninstall --global OrchardCoreContrib.PoExtractor`
-
-or
-
-`dotnet tool uninstall --global OrchardCoreContrib.PoExtractor.OrchardCore`
 
 ## Limitations
 

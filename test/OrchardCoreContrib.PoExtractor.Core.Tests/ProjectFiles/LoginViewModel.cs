@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace OrchardCoreContrib.PoExtractor.Core.Tests.Files
+namespace OrchardCoreContrib.PoExtractor.Tests.Files
 {
     public class LoginViewModel
     {
