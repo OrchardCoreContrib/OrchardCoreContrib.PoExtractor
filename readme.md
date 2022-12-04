@@ -6,17 +6,45 @@
 
 Install with the following command:
 
-`dotnet tool install --global OrchardCoreContrib.PoExtractor`
+```powershell
+dotnet tool install --global OrchardCoreContrib.PoExtractor
+```
 
 ## Usage
 
-`extractpo inputpath outputpath`
+```powershell
+dotnet extractpo <INTPUT_PATH> <OUTPUT_PATH> [-l|--language {"C#"|"VB"}] [-t|--template {"razor"|"liquid"}]
+```
+
+### Description
 
 Extracts all translatable strings from projects at the specified input path and saves generated POT files at the specified output path. It creates one POT file per a project. This includes liquid views.
 
+### Arguments
+
+- **`INTPUT_PATH`**
+
+The path to the input directory, all projects at the the path will be processed.
+
+- **`OUTPUT_PATH`**
+
+The path to a directory where POT files will be generated.
+
+### Options
+
+- **`-l|--language {C#|VB}`**
+
+Specifies the code language to extracts translatable strings from. Default: `C#` language
+
+- **`-t|--template {"razor"|"liquid"}`**
+
+Specifies the template engine to extract the translatable strings from. Default: `Razor` & `Liquid` templates.
+
 ## Uninstallation
 
-`dotnet tool uninstall --global OrchardCoreContrib.PoExtractor`
+```powershell
+dotnet tool uninstall --global OrchardCoreContrib.PoExtractor
+```
 
 ## Limitations
 
