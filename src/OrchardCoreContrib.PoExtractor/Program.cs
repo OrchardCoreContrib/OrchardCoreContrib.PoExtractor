@@ -23,8 +23,8 @@ namespace OrchardCoreContrib.PoExtractor
                 return;
             }
 
-            var inputPath = args[0];
-            var outputPath = args[1];
+            var inputPath = new DirectoryInfo(args[0]).FullName;
+            var outputPath = new DirectoryInfo(args[1]).FullName;
 
             if (!Directory.Exists(inputPath))
             {
@@ -71,7 +71,7 @@ namespace OrchardCoreContrib.PoExtractor
             {
                 var projectPath = Path.GetDirectoryName(projectFile);
                 var projectBasePath = Path.GetDirectoryName(projectPath) + Path.DirectorySeparatorChar;
-                var projectRelativePath = projectPath.TrimStart(inputPath + Path.DirectorySeparatorChar);
+                var projectRelativePath = projectPath.Substring(projectBasePath.Length);
 
                 if (IgnoredProject.ToList().Any(p => projectRelativePath.StartsWith(p)))
                 {
