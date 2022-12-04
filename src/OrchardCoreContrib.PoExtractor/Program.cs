@@ -14,6 +14,14 @@ namespace OrchardCoreContrib.PoExtractor
     {
         private static readonly string _defaultLanguage = Language.CSharp;
         private static readonly string _defaultTemplateEngine = TemplateEngine.Both;
+        private static readonly string[] _ignoredProjects = new string[]
+        {
+            "docs",
+            "src\\OrchardCore.Cms.Web",
+            "src\\OrchardCore.Mvc.Web",
+            "src\\Templates",
+            "test"
+        };
 
         public static void Main(string[] args)
         {
