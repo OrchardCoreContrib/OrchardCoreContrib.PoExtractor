@@ -14,16 +14,16 @@ namespace OrchardCoreContrib.PoExtractor.DotNet.CS
         /// <inheritdoc/>
         public virtual void Process(string path, string basePath, LocalizableStringCollection strings)
         {
-            var codeMetadataProvider = new CodeMetadataProvider(basePath);
+            var csharpMetadataProvider = new CSharpMetadataProvider(basePath);
             var csharpWalker = new ExtractingCodeWalker(new IStringExtractor<SyntaxNode>[]
             {
-                new SingularStringExtractor(codeMetadataProvider),
-                new PluralStringExtractor(codeMetadataProvider),
-                new ErrorMessageAnnotationStringExtractor(codeMetadataProvider),
-                new DisplayAttributeDescriptionStringExtractor(codeMetadataProvider),
-                new DisplayAttributeNameStringExtractor(codeMetadataProvider),
-                new DisplayAttributeGroupNameStringExtractor(codeMetadataProvider),
-                new DisplayAttributeShortNameStringExtractor(codeMetadataProvider)
+                new SingularStringExtractor(csharpMetadataProvider),
+                new PluralStringExtractor(csharpMetadataProvider),
+                new ErrorMessageAnnotationStringExtractor(csharpMetadataProvider),
+                new DisplayAttributeDescriptionStringExtractor(csharpMetadataProvider),
+                new DisplayAttributeNameStringExtractor(csharpMetadataProvider),
+                new DisplayAttributeGroupNameStringExtractor(csharpMetadataProvider),
+                new DisplayAttributeShortNameStringExtractor(csharpMetadataProvider)
             }, strings);
 
             foreach (var file in Directory.EnumerateFiles(path, "*.cs", SearchOption.AllDirectories).OrderBy(file => file))

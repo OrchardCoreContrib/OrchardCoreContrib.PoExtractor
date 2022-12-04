@@ -24,7 +24,7 @@ namespace OrchardCoreContrib.PoExtractor.Tests.Fakes
                 basePath = _defaultPath;
             }
 
-            var codeMetadataProvider = new CodeMetadataProvider(basePath);
+            var codeMetadataProvider = new CSharpMetadataProvider(basePath);
             var csharpWalker = new ExtractingCodeWalker(
                 new IStringExtractor<SyntaxNode>[] {
                         new SingularStringExtractor(codeMetadataProvider),

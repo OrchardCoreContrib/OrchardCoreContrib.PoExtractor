@@ -14,16 +14,16 @@ namespace OrchardCoreContrib.PoExtractor.DotNet.VB
         /// <inheritdoc/>
         public void Process(string path, string basePath, LocalizableStringCollection strings)
         {
-            var codeMetadataProvider = new CodeMetadataProvider(basePath);
+            var visualBasicMetadataProvider = new VisualBasicMetadataProvider(basePath);
             var visualBasicWalker = new ExtractingCodeWalker(new IStringExtractor<SyntaxNode>[]
             {
-                new SingularStringExtractor(codeMetadataProvider),
-                new PluralStringExtractor(codeMetadataProvider),
-                new ErrorMessageAnnotationStringExtractor(codeMetadataProvider),
-                new DisplayAttributeDescriptionStringExtractor(codeMetadataProvider),
-                new DisplayAttributeNameStringExtractor(codeMetadataProvider),
-                new DisplayAttributeGroupNameStringExtractor(codeMetadataProvider),
-                new DisplayAttributeShortNameStringExtractor(codeMetadataProvider)
+                new SingularStringExtractor(visualBasicMetadataProvider),
+                new PluralStringExtractor(visualBasicMetadataProvider),
+                new ErrorMessageAnnotationStringExtractor(visualBasicMetadataProvider),
+                new DisplayAttributeDescriptionStringExtractor(visualBasicMetadataProvider),
+                new DisplayAttributeNameStringExtractor(visualBasicMetadataProvider),
+                new DisplayAttributeGroupNameStringExtractor(visualBasicMetadataProvider),
+                new DisplayAttributeShortNameStringExtractor(visualBasicMetadataProvider)
             }, strings);
 
             foreach (var file in Directory.EnumerateFiles(path, "*.vb", SearchOption.AllDirectories).OrderBy(file => file))

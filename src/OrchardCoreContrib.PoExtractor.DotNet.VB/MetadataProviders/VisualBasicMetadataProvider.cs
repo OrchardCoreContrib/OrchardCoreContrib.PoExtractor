@@ -7,21 +7,21 @@ namespace OrchardCoreContrib.PoExtractor.DotNet.VB.MetadataProviders
     /// <summary>
     /// Provides metadata for .vb code files
     /// </summary>
-    public class CodeMetadataProvider : IMetadataProvider<SyntaxNode>
+    public class VisualBasicMetadataProvider : IMetadataProvider<SyntaxNode>
     {
         /// <summary>
-        /// Creates a new instance of a <see cref="CodeMetadataProvider"/>.
+        /// Creates a new instance of a <see cref="VisualBasicMetadataProvider"/>.
         /// </summary>
         /// <param name="basePath">The base path.</param>
-        public CodeMetadataProvider(string basePath)
+        public VisualBasicMetadataProvider(string basePath)
         {
-            this.BasePath = basePath;
+            BasePath = basePath;
         }
 
         /// <summary>
-        /// Gets or sets a base path.
+        /// Gets a base path.
         /// </summary>
-        public string BasePath { get; private set; }
+        public string BasePath { get; }
 
         /// <inheritdoc/>
         public string GetContext(SyntaxNode node)
@@ -40,7 +40,7 @@ namespace OrchardCoreContrib.PoExtractor.DotNet.VB.MetadataProviders
             return new LocalizableStringLocation
             {
                 SourceFileLine = lineNumber + 1,
-                SourceFile = node.SyntaxTree.FilePath.TrimStart(this.BasePath),
+                SourceFile = node.SyntaxTree.FilePath.TrimStart(BasePath),
                 Comment = node.SyntaxTree.GetText().Lines[lineNumber].ToString().Trim()
             };
         }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 
 namespace OrchardCoreContrib.PoExtractor.Liquid.MetadataProviders
 {
@@ -14,11 +13,11 @@ namespace OrchardCoreContrib.PoExtractor.Liquid.MetadataProviders
         /// <param name="basePath">The base path.</param>
         public LiquidMetadataProvider(string basePath)
         {
-            this.BasePath = basePath;
+            BasePath = basePath;
         }
 
         /// <summary>
-        /// Gets or sets the base path.
+        /// Gets the base path.
         /// </summary>
         public string BasePath { get; set; }
 
@@ -34,7 +33,7 @@ namespace OrchardCoreContrib.PoExtractor.Liquid.MetadataProviders
         {
             return new LocalizableStringLocation()
             {
-                SourceFile = expressionContext.FilePath.TrimStart(this.BasePath)
+                SourceFile = expressionContext.FilePath.TrimStart(BasePath)
             };
         }
     }

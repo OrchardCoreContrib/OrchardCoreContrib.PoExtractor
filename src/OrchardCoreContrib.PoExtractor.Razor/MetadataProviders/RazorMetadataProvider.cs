@@ -20,11 +20,11 @@ namespace OrchardCoreContrib.PoExtractor.Razor.MetadataProviders
         /// <param name="basePath">The base path.</param>
         public RazorMetadataProvider(string basePath)
         {
-            this.BasePath = basePath;
+            BasePath = basePath;
         }
 
         /// <summary>
-        /// Gets or sets base path.
+        /// Gets base path.
         /// </summary>
         public string BasePath { get; set; }
 
@@ -75,7 +75,6 @@ namespace OrchardCoreContrib.PoExtractor.Razor.MetadataProviders
                 }
                 catch
                 {
-                    ; // do nothing
                 }
             }
 
