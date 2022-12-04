@@ -2,6 +2,7 @@
 using OrchardCoreContrib.PoExtractor.DotNet.CS;
 using OrchardCoreContrib.PoExtractor.DotNet.VB;
 using OrchardCoreContrib.PoExtractor.Liquid;
+using OrchardCoreContrib.PoExtractor.Razor;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -62,7 +63,16 @@ namespace OrchardCoreContrib.PoExtractor
                     .OrderBy(f => f));
             }
 
-            if (templateEngine == TemplateEngine.Liquid || templateEngine == TemplateEngine.Both)
+            if (templateEngine == TemplateEngine.Both)
+            {
+                projectProcessors.Add(new RazorProjectProcessor());
+                projectProcessors.Add(new LiquidProjectProcessor());
+            }
+            else if (templateEngine == TemplateEngine.Razor)
+            {
+                projectProcessors.Add(new RazorProjectProcessor());
+            }
+            else if (templateEngine == TemplateEngine.Liquid)
             {
                 projectProcessors.Add(new LiquidProjectProcessor());
             }

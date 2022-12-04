@@ -18,6 +18,7 @@
 		<ProjectReference Include="..\OrchardCoreContrib.PoExtractor.DotNet.CS\OrchardCoreContrib.PoExtractor.DotNet.CS.csproj" />
 		<ProjectReference Include="..\OrchardCoreContrib.PoExtractor.DotNet.VB\OrchardCoreContrib.PoExtractor.DotNet.VB.csproj" />
 		<ProjectReference Include="..\OrchardCoreContrib.PoExtractor.Liquid\OrchardCoreContrib.PoExtractor.Liquid.csproj" />
+		<ProjectReference Include="..\OrchardCoreContrib.PoExtractor.Razor\OrchardCoreContrib.PoExtractor.Razor.csproj" />
 	</ItemGroup>
 
 </Project>
