@@ -158,3 +158,11 @@ msgctxt "TheBlogTheme.Views.Shared.NotFound"
 msgid "Page Not Found"
 msgstr ""
 ```
+
+## Credits
+
+**PoExtractor**
+
+https://github.com/lukaskabrt/PoExtractor
+
+Lukas Kabrt
