@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Linq;
+using System.Text;
 
 namespace OrchardCoreContrib.PoExtractor.DotNet.CS.MetadataProviders
 {
@@ -29,8 +30,14 @@ namespace OrchardCoreContrib.PoExtractor.DotNet.CS.MetadataProviders
                 .Name.ToString();
             var @class = node.Ancestors()
                 .OfType<ClassDeclarationSyntax>()
-                .FirstOrDefault()?
-                .Identifier.ValueText;
+                .Select(x => x.Identifier.ValueText)
+                .Reverse()
+                .Aggregate(
+                    new StringBuilder(), 
+                    (currentClassName, nextClassName) => currentClassName
+                        .Append(currentClassName.Length == 0 ? "" : ".")
+                        .Append(nextClassName))
+                .ToString();
 
             return $"{@namespace}.{@class}";
         }
