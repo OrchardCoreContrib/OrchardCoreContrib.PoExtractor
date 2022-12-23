@@ -11,6 +11,8 @@ namespace OrchardCoreContrib.PoExtractor.Liquid
     /// </remarks>
     public class LiquidStringExtractor : LocalizableStringExtractor<LiquidExpressionContext>
     {
+        private static readonly string _localizationFilterName = "t";
+
         /// <summary>
         /// Creates a new instance of a <see cref="LiquidStringExtractor"/>.
         /// </summary>
@@ -30,7 +32,7 @@ namespace OrchardCoreContrib.PoExtractor.Liquid
             result = null;
             var filter = expressionContext.Expression;
 
-            if (filter.Name == "t")
+            if (filter.Name == _localizationFilterName)
             {
                 if (filter.Input is LiteralExpression literal)
                 {
