@@ -1,10 +1,4 @@
-﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
-using OrchardCoreContrib.PoExtractor.DotNet;
-using OrchardCoreContrib.PoExtractor.DotNet.CS;
-using OrchardCoreContrib.PoExtractor.DotNet.CS.MetadataProviders;
-using System.IO;
-using System.Linq;
+﻿using OrchardCoreContrib.PoExtractor.DotNet.CS;
 
 namespace OrchardCoreContrib.PoExtractor.Tests.Fakes
 {
@@ -24,30 +18,9 @@ namespace OrchardCoreContrib.PoExtractor.Tests.Fakes
                 basePath = _defaultPath;
             }
 
-            var codeMetadataProvider = new CSharpMetadataProvider(basePath);
-            var csharpWalker = new ExtractingCodeWalker(
-                new IStringExtractor<SyntaxNode>[] {
-                        new SingularStringExtractor(codeMetadataProvider),
-                        new PluralStringExtractor(codeMetadataProvider),
-                        new ErrorMessageAnnotationStringExtractor(codeMetadataProvider),
-                        new DisplayAttributeDescriptionStringExtractor(codeMetadataProvider),
-                        new DisplayAttributeNameStringExtractor(codeMetadataProvider),
-                        new DisplayAttributeGroupNameStringExtractor(codeMetadataProvider),
-                        new DisplayAttributeShortNameStringExtractor(codeMetadataProvider)
-                }, localizableStrings);
+            var csharpProjectProcessor = new CSharpProjectProcessor();
 
-            foreach (var file in Directory.EnumerateFiles(path, "*.cs", SearchOption.AllDirectories).OrderBy(file => file))
-            {
-                using (var stream = File.OpenRead(file))
-                {
-                    using (var reader = new StreamReader(stream))
-                    {
-                        var syntaxTree = CSharpSyntaxTree.ParseText(reader.ReadToEnd(), path: file);
-
-                        csharpWalker.Visit(syntaxTree.GetRoot());
-                    }
-                }
-            }
+            csharpProjectProcessor.Process(path, basePath, localizableStrings);
         }
     }
 }

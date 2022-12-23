@@ -1,12 +1,11 @@
-﻿using Xunit;
-
-namespace OrchardCoreContrib.PoExtractor.Tests
+﻿namespace OrchardCoreContrib.PoExtractor.Tests
 {
     public class LocalizableStringTests
     {
         [Fact]
         public void Constructor_PopulatesProperties()
         {
+            // Arrange
             var source = new LocalizableStringOccurence()
             {
                 Context = "OrchardCoreContrib.PoExtractor",
@@ -20,12 +19,13 @@ namespace OrchardCoreContrib.PoExtractor.Tests
                 }
             };
 
+            // Act
             var result = new LocalizableString(source);
 
+            // Assert
             Assert.Equal(source.Context, result.Context);
             Assert.Equal(source.Text, result.Text);
             Assert.Equal(source.TextPlural, result.TextPlural);
-
             Assert.Single(result.Locations, source.Location);
         }
     }

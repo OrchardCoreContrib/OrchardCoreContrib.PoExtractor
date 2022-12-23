@@ -1,23 +1,25 @@
 ﻿using OrchardCoreContrib.PoExtractor.Tests.Fakes;
 using System.Linq;
-using Xunit;
 
 namespace OrchardCoreContrib.PoExtractor.Tests
 {
     public class DisplayAttributeStringExtractorTests
     {
+        private readonly FakeCSharpProjectProcessor _fakeCSharpProjectProcessor = new();
+
         [Fact]
         public void ExtractLocalizedNameFromDisplayAttribute()
         {
             // Arrange
-            var csProjectProcessor = new FakeCSharpProjectProcessor();
             var localizableStringCollection = new LocalizableStringCollection();
 
             // Act
-            csProjectProcessor.Process(string.Empty, string.Empty, localizableStringCollection);
+            _fakeCSharpProjectProcessor.Process(string.Empty, string.Empty, localizableStringCollection);
 
             // Assert
-            var localizedStrings = localizableStringCollection.Values.Select(s => s.Text).ToList();
+            var localizedStrings = localizableStringCollection.Values
+                .Select(s => s.Text)
+                .ToList();
 
             Assert.Contains(localizedStrings, s => s == "First name");
         }
@@ -26,14 +28,15 @@ namespace OrchardCoreContrib.PoExtractor.Tests
         public void ExtractLocalizedShortNameFromDisplayAttribute()
         {
             // Arrange
-            var csProjectProcessor = new FakeCSharpProjectProcessor();
             var localizableStringCollection = new LocalizableStringCollection();
 
             // Act
-            csProjectProcessor.Process(string.Empty, string.Empty, localizableStringCollection);
+            _fakeCSharpProjectProcessor.Process(string.Empty, string.Empty, localizableStringCollection);
 
             // Assert
-            var localizedStrings = localizableStringCollection.Values.Select(s => s.Text).ToList();
+            var localizedStrings = localizableStringCollection.Values
+                .Select(s => s.Text)
+                .ToList();
 
             Assert.Contains(localizedStrings, s => s == "1st name");
         }
@@ -42,14 +45,15 @@ namespace OrchardCoreContrib.PoExtractor.Tests
         public void ExtractLocalizedGroupNameFromDisplayAttribute()
         {
             // Arrange
-            var csProjectProcessor = new FakeCSharpProjectProcessor();
             var localizableStringCollection = new LocalizableStringCollection();
 
             // Act
-            csProjectProcessor.Process(string.Empty, string.Empty, localizableStringCollection);
+            _fakeCSharpProjectProcessor.Process(string.Empty, string.Empty, localizableStringCollection);
 
             // Assert
-            var localizedStrings = localizableStringCollection.Values.Select(s => s.Text).ToList();
+            var localizedStrings = localizableStringCollection.Values
+                .Select(s => s.Text)
+                .ToList();
 
             Assert.Contains(localizedStrings, s => s == "Person info");
         }
@@ -58,14 +62,15 @@ namespace OrchardCoreContrib.PoExtractor.Tests
         public void ExtractLocalizedDescriptionFromDisplayAttribute()
         {
             // Arrange
-            var csProjectProcessor = new FakeCSharpProjectProcessor();
             var localizableStringCollection = new LocalizableStringCollection();
 
             // Act
-            csProjectProcessor.Process(string.Empty, string.Empty, localizableStringCollection);
+            _fakeCSharpProjectProcessor.Process(string.Empty, string.Empty, localizableStringCollection);
 
             // Assert
-            var localizedStrings = localizableStringCollection.Values.Select(s => s.Text).ToList();
+            var localizedStrings = localizableStringCollection.Values
+                .Select(s => s.Text)
+                .ToList();
 
             Assert.Contains(localizedStrings, s => s == "The first name of the person");
         }

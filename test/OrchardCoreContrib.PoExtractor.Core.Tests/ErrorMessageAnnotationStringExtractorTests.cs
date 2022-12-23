@@ -1,23 +1,25 @@
 ﻿using OrchardCoreContrib.PoExtractor.Tests.Fakes;
 using System.Linq;
-using Xunit;
 
 namespace OrchardCoreContrib.PoExtractor.Tests
 {
     public class ErrorMessageAnnotationStringExtractorTests
     {
+        private readonly FakeCSharpProjectProcessor _fakeCSharpProjectProcessor = new();
+
         [Fact]
         public void ExtractLocalizedStringsFromDataAnnotations()
         {
             // Arrange
-            var csProjectProcessor = new FakeCSharpProjectProcessor();
             var localizableStringCollection = new LocalizableStringCollection();
 
             // Act
-            csProjectProcessor.Process(string.Empty, string.Empty, localizableStringCollection);
+            _fakeCSharpProjectProcessor.Process(string.Empty, string.Empty, localizableStringCollection);
 
             // Assert
-            var localizedStrings = localizableStringCollection.Values.Select(s => s.Text).ToList();
+            var localizedStrings = localizableStringCollection.Values
+                .Select(s => s.Text)
+                .ToList();
 
             Assert.NotEmpty(localizedStrings);
             Assert.Equal(6, localizedStrings.Count());
@@ -28,14 +30,15 @@ namespace OrchardCoreContrib.PoExtractor.Tests
         public void DataAnnotationsExtractorShouldRespectErrorMessageOrder()
         {
             // Arrange
-            var csProjectProcessor = new FakeCSharpProjectProcessor();
             var localizableStringCollection = new LocalizableStringCollection();
 
             // Act
-            csProjectProcessor.Process(string.Empty, string.Empty, localizableStringCollection);
+            _fakeCSharpProjectProcessor.Process(string.Empty, string.Empty, localizableStringCollection);
 
             // Assert
-            var localizedStrings = localizableStringCollection.Values.Select(s => s.Text).ToList();
+            var localizedStrings = localizableStringCollection.Values
+                .Select(s => s.Text)
+                .ToList();
 
             Assert.Contains(localizedStrings, s => s == "Age should be in the range [15-45].");
         }

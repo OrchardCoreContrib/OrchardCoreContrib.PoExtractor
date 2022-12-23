@@ -1,22 +1,27 @@
-﻿namespace OrchardCoreContrib.PoExtractor.Tests
+﻿using Xunit;
+
+namespace OrchardCoreContrib.PoExtractor.Tests
 {
     public class PoWriterTests
     {
-        private MemoryStream _stream = new MemoryStream();
+        private readonly MemoryStream _stream = new();
 
         [Fact]
         public void WriteRecord_WritesSingularLocalizableString()
         {
-            var s = new LocalizableString()
+            // Arrange
+            var localizableString = new LocalizableString
             {
                 Text = "Computer"
             };
-
+            
+            // Act
             using (var writer = new PoWriter(_stream))
             {
-                writer.WriteRecord(s);
+                writer.WriteRecord(localizableString);
             }
 
+            // Assert
             var result = ReadPoStream();
             Assert.Equal($"msgid \"Computer\"", result[0]);
             Assert.Equal($"msgstr \"\"", result[1]);
@@ -25,17 +30,20 @@
         [Fact]
         public void WriteRecord_WritesPluralLocalizableString()
         {
-            var s = new LocalizableString()
+            // Arrange
+            var localizableString = new LocalizableString()
             {
                 Text = "Computer",
                 TextPlural = "Computers"
             };
 
+            // Act
             using (var writer = new PoWriter(_stream))
             {
-                writer.WriteRecord(s);
+                writer.WriteRecord(localizableString);
             }
 
+            // Assert
             var result = ReadPoStream();
             Assert.Equal($"msgid \"Computer\"", result[0]);
             Assert.Equal($"msgid_plural \"Computers\"", result[1]);
@@ -45,17 +53,20 @@
         [Fact]
         public void WriteRecord_WritesContext()
         {
-            var s = new LocalizableString()
+            // Arrange
+            var localizableString = new LocalizableString()
             {
                 Text = "Computer",
                 Context = "CONTEXT"
             };
 
+            // Act
             using (var writer = new PoWriter(_stream))
             {
-                writer.WriteRecord(s);
+                writer.WriteRecord(localizableString);
             }
 
+            // Assert
             var result = ReadPoStream();
             Assert.Equal($"msgctxt \"CONTEXT\"", result[0]);
             Assert.Equal($"msgid \"Computer\"", result[1]);
@@ -65,18 +76,33 @@
         [Fact]
         public void WriteRecord_WritesLocations()
         {
-            var s = new LocalizableString()
+            // Arrange
+            var localizableString = new LocalizableString()
             {
                 Text = "Computer",
             };
-            s.Locations.Add(new LocalizableStringLocation() { SourceFile = "File.cs", SourceFileLine = 1, Comment = "Comment 1" });
-            s.Locations.Add(new LocalizableStringLocation() { SourceFile = "File.cs", SourceFileLine = 2, Comment = "Comment 2" });
+            
+            localizableString.Locations.Add(new LocalizableStringLocation
+            {
+                SourceFile = "File.cs",
+                SourceFileLine = 1,
+                Comment = "Comment 1"
+            });
+            
+            localizableString.Locations.Add(new LocalizableStringLocation
+            {
+                SourceFile = "File.cs",
+                SourceFileLine = 2,
+                Comment = "Comment 2"
+            });
 
+            // Act
             using (var writer = new PoWriter(_stream))
             {
-                writer.WriteRecord(s);
+                writer.WriteRecord(localizableString);
             }
 
+            // Assert
             var result = ReadPoStream();
             Assert.Equal($"#: File.cs:1", result[0]);
             Assert.Equal($"#. Comment 1", result[1]);
@@ -90,7 +116,9 @@
         {
             using (var reader = new StreamReader(new MemoryStream(_stream.ToArray())))
             {
-                return reader.ReadToEnd().Split(Environment.NewLine);
+                return reader
+                    .ReadToEnd()
+                    .Split(Environment.NewLine);
             }
         }
     }

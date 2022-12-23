@@ -4,23 +4,27 @@ namespace OrchardCoreContrib.PoExtractor.Liquid.Tests
 {
     public class LiquidProjectProcessorTests
     {
-        readonly LiquidProjectProcessor processor = new();
-        readonly LocalizableStringCollection strings = new();
+        private readonly LiquidProjectProcessor _processor = new();
+        private readonly LocalizableStringCollection _localizableStrings = new();
 
         [Fact]
         public void ExtractsStringFromLiquidProperty()
         {
-            processor.Process("ProjectFiles", string.Empty, strings);
+            // Act
+            _processor.Process("ProjectFiles", string.Empty, _localizableStrings);
 
-            Assert.Contains(strings.Values, s => s.Text == "string in variable");
+            // Assert
+            Assert.Contains(_localizableStrings.Values, s => s.Text == "string in variable");
         }
 
         [Fact]
         public void ExtractsStringFromLiquidExpression()
         {
-            processor.Process("ProjectFiles", string.Empty, strings);
+            // Act
+            _processor.Process("ProjectFiles", string.Empty, _localizableStrings);
 
-            Assert.Contains(strings.Values, s => s.Text == "string in expression");
+            // Assert
+            Assert.Contains(_localizableStrings.Values, s => s.Text == "string in expression");
         }
     }
 }

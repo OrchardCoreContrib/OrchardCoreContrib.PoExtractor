@@ -1,62 +1,77 @@
-﻿using System.Linq;
-using Xunit;
-
-namespace OrchardCoreContrib.PoExtractor.Tests
+﻿namespace OrchardCoreContrib.PoExtractor.Tests
 {
     public class LocalizableStringCollectionTests
     {
-        private LocalizableStringOccurence s1 = new LocalizableStringOccurence() { Text = "Computer", Location = new LocalizableStringLocation() { SourceFileLine = 1 } };
-        private LocalizableStringOccurence s2 = new LocalizableStringOccurence() { Text = "Computer", Location = new LocalizableStringLocation() { SourceFileLine = 1 } };
-        private LocalizableStringOccurence otherS = new LocalizableStringOccurence() { Text = "Keyboard", Location = new LocalizableStringLocation() { SourceFileLine = 1 } };
+        private readonly LocalizableStringOccurence _localizedString1 = new()
+        {
+            Text = "Computer",
+            Location = new LocalizableStringLocation() { SourceFileLine = 1 }
+        };
+        private readonly LocalizableStringOccurence _localizedString2 = new()
+        {
+            Text = "Computer",
+            Location = new LocalizableStringLocation() { SourceFileLine = 1 }
+        };
+        private readonly LocalizableStringOccurence _localizedString3 = new()
+        {
+            Text = "Keyboard", Location = new LocalizableStringLocation() { SourceFileLine = 1 }
+        };
 
         [Fact]
         public void WhenCreated_ValuesCollectionIsEmpty()
         {
-            var sut = new LocalizableStringCollection();
+            // Arrange
+            var localizableString = new LocalizableStringCollection();
 
-            Assert.Empty(sut.Values);
+            // Assert
+            Assert.Empty(localizableString.Values);
         }
 
         [Fact]
         public void Add_CreatesNewLocalizableString_IfTheCollectionIsEmpty()
         {
-            var sut = new LocalizableStringCollection();
+            // Arrange
+            var localizableString = new LocalizableStringCollection();
 
-            sut.Add(s1);
+            // Act
+            localizableString.Add(_localizedString1);
 
-            Assert.Single(sut.Values);
-
-            var result = sut.Values.Single();
-            Assert.Equal(s1.Text, result.Text);
-            Assert.Contains(s1.Location, result.Locations);
+            // Assert
+            var result = Assert.Single(localizableString.Values);
+            Assert.Equal(_localizedString1.Text, result.Text);
+            Assert.Contains(_localizedString1.Location, result.Locations);
         }
 
         [Fact]
         public void Add_AddsLocationToLocalizableString_IfTheCollectionContainsSameString()
         {
-            var sut = new LocalizableStringCollection();
+            // Arrange
+            var localizableString = new LocalizableStringCollection();
 
-            sut.Add(s1);
-            sut.Add(s2);
+            // Act
+            localizableString.Add(_localizedString1);
+            localizableString.Add(_localizedString2);
 
-            Assert.Single(sut.Values);
-
-            var result = sut.Values.Single();
-            Assert.Equal(s1.Text, result.Text);
-            Assert.Contains(s1.Location, result.Locations);
-            Assert.Contains(s2.Location, result.Locations);
+            // Assert
+            var result = Assert.Single(localizableString.Values);
+            Assert.Equal(_localizedString1.Text, result.Text);
+            Assert.Contains(_localizedString1.Location, result.Locations);
+            Assert.Contains(_localizedString2.Location, result.Locations);
         }
 
         [Fact]
         public void Add_CreatesNewLocalizableString_IfTheCollectionDoesntContainSameString()
         {
-            var sut = new LocalizableStringCollection();
+            // Arrange
+            var localizableString = new LocalizableStringCollection();
 
-            sut.Add(s1);
-            sut.Add(otherS);
+            // Act
+            localizableString.Add(_localizedString1);
+            localizableString.Add(_localizedString3);
 
-            Assert.Contains(sut.Values, o => o.Text == s1.Text);
-            Assert.Contains(sut.Values, o => o.Text == s2.Text);
+            // Assert
+            Assert.Contains(localizableString.Values, o => o.Text == _localizedString1.Text);
+            Assert.Contains(localizableString.Values, o => o.Text == _localizedString2.Text);
         }
     }
 }
