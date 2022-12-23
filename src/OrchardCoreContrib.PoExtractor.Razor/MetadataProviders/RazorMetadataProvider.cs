@@ -14,24 +14,21 @@ namespace OrchardCoreContrib.PoExtractor.Razor.MetadataProviders
         private string[] _sourceCache;
         private string _sourceCachePath;
 
+        private readonly string _basePath;
+
         /// <summary>
         /// Creates a new instance of a <see cref="RazorMetadataProvider"/>.
         /// </summary>
         /// <param name="basePath">The base path.</param>
         public RazorMetadataProvider(string basePath)
         {
-            BasePath = basePath;
+            _basePath = basePath;
         }
-
-        /// <summary>
-        /// Gets base path.
-        /// </summary>
-        public string BasePath { get; set; }
 
         /// <inheritdoc/>
         public string GetContext(SyntaxNode node)
         {
-            var path = node.SyntaxTree.FilePath.TrimStart(BasePath);
+            var path = node.SyntaxTree.FilePath.TrimStart(_basePath);
             
             return path.Replace(Path.DirectorySeparatorChar, '.').Replace(".cshtml", string.Empty);
         }
@@ -41,19 +38,28 @@ namespace OrchardCoreContrib.PoExtractor.Razor.MetadataProviders
         {
             var result = new LocalizableStringLocation
             {
-                SourceFile = node.SyntaxTree.FilePath.TrimStart(BasePath)
+                SourceFile = node.SyntaxTree.FilePath.TrimStart(_basePath)
             };
 
-            var statement = node.Ancestors().OfType<ExpressionStatementSyntax>().FirstOrDefault();
+            var statement = node
+                .Ancestors()
+                .OfType<ExpressionStatementSyntax>()
+                .FirstOrDefault();
+
             if (statement != null)
             {
-                var lineTriviaSyntax = statement.DescendantTrivia().OfType<SyntaxTrivia>().Where(o => o.IsKind(SyntaxKind.LineDirectiveTrivia) && o.HasStructure).FirstOrDefault();
+                var lineTriviaSyntax = statement
+                    .DescendantTrivia()
+                    .OfType<SyntaxTrivia>()
+                    .Where(o => o.IsKind(SyntaxKind.LineDirectiveTrivia) && o.HasStructure)
+                    .FirstOrDefault();
+                
                 if (lineTriviaSyntax.GetStructure() is LineDirectiveTriviaSyntax lineTrivia && lineTrivia.HashToken.Text == "#" && lineTrivia.DirectiveNameToken.Text == "line")
                 {
                     if (int.TryParse(lineTrivia.Line.Text, out var lineNumber))
                     {
                         result.SourceFileLine = lineNumber;
-                        result.Comment = this.GetSourceCodeLine(node.SyntaxTree.FilePath, lineNumber).Trim();
+                        result.Comment = GetSourceCodeLine(node.SyntaxTree.FilePath, lineNumber).Trim();
                     }
                 }
             }

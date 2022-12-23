@@ -26,6 +26,7 @@ namespace OrchardCoreContrib.PoExtractor.Razor
                 new DisplayAttributeGroupNameStringExtractor(razorMetadataProvider),
                 new DisplayAttributeShortNameStringExtractor(razorMetadataProvider)
             }, strings);
+            
             var compiledViews = ViewCompiler.CompileViews(path);
             
             foreach (var view in compiledViews)

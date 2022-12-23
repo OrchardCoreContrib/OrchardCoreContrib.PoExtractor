@@ -31,7 +31,7 @@ namespace OrchardCoreContrib.PoExtractor.DotNet
             {
                 if (extractor.TryExtract(node, out var result))
                 {
-                    this._strings.Add(result);
+                    _strings.Add(result);
                 }
             }
         }

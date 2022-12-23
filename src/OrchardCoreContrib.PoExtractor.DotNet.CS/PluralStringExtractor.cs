@@ -44,7 +44,8 @@ namespace OrchardCoreContrib.PoExtractor.DotNet.CS
                         array.Initializer.Expressions[1] is LiteralExpressionSyntax pluralLiteral && pluralLiteral.IsKind(SyntaxKind.StringLiteralExpression))
                     {
 
-                        result = this.CreateLocalizedString(singularLiteral.Token.ValueText, pluralLiteral.Token.ValueText, node);
+                        result = CreateLocalizedString(singularLiteral.Token.ValueText, pluralLiteral.Token.ValueText, node);
+                        
                         return true;
                     }
                 }
@@ -55,7 +56,8 @@ namespace OrchardCoreContrib.PoExtractor.DotNet.CS
                         arguments[2].Expression is LiteralExpressionSyntax pluralLiteral && pluralLiteral.IsKind(SyntaxKind.StringLiteralExpression))
                     {
 
-                        result = this.CreateLocalizedString(singularLiteral.Token.ValueText, pluralLiteral.Token.ValueText, node);
+                        result = CreateLocalizedString(singularLiteral.Token.ValueText, pluralLiteral.Token.ValueText, node);
+                        
                         return true;
                     }
                 }

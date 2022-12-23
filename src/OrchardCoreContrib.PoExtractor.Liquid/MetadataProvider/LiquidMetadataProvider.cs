@@ -7,34 +7,27 @@ namespace OrchardCoreContrib.PoExtractor.Liquid.MetadataProviders
     /// </summary>
     public class LiquidMetadataProvider : IMetadataProvider<LiquidExpressionContext>
     {
+        private readonly string _basePath;
+
         /// <summary>
         /// Creates a new instance of a <see cref="LiquidMetadataProvider"/>.
         /// </summary>
         /// <param name="basePath">The base path.</param>
         public LiquidMetadataProvider(string basePath)
         {
-            BasePath = basePath;
+            _basePath = basePath;
         }
-
-        /// <summary>
-        /// Gets the base path.
-        /// </summary>
-        public string BasePath { get; set; }
 
         /// <inheritdoc/>
         public string GetContext(LiquidExpressionContext expressionContext)
         {
-            var path = expressionContext.FilePath.TrimStart(this.BasePath);
+            var path = expressionContext.FilePath.TrimStart(_basePath);
+            
             return path.Replace(Path.DirectorySeparatorChar, '.').Replace(".liquid", string.Empty);
         }
 
         /// <inheritdoc/>
         public LocalizableStringLocation GetLocation(LiquidExpressionContext expressionContext)
-        {
-            return new LocalizableStringLocation()
-            {
-                SourceFile = expressionContext.FilePath.TrimStart(BasePath)
-            };
-        }
+            => new() { SourceFile = expressionContext.FilePath.TrimStart(_basePath) };
     }
 }

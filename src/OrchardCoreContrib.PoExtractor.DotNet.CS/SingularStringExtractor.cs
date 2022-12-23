@@ -38,8 +38,8 @@ namespace OrchardCoreContrib.PoExtractor.DotNet.CS
                     result = new LocalizableStringOccurence()
                     {
                         Text = literal.Token.ValueText,
-                        Context = this.MetadataProvider.GetContext(node),
-                        Location = this.MetadataProvider.GetLocation(node)
+                        Context = MetadataProvider.GetContext(node),
+                        Location = MetadataProvider.GetLocation(node)
                     };
 
                     return true;

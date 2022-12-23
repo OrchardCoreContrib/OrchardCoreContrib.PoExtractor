@@ -12,13 +12,7 @@ namespace OrchardCoreContrib.PoExtractor
         /// <summary>
         /// Gets collection of all <see cref="LocalizableString"/> in the project
         /// </summary>
-        public IEnumerable<LocalizableString> Values
-        {
-            get
-            {
-                return _values.Values;
-            }
-        }
+        public IEnumerable<LocalizableString> Values => _values.Values;
 
         /// <summary>
         /// Creates a new empty instance of the <see cref="LocalizableStringCollection" /> class

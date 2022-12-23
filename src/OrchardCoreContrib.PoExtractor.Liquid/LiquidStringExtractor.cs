@@ -8,7 +8,7 @@ namespace OrchardCoreContrib.PoExtractor.Liquid
     /// <remarks>
     /// The localizable string is identified by the name convention of the filter - "TEXT TO TRANSLATE" | t 
     /// </remarks>
-    class LiquidStringExtractor : LocalizableStringExtractor<LiquidExpressionContext>
+    public class LiquidStringExtractor : LocalizableStringExtractor<LiquidExpressionContext>
     {
         /// <summary>
         /// Creates a new instance of a <see cref="LiquidStringExtractor"/>.
@@ -28,8 +28,14 @@ namespace OrchardCoreContrib.PoExtractor.Liquid
             {
                 if (filter.Input is LiteralExpression literal)
                 {
-                    var text = literal.EvaluateAsync(new Fluid.TemplateContext()).GetAwaiter().GetResult().ToStringValue();
-                    result = this.CreateLocalizedString(text, null, expressionContext);
+                    var text = literal
+                        .EvaluateAsync(new Fluid.TemplateContext())
+                        .GetAwaiter()
+                        .GetResult()
+                        .ToStringValue();
+                    
+                    result = CreateLocalizedString(text, null, expressionContext);
+                    
                     return true;
                 }
             }

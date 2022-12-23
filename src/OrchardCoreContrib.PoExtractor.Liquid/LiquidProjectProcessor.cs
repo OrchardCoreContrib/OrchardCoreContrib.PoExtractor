@@ -21,6 +21,7 @@ namespace OrchardCoreContrib.PoExtractor.Liquid
         public LiquidProjectProcessor()
         {
             var parserOptions = Options.Create(new LiquidViewOptions());
+            
             _parser = new LiquidViewParser(parserOptions);
         }
 

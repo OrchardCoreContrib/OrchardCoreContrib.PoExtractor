@@ -12,7 +12,7 @@ namespace OrchardCoreContrib.PoExtractor
     {
         public const string PortaleObjectTemplateExtension = ".pot";
 
-        private TextWriter _writer;
+        private readonly TextWriter _writer;
 
         /// <summary>
         /// Creates a new instance of the <see cref="PoWriter"/>, that writes records to the file
@@ -42,6 +42,7 @@ namespace OrchardCoreContrib.PoExtractor
             foreach (var location in record.Locations)
             {
                 _writer.WriteLine($"#: {location.SourceFile}:{location.SourceFileLine}");
+                
                 if (!string.IsNullOrEmpty(location.Comment))
                 {
                     _writer.WriteLine($"#. {location.Comment}");
@@ -50,17 +51,18 @@ namespace OrchardCoreContrib.PoExtractor
 
             if (!string.IsNullOrEmpty(record.Context))
             {
-                _writer.WriteLine($"msgctxt \"{this.Escape(record.Context)}\"");
+                _writer.WriteLine($"msgctxt \"{Escape(record.Context)}\"");
             }
 
-            _writer.WriteLine($"msgid \"{this.Escape(record.Text)}\"");
+            _writer.WriteLine($"msgid \"{Escape(record.Text)}\"");
+            
             if (string.IsNullOrEmpty(record.TextPlural))
             {
                 _writer.WriteLine($"msgstr \"\"");
             }
             else
             {
-                _writer.WriteLine($"msgid_plural \"{this.Escape(record.TextPlural)}\"");
+                _writer.WriteLine($"msgid_plural \"{Escape(record.TextPlural)}\"");
                 _writer.WriteLine($"msgstr[0] \"\"");
             }
 
@@ -76,7 +78,7 @@ namespace OrchardCoreContrib.PoExtractor
         {
             foreach (var record in records)
             {
-                this.WriteRecord(record);
+                WriteRecord(record);
             }
         }
 
@@ -97,7 +99,7 @@ namespace OrchardCoreContrib.PoExtractor
             }
         }
 
-        private string Escape(string text)
+        private static string Escape(string text)
         {
             var sb = new StringBuilder(text);
             sb.Replace("\\", "\\\\"); // \ -> \\

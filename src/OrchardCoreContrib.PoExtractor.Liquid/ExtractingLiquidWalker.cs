@@ -39,47 +39,50 @@ namespace OrchardCoreContrib.PoExtractor.Liquid
         {
             switch (node)
             {
-                case AssignStatement assign: this.Visit(assign.Value); break;
+                case AssignStatement assign:
+                    Visit(assign.Value);
+                    break;
                 case CaseStatement @case:
-                    this.Visit(@case.Statements);
-                    this.Visit(@case.Whens);
-                    this.Visit(@case.Else);
-                    this.Visit(@case.Expression);
+                    Visit(@case.Statements);
+                    Visit(@case.Whens);
+                    Visit(@case.Else);
+                    Visit(@case.Expression);
                     break;
                 case CycleStatement cycle:
-                    this.Visit(cycle.Group);
-                    this.Visit(cycle.Values2);
+                    Visit(cycle.Group);
+                    Visit(cycle.Values2);
                     break;
                 case ElseIfStatement elseIf:
-                    this.Visit(elseIf.Condition);
-                    this.Visit(elseIf.Statements);
+                    Visit(elseIf.Condition);
+                    Visit(elseIf.Statements);
                     break;
                 case IfStatement @if:
-                    this.Visit(@if.Condition);
-                    this.Visit(@if.Statements);
-                    this.Visit(@if.ElseIfs);
-                    this.Visit(@if.Else);
+                    Visit(@if.Condition);
+                    Visit(@if.Statements);
+                    Visit(@if.ElseIfs);
+                    Visit(@if.Else);  
                     break;
                 case OutputStatement output:
-                    this.Visit(output.Expression);
-                    this.Visit(output.Filters);
+                    Visit(output.Expression);
+                    Visit(output.Filters);
                     break;
                 case UnlessStatement unless:
-                    this.Visit(unless.Condition);
-                    this.Visit(unless.Statements);
+                    Visit(unless.Condition);
+                    Visit(unless.Statements);
                     break;
                 case WhenStatement @when:
-                    this.Visit(when.Options);
-                    this.Visit(when.Statements);
+                    Visit(when.Options);
+                    Visit(when.Statements);                  
                     break;
                 case TagStatement tag:
                     if (tag.Statements != null)
                     {
                         foreach (var item in tag.Statements)
                         {
-                            this.Visit(item);
+                            Visit(item);
                         }
                     }
+                    
                     break;
             }
         }
@@ -93,7 +96,7 @@ namespace OrchardCoreContrib.PoExtractor.Liquid
 
             foreach (var statement in statements)
             {
-                this.Visit(statement);
+                Visit(statement);
             }
         }
         private void Visit(Expression expression)
@@ -101,11 +104,11 @@ namespace OrchardCoreContrib.PoExtractor.Liquid
             switch (expression)
             {
                 case BinaryExpression binary:
-                    this.Visit(binary.Left);
-                    this.Visit(binary.Right);
+                    Visit(binary.Left);
+                    Visit(binary.Right);
                     break;
                 case FilterExpression filter:
-                    this.ProcessFilterExpression(filter);
+                    ProcessFilterExpression(filter); 
                     break;
 
             }
@@ -120,7 +123,7 @@ namespace OrchardCoreContrib.PoExtractor.Liquid
 
             foreach (var expression in expressions)
             {
-                this.Visit(expression);
+                Visit(expression);
             }
         }
 
@@ -134,7 +137,7 @@ namespace OrchardCoreContrib.PoExtractor.Liquid
                 }
             }
 
-            this.Visit(filter.Input);
+            Visit(filter.Input);
         }
     }
 }

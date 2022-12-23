@@ -14,7 +14,7 @@
         /// <param name="metadataProvider">The <see cref="IMetadataProvider{T}"/>.</param>
         public LocalizableStringExtractor(IMetadataProvider<T> metadataProvider)
         {
-            this.MetadataProvider = metadataProvider;
+            MetadataProvider = metadataProvider;
         }
 
         /// <inheritdoc/>
@@ -32,8 +32,8 @@
             {
                 Text = text,
                 TextPlural = textPlural,
-                Location = this.MetadataProvider.GetLocation(node),
-                Context = this.MetadataProvider.GetContext(node)
+                Location = MetadataProvider.GetLocation(node),
+                Context = MetadataProvider.GetContext(node)
             };
 
             return result;
