@@ -4,14 +4,19 @@ namespace OrchardCoreContrib.PoExtractor.Tests.Extensions
 {
     public class StringExtensionsTests
     {
-        [Fact]
-        public void TrimStart_TrimsTextFromStartOfString()
+        [Theory]
+        [InlineData("TEST-some-other-content-TEST", "TEST", "-some-other-content-TEST")]
+        [InlineData(
+            @"D:\Repositories\OrchardCoreContrib.PoExtractor\src\WebApplication1\WebApplication1\Pages\Index.cshtml",
+            @"D:\Repositories\OrchardCoreContrib.PoExtractor\src\WebApplication1\",
+            "WebApplication1\\Pages\\Index.cshtml")]
+        public void TrimStart_TrimsTextFromStartOfString(string text, string textToBeRemoved, string expected)
         {
-            var text = "TEST-some-other-content-TEST";
+            // Act
+            var result = text.TrimStart(textToBeRemoved);
 
-            var result = text.TrimStart("TEST");
-
-            Assert.Equal("-some-other-content-TEST", result);
+            // Assert
+            Assert.Equal(expected, result);
         }
     }
 }
