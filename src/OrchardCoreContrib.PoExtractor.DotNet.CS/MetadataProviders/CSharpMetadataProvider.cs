@@ -1,11 +1,12 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System;
 using System.Linq;
 
 namespace OrchardCoreContrib.PoExtractor.DotNet.CS.MetadataProviders
 {
     /// <summary>
-    /// Provides metadata for .cs code files
+    /// Provides metadata for C# code files.
     /// </summary>
     public class CSharpMetadataProvider : IMetadataProvider<SyntaxNode>
     {
@@ -17,12 +18,22 @@ namespace OrchardCoreContrib.PoExtractor.DotNet.CS.MetadataProviders
         /// <param name="basePath">The base path.</param>
         public CSharpMetadataProvider(string basePath)
         {
+            if (string.IsNullOrEmpty(basePath))
+            {
+                throw new ArgumentException($"'{nameof(basePath)}' cannot be null or empty.", nameof(basePath));
+            }
+
             _basePath = basePath;
         }
 
         /// <inheritdoc/>
         public string GetContext(SyntaxNode node)
         {
+            if (node is null)
+            {
+                throw new ArgumentNullException(nameof(node));
+            }
+
             var @namespace = node.Ancestors()
                 .OfType<NamespaceDeclarationSyntax>()
                 .FirstOrDefault()?
@@ -38,6 +49,11 @@ namespace OrchardCoreContrib.PoExtractor.DotNet.CS.MetadataProviders
         /// <inheritdoc/>
         public LocalizableStringLocation GetLocation(SyntaxNode node)
         {
+            if (node is null)
+            {
+                throw new ArgumentNullException(nameof(node));
+            }
+
             var lineNumber = node
                 .GetLocation()
                 .GetMappedLineSpan()

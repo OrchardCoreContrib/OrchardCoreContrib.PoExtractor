@@ -1,4 +1,6 @@
 ﻿using Fluid.Ast;
+using Microsoft.CodeAnalysis;
+using System;
 using System.Collections.Generic;
 
 namespace OrchardCoreContrib.PoExtractor.Liquid
@@ -10,18 +12,18 @@ namespace OrchardCoreContrib.PoExtractor.Liquid
     {
         private string _filePath;
 
-        private readonly LocalizableStringCollection _strings;
+        private readonly LocalizableStringCollection _localizableStrings;
         private readonly IEnumerable<IStringExtractor<LiquidExpressionContext>> _extractors;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ExtractingLiquidWalker"/> class
         /// </summary>
         /// <param name="extractors">the collection of extractors to use</param>
-        /// <param name="strings">the <see cref="LocalizableStringCollection"/> where the results are saved</param>
-        public ExtractingLiquidWalker(IEnumerable<IStringExtractor<LiquidExpressionContext>> extractors, LocalizableStringCollection strings)
+        /// <param name="localizableStrings">the <see cref="LocalizableStringCollection"/> where the results are saved</param>
+        public ExtractingLiquidWalker(IEnumerable<IStringExtractor<LiquidExpressionContext>> extractors, LocalizableStringCollection localizableStrings)
         {
-            _extractors = extractors;
-            _strings = strings;
+            _extractors = extractors ?? throw new ArgumentNullException(nameof(extractors));
+            _localizableStrings = localizableStrings ?? throw new ArgumentNullException(nameof(localizableStrings));
         }
 
         /// <summary>
@@ -30,6 +32,11 @@ namespace OrchardCoreContrib.PoExtractor.Liquid
         /// <param name="statementContext">The statement context.</param>
         public void Visit(LiquidStatementContext statementContext)
         {
+            if (statementContext is null)
+            {
+                throw new ArgumentNullException(nameof(statementContext));
+            }
+
             _filePath = statementContext.FilePath;
 
             Visit(statementContext.Statement);
@@ -133,7 +140,7 @@ namespace OrchardCoreContrib.PoExtractor.Liquid
             {
                 if (extractor.TryExtract(new LiquidExpressionContext() { Expression = filter, FilePath = _filePath }, out var result))
                 {
-                    _strings.Add(result);
+                    _localizableStrings.Add(result);
                 }
             }
 

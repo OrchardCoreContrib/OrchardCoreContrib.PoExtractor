@@ -1,4 +1,5 @@
 using Microsoft.CodeAnalysis;
+using System.ComponentModel.DataAnnotations;
 
 namespace OrchardCoreContrib.PoExtractor.DotNet
 {
@@ -10,7 +11,7 @@ namespace OrchardCoreContrib.PoExtractor.DotNet
         /// <summary>
         /// Creates a new instance of a <see cref="DisplayAttributeGroupNameStringExtractor"/>.
         /// </summary>
-        /// <param name="metadataProvider">The <see cref="IMetadataProvider{T}"/>.</param>
+        /// <param name="metadataProvider">The <see cref="IMetadataProvider{TNode}"/>.</param>
         public DisplayAttributeGroupNameStringExtractor(IMetadataProvider<SyntaxNode> metadataProvider)
             : base("GroupName", metadataProvider)
         {

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace OrchardCoreContrib.PoExtractor
 {
@@ -7,15 +8,10 @@ namespace OrchardCoreContrib.PoExtractor
     /// </summary>
     public class LocalizableStringCollection
     {
-        private Dictionary<string, LocalizableString> _values;
+        private readonly Dictionary<string, LocalizableString> _values;
 
         /// <summary>
-        /// Gets collection of all <see cref="LocalizableString"/> in the project
-        /// </summary>
-        public IEnumerable<LocalizableString> Values => _values.Values;
-
-        /// <summary>
-        /// Creates a new empty instance of the <see cref="LocalizableStringCollection" /> class
+        /// Creates a new empty instance of the <see cref="LocalizableStringCollection" /> class.
         /// </summary>
         public LocalizableStringCollection()
         {
@@ -23,22 +19,29 @@ namespace OrchardCoreContrib.PoExtractor
         }
 
         /// <summary>
-        /// Adds <see cref="LocalizableStringOccurence"/> to the collection
+        /// Gets collection of all <see cref="LocalizableString"/> in the project.
         /// </summary>
-        /// <param name="s">the item to add</param>
-        public void Add(LocalizableStringOccurence s)
+        public IEnumerable<LocalizableString> Values => _values.Values;
+
+        /// <summary>
+        /// Adds <see cref="LocalizableStringOccurence"/> to the collection.
+        /// </summary>
+        /// <param name="item">The item to add.</param>
+        public void Add(LocalizableStringOccurence item)
         {
-            if (s != null)
+            if (item is null)
             {
-                var key = s.Context + s.Text;
-                if (_values.TryGetValue(key, out var localizedString))
-                {
-                    localizedString.Locations.Add(s.Location);
-                }
-                else
-                {
-                    _values.Add(key, new LocalizableString(s));
-                }
+                throw new ArgumentNullException(nameof(item));
+            }
+
+            var key = item.Context + item.Text;
+            if (_values.TryGetValue(key, out var localizedString))
+            {
+                localizedString.Locations.Add(item.Location);
+            }
+            else
+            {
+                _values.Add(key, new LocalizableString(item));
             }
         }
     }

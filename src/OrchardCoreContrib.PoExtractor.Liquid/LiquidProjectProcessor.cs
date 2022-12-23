@@ -3,6 +3,7 @@ using Fluid.Parser;
 using Microsoft.Extensions.Options;
 using OrchardCore.DisplayManagement.Liquid;
 using OrchardCoreContrib.PoExtractor.Liquid.MetadataProviders;
+using System;
 using System.IO;
 using System.Linq;
 
@@ -26,10 +27,25 @@ namespace OrchardCoreContrib.PoExtractor.Liquid
         }
 
         /// <inheritdoc/>
-        public void Process(string path, string basePath, LocalizableStringCollection strings)
+        public void Process(string path, string basePath, LocalizableStringCollection localizableStrings)
         {
+            if (string.IsNullOrEmpty(path))
+            {
+                throw new ArgumentException($"'{nameof(path)}' cannot be null or empty.", nameof(path));
+            }
+
+            if (string.IsNullOrEmpty(basePath))
+            {
+                throw new ArgumentException($"'{nameof(basePath)}' cannot be null or empty.", nameof(basePath));
+            }
+
+            if (localizableStrings is null)
+            {
+                throw new ArgumentNullException(nameof(localizableStrings));
+            }
+
             var liquidMetadataProvider = new LiquidMetadataProvider(basePath);
-            var liquidVisitor = new ExtractingLiquidWalker(new[] { new LiquidStringExtractor(liquidMetadataProvider) }, strings);
+            var liquidVisitor = new ExtractingLiquidWalker(new[] { new LiquidStringExtractor(liquidMetadataProvider) }, localizableStrings);
 
             foreach (var file in Directory.EnumerateFiles(path, "*.liquid", SearchOption.AllDirectories).OrderBy(file => file))
             {
@@ -61,7 +77,7 @@ namespace OrchardCoreContrib.PoExtractor.Liquid
             }
         }
 
-        private void ProcessTemplate(FluidTemplate template, ExtractingLiquidWalker visitor, string path)
+        private static void ProcessTemplate(FluidTemplate template, ExtractingLiquidWalker visitor, string path)
         {
             foreach (var statement in template.Statements)
             {

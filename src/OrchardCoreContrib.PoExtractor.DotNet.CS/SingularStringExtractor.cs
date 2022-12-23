@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System;
 using System.Linq;
 
 namespace OrchardCoreContrib.PoExtractor.DotNet.CS
@@ -16,7 +17,7 @@ namespace OrchardCoreContrib.PoExtractor.DotNet.CS
         /// <summary>
         /// Creates a new instance of a <see cref="SingularStringExtractor"/>.
         /// </summary>
-        /// <param name="metadataProvider">The <see cref="IMetadataProvider{T}"/>.</param>
+        /// <param name="metadataProvider">The <see cref="IMetadataProvider{TNode}"/>.</param>
         public SingularStringExtractor(IMetadataProvider<SyntaxNode> metadataProvider) : base(metadataProvider)
         {
         }
@@ -24,6 +25,11 @@ namespace OrchardCoreContrib.PoExtractor.DotNet.CS
         /// <inheritdoc/>
         public override bool TryExtract(SyntaxNode node, out LocalizableStringOccurence result)
         {
+            if (node is null)
+            {
+                throw new ArgumentNullException(nameof(node));
+            }
+
             result = null;
 
             if (node is ElementAccessExpressionSyntax accessor &&

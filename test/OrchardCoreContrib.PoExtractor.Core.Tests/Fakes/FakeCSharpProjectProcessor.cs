@@ -12,7 +12,7 @@ namespace OrchardCoreContrib.PoExtractor.Tests.Fakes
     {
         private static readonly string _defaultPath = "ProjectFiles";
 
-        public void Process(string path, string basePath, LocalizableStringCollection strings)
+        public void Process(string path, string basePath, LocalizableStringCollection localizableStrings)
         {
             if (string.IsNullOrEmpty(path))
             {
@@ -34,7 +34,7 @@ namespace OrchardCoreContrib.PoExtractor.Tests.Fakes
                         new DisplayAttributeNameStringExtractor(codeMetadataProvider),
                         new DisplayAttributeGroupNameStringExtractor(codeMetadataProvider),
                         new DisplayAttributeShortNameStringExtractor(codeMetadataProvider)
-                }, strings);
+                }, localizableStrings);
 
             foreach (var file in Directory.EnumerateFiles(path, "*.cs", SearchOption.AllDirectories).OrderBy(file => file))
             {

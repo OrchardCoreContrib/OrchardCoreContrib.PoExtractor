@@ -1,7 +1,7 @@
 ﻿namespace OrchardCoreContrib.PoExtractor.DotNet
 {
     /// <summary>
-    /// Represents a class that contains .NET projects extensions
+    /// Represents a class that contains .NET projects extensions.
     /// </summary>
     public class ProjectExtension
     {

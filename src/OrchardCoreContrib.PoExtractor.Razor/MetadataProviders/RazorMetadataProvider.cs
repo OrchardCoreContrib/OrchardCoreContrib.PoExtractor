@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System;
 using System.IO;
 using System.Linq;
 
@@ -28,6 +29,11 @@ namespace OrchardCoreContrib.PoExtractor.Razor.MetadataProviders
         /// <inheritdoc/>
         public string GetContext(SyntaxNode node)
         {
+            if (node is null)
+            {
+                throw new ArgumentNullException(nameof(node));
+            }
+
             var path = node.SyntaxTree.FilePath.TrimStart(_basePath);
 
             return path.Replace(Path.DirectorySeparatorChar, '.').Replace(".cshtml", string.Empty);
@@ -36,6 +42,11 @@ namespace OrchardCoreContrib.PoExtractor.Razor.MetadataProviders
         /// <inheritdoc/>
         public LocalizableStringLocation GetLocation(SyntaxNode node)
         {
+            if (node is null)
+            {
+                throw new ArgumentNullException(nameof(node));
+            }
+
             var result = new LocalizableStringLocation
             {
                 SourceFile = node.SyntaxTree.FilePath.TrimStart(_basePath)

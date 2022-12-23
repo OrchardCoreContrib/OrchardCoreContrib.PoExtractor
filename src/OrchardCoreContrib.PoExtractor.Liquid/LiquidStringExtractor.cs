@@ -1,4 +1,5 @@
 ﻿using Fluid.Ast;
+using System;
 
 namespace OrchardCoreContrib.PoExtractor.Liquid
 {
@@ -21,6 +22,11 @@ namespace OrchardCoreContrib.PoExtractor.Liquid
         /// <inheritdoc/>
         public override bool TryExtract(LiquidExpressionContext expressionContext, out LocalizableStringOccurence result)
         {
+            if (expressionContext is null)
+            {
+                throw new ArgumentNullException(nameof(expressionContext));
+            }
+
             result = null;
             var filter = expressionContext.Expression;
 

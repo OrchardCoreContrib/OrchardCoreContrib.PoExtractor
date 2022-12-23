@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using OrchardCoreContrib.PoExtractor.DotNet.CS.MetadataProviders;
+using System;
 using System.IO;
 using System.Linq;
 
@@ -12,8 +13,23 @@ namespace OrchardCoreContrib.PoExtractor.DotNet.CS
     public class CSharpProjectProcessor : IProjectProcessor
     {
         /// <inheritdoc/>
-        public virtual void Process(string path, string basePath, LocalizableStringCollection strings)
+        public virtual void Process(string path, string basePath, LocalizableStringCollection localizableStrings)
         {
+            if (string.IsNullOrEmpty(path))
+            {
+                throw new ArgumentException($"'{nameof(path)}' cannot be null or empty.", nameof(path));
+            }
+
+            if (string.IsNullOrEmpty(basePath))
+            {
+                throw new ArgumentException($"'{nameof(basePath)}' cannot be null or empty.", nameof(basePath));
+            }
+
+            if (localizableStrings is null)
+            {
+                throw new ArgumentNullException(nameof(localizableStrings));
+            }
+
             var csharpMetadataProvider = new CSharpMetadataProvider(basePath);
             var csharpWalker = new ExtractingCodeWalker(new IStringExtractor<SyntaxNode>[]
             {
@@ -24,7 +40,7 @@ namespace OrchardCoreContrib.PoExtractor.DotNet.CS
                 new DisplayAttributeNameStringExtractor(csharpMetadataProvider),
                 new DisplayAttributeGroupNameStringExtractor(csharpMetadataProvider),
                 new DisplayAttributeShortNameStringExtractor(csharpMetadataProvider)
-            }, strings);
+            }, localizableStrings);
 
             foreach (var file in Directory.EnumerateFiles(path, "*.cs", SearchOption.AllDirectories).OrderBy(file => file))
             {

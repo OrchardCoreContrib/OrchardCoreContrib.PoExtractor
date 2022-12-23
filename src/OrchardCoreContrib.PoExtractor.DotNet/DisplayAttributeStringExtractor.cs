@@ -17,7 +17,7 @@ namespace OrchardCoreContrib.PoExtractor.DotNet
         /// Creates a new instance of a <see cref="DisplayAttributeStringExtractor"/>.
         /// </summary>
         /// <param name="argumentName">The argument name.</param>
-        /// <param name="metadataProvider">The <see cref="IMetadataProvider{T}"/>.</param>
+        /// <param name="metadataProvider">The <see cref="IMetadataProvider{TNode}"/>.</param>
         protected DisplayAttributeStringExtractor(string argumentName, IMetadataProvider<SyntaxNode> metadataProvider)
             : base(metadataProvider)
         {

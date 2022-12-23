@@ -1,23 +1,23 @@
 ﻿namespace OrchardCoreContrib.PoExtractor
 {
     /// <summary>
-    /// Provides metadata of the translatable text based on information from the AST node
+    /// Provides metadata of the translatable text based on information from the AST node.
     /// </summary>
-    /// <typeparam name="T">type of the node</typeparam>
-    public interface IMetadataProvider<T>
+    /// <typeparam name="TNode">Type of the node.</typeparam>
+    public interface IMetadataProvider<TNode>
     {
         /// <summary>
-        /// Gets context of the translatable text
+        /// Gets context of the translatable text.
         /// </summary>
-        /// <param name="node">the AST node representing the translatable text</param>
-        /// <returns>a string value, that is used in the output file as #msgctx</returns>
-        string GetContext(T node);
+        /// <param name="node">The AST node representing the translatable text.</param>
+        /// <returns>A string value, that is used in the output file as #msgctx.</returns>
+        string GetContext(TNode node);
 
         /// <summary>
-        /// Gets location of the translatable text in the source file
+        /// Gets location of the translatable text in the source file.
         /// </summary>
-        /// <param name="node">the AST node representing the translatable text</param>
-        /// <returns>an object with the description of the location in the source file</returns>
-        LocalizableStringLocation GetLocation(T node);
+        /// <param name="node">The AST node representing the translatable text.</param>
+        /// <returns>An object with the description of the location in the source file.</returns>
+        LocalizableStringLocation GetLocation(TNode node);
     }
 }

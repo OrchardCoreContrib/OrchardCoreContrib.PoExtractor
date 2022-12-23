@@ -1,9 +1,10 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace OrchardCoreContrib.PoExtractor.Liquid.MetadataProviders
 {
     /// <summary>
-    /// Provides metadata for .liquid files
+    /// Provides metadata for .liquid files.
     /// </summary>
     public class LiquidMetadataProvider : IMetadataProvider<LiquidExpressionContext>
     {
@@ -15,12 +16,22 @@ namespace OrchardCoreContrib.PoExtractor.Liquid.MetadataProviders
         /// <param name="basePath">The base path.</param>
         public LiquidMetadataProvider(string basePath)
         {
+            if (string.IsNullOrEmpty(basePath))
+            {
+                throw new ArgumentException($"'{nameof(basePath)}' cannot be null or empty.", nameof(basePath));
+            }
+
             _basePath = basePath;
         }
 
         /// <inheritdoc/>
         public string GetContext(LiquidExpressionContext expressionContext)
         {
+            if (expressionContext is null)
+            {
+                throw new ArgumentNullException(nameof(expressionContext));
+            }
+
             var path = expressionContext.FilePath.TrimStart(_basePath);
 
             return path.Replace(Path.DirectorySeparatorChar, '.').Replace(".liquid", string.Empty);
@@ -28,6 +39,13 @@ namespace OrchardCoreContrib.PoExtractor.Liquid.MetadataProviders
 
         /// <inheritdoc/>
         public LocalizableStringLocation GetLocation(LiquidExpressionContext expressionContext)
-            => new() { SourceFile = expressionContext.FilePath.TrimStart(_basePath) };
+        {
+            if (expressionContext is null)
+            {
+                throw new ArgumentNullException(nameof(expressionContext));
+            }
+
+            return new() { SourceFile = expressionContext.FilePath.TrimStart(_basePath) };
+        }
     }
 }

@@ -1,22 +1,23 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.VisualBasic;
 using Microsoft.CodeAnalysis.VisualBasic.Syntax;
+using System;
 using System.Linq;
 
 namespace OrchardCoreContrib.PoExtractor.DotNet.VB
 {
     /// <summary>
-    /// Extracts <see cref="LocalizableStringOccurence"/> with the singular text from the VB AST node
+    /// Extracts <see cref="LocalizableStringOccurence"/> with the singular text from the VB AST node.
     /// </summary>
     /// <remarks>
-    /// The localizable string is identified by the name convention - T.Plural(count, "1 book", "{0} books")
+    /// The localizable string is identified by the name convention - T.Plural(count, "1 book", "{0} books").
     /// </remarks>
     public class PluralStringExtractor : LocalizableStringExtractor<SyntaxNode>
     {
         /// <summary>
         /// Creates a new instance of a <see cref="PluralStringExtractor"/>.
         /// </summary>
-        /// <param name="metadataProvider">The <see cref="IMetadataProvider{T}"/>.</param>
+        /// <param name="metadataProvider">The <see cref="IMetadataProvider{TNode}"/>.</param>
         public PluralStringExtractor(IMetadataProvider<SyntaxNode> metadataProvider) : base(metadataProvider)
         {
 
@@ -25,6 +26,11 @@ namespace OrchardCoreContrib.PoExtractor.DotNet.VB
         /// <inheritdoc/>
         public override bool TryExtract(SyntaxNode node, out LocalizableStringOccurence result)
         {
+            if (node is null)
+            {
+                throw new ArgumentNullException(nameof(node));
+            }
+
             result = null;
 
             if (node is InvocationExpressionSyntax invocation &&

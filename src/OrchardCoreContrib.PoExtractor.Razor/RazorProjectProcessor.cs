@@ -15,6 +15,21 @@ namespace OrchardCoreContrib.PoExtractor.Razor
         /// <inheritdoc/>
         public override void Process(string path, string basePath, LocalizableStringCollection strings)
         {
+            if (string.IsNullOrEmpty(path))
+            {
+                throw new ArgumentException($"'{nameof(path)}' cannot be null or empty.", nameof(path));
+            }
+
+            if (string.IsNullOrEmpty(basePath))
+            {
+                throw new ArgumentException($"'{nameof(basePath)}' cannot be null or empty.", nameof(basePath));
+            }
+
+            if (strings is null)
+            {
+                throw new ArgumentNullException(nameof(strings));
+            }
+
             var razorMetadataProvider = new RazorMetadataProvider(basePath);
             var razorWalker = new ExtractingCodeWalker(new IStringExtractor<SyntaxNode>[]
             {

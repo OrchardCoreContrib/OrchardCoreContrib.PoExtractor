@@ -10,7 +10,7 @@ namespace OrchardCoreContrib.PoExtractor
         /// </summary>
         /// <param name="path">Project path.</param>
         /// <param name="basePath">Project base path.</param>
-        /// <param name="strings">List of <see cref="LocalizableString"/> contain in the processed project.</param>
-        void Process(string path, string basePath, LocalizableStringCollection strings);
+        /// <param name="localizableStrings">List of <see cref="LocalizableString"/> contain in the processed project.</param>
+        void Process(string path, string basePath, LocalizableStringCollection localizableStrings);
     }
 }

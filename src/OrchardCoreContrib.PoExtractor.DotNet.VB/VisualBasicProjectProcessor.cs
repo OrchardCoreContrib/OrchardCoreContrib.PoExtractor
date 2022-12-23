@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.VisualBasic;
 using OrchardCoreContrib.PoExtractor.DotNet.VB.MetadataProviders;
+using System;
 using System.IO;
 using System.Linq;
 
@@ -12,8 +13,23 @@ namespace OrchardCoreContrib.PoExtractor.DotNet.VB
     public class VisualBasicProjectProcessor : IProjectProcessor
     {
         /// <inheritdoc/>
-        public void Process(string path, string basePath, LocalizableStringCollection strings)
+        public void Process(string path, string basePath, LocalizableStringCollection localizableStrings)
         {
+            if (string.IsNullOrEmpty(path))
+            {
+                throw new ArgumentException($"'{nameof(path)}' cannot be null or empty.", nameof(path));
+            }
+
+            if (string.IsNullOrEmpty(basePath))
+            {
+                throw new ArgumentException($"'{nameof(basePath)}' cannot be null or empty.", nameof(basePath));
+            }
+
+            if (localizableStrings is null)
+            {
+                throw new ArgumentNullException(nameof(localizableStrings));
+            }
+
             var visualBasicMetadataProvider = new VisualBasicMetadataProvider(basePath);
             var visualBasicWalker = new ExtractingCodeWalker(new IStringExtractor<SyntaxNode>[]
             {
@@ -24,7 +40,7 @@ namespace OrchardCoreContrib.PoExtractor.DotNet.VB
                 new DisplayAttributeNameStringExtractor(visualBasicMetadataProvider),
                 new DisplayAttributeGroupNameStringExtractor(visualBasicMetadataProvider),
                 new DisplayAttributeShortNameStringExtractor(visualBasicMetadataProvider)
-            }, strings);
+            }, localizableStrings);
 
             foreach (var file in Directory.EnumerateFiles(path, "*.vb", SearchOption.AllDirectories).OrderBy(file => file))
             {

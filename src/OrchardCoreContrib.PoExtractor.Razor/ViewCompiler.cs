@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Razor.Language;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -16,6 +17,11 @@ namespace OrchardCoreContrib.PoExtractor.Razor
         /// <param name="projectDirectory">The project directory.</param>
         public static IEnumerable<RazorPageGeneratorResult> CompileViews(string projectDirectory)
         {
+            if (string.IsNullOrEmpty(projectDirectory))
+            {
+                throw new ArgumentException($"'{nameof(projectDirectory)}' cannot be null or empty.", nameof(projectDirectory));
+            }
+
             var projectEngine = CreateProjectEngine("OrchardCoreContrib.PoExtractor.GeneratedCode", projectDirectory);
 
             foreach (var item in projectEngine.FileSystem.EnumerateItems(projectDirectory).OrderBy(rzrProjItem => rzrProjItem.FileName))
@@ -26,6 +32,16 @@ namespace OrchardCoreContrib.PoExtractor.Razor
 
         private static RazorProjectEngine CreateProjectEngine(string rootNamespace, string projectDirectory)
         {
+            if (string.IsNullOrEmpty(rootNamespace))
+            {
+                throw new ArgumentException($"'{nameof(rootNamespace)}' cannot be null or empty.", nameof(rootNamespace));
+            }
+
+            if (string.IsNullOrEmpty(projectDirectory))
+            {
+                throw new ArgumentException($"'{nameof(projectDirectory)}' cannot be null or empty.", nameof(projectDirectory));
+            }
+
             var fileSystem = RazorProjectFileSystem.Create(projectDirectory);
             var projectEngine = RazorProjectEngine.Create(RazorConfiguration.Default, fileSystem, builder =>
             {
