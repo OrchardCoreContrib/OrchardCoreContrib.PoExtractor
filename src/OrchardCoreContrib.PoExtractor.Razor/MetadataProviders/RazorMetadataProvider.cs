@@ -12,6 +12,8 @@ namespace OrchardCoreContrib.PoExtractor.Razor.MetadataProviders
     /// </summary>
     public class RazorMetadataProvider : IMetadataProvider<SyntaxNode>
     {
+        private static readonly string _razorExtension = ".cshtml";
+
         private string[] _sourceCache;
         private string _sourceCachePath;
 
@@ -36,7 +38,7 @@ namespace OrchardCoreContrib.PoExtractor.Razor.MetadataProviders
 
             var path = node.SyntaxTree.FilePath.TrimStart(_basePath);
 
-            return path.Replace(Path.DirectorySeparatorChar, '.').Replace(".cshtml", string.Empty);
+            return path.Replace(Path.DirectorySeparatorChar, '.').Replace(_razorExtension, string.Empty);
         }
 
         /// <inheritdoc/>

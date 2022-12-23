@@ -14,6 +14,8 @@ namespace OrchardCoreContrib.PoExtractor.Liquid
     /// </summary>
     public class LiquidProjectProcessor : IProjectProcessor
     {
+        private static readonly string _liquidExtension = "*.liquid";
+
         private readonly LiquidViewParser _parser;
 
         /// <summary>
@@ -47,7 +49,7 @@ namespace OrchardCoreContrib.PoExtractor.Liquid
             var liquidMetadataProvider = new LiquidMetadataProvider(basePath);
             var liquidVisitor = new ExtractingLiquidWalker(new[] { new LiquidStringExtractor(liquidMetadataProvider) }, localizableStrings);
 
-            foreach (var file in Directory.EnumerateFiles(path, "*.liquid", SearchOption.AllDirectories).OrderBy(file => file))
+            foreach (var file in Directory.EnumerateFiles(path, $"*{_liquidExtension}", SearchOption.AllDirectories).OrderBy(file => file))
             {
                 using (var stream = File.OpenRead(file))
                 {

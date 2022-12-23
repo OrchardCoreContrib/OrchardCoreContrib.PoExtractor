@@ -12,6 +12,8 @@ namespace OrchardCoreContrib.PoExtractor.DotNet.CS
     /// </summary>
     public class CSharpProjectProcessor : IProjectProcessor
     {
+        private static readonly string _cSharpExtension = "*.cs";
+
         /// <inheritdoc/>
         public virtual void Process(string path, string basePath, LocalizableStringCollection localizableStrings)
         {
@@ -42,7 +44,7 @@ namespace OrchardCoreContrib.PoExtractor.DotNet.CS
                 new DisplayAttributeShortNameStringExtractor(csharpMetadataProvider)
             }, localizableStrings);
 
-            foreach (var file in Directory.EnumerateFiles(path, "*.cs", SearchOption.AllDirectories).OrderBy(file => file))
+            foreach (var file in Directory.EnumerateFiles(path, $"*{_cSharpExtension}", SearchOption.AllDirectories).OrderBy(file => file))
             {
                 if (file.StartsWith(Path.Combine(path, "obj")))
                 {

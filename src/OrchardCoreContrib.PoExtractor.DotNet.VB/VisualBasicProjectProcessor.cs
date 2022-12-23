@@ -12,6 +12,8 @@ namespace OrchardCoreContrib.PoExtractor.DotNet.VB
     /// </summary>
     public class VisualBasicProjectProcessor : IProjectProcessor
     {
+        private static readonly string _visualBasicExtension = "*.vb";
+
         /// <inheritdoc/>
         public void Process(string path, string basePath, LocalizableStringCollection localizableStrings)
         {
@@ -42,7 +44,7 @@ namespace OrchardCoreContrib.PoExtractor.DotNet.VB
                 new DisplayAttributeShortNameStringExtractor(visualBasicMetadataProvider)
             }, localizableStrings);
 
-            foreach (var file in Directory.EnumerateFiles(path, "*.vb", SearchOption.AllDirectories).OrderBy(file => file))
+            foreach (var file in Directory.EnumerateFiles(path, $"*{_visualBasicExtension}", SearchOption.AllDirectories).OrderBy(file => file))
             {
                 using (var stream = File.OpenRead(file))
                 {
