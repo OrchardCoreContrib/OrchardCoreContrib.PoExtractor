@@ -22,7 +22,7 @@ namespace OrchardCoreContrib.PoExtractor.Liquid.MetadataProviders
         public string GetContext(LiquidExpressionContext expressionContext)
         {
             var path = expressionContext.FilePath.TrimStart(_basePath);
-            
+
             return path.Replace(Path.DirectorySeparatorChar, '.').Replace(".liquid", string.Empty);
         }
 

@@ -45,7 +45,7 @@ namespace OrchardCoreContrib.PoExtractor.DotNet.VB
                     {
 
                         result = CreateLocalizedString(singularLiteral.Token.ValueText, pluralLiteral.Token.ValueText, node);
-                        
+
                         return true;
                     }
                 }
@@ -57,7 +57,7 @@ namespace OrchardCoreContrib.PoExtractor.DotNet.VB
                     {
 
                         result = CreateLocalizedString(singularLiteral.Token.ValueText, pluralLiteral.Token.ValueText, node);
-                        
+
                         return true;
                     }
                 }

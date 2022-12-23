@@ -29,7 +29,7 @@ namespace OrchardCoreContrib.PoExtractor.Razor.MetadataProviders
         public string GetContext(SyntaxNode node)
         {
             var path = node.SyntaxTree.FilePath.TrimStart(_basePath);
-            
+
             return path.Replace(Path.DirectorySeparatorChar, '.').Replace(".cshtml", string.Empty);
         }
 
@@ -53,7 +53,7 @@ namespace OrchardCoreContrib.PoExtractor.Razor.MetadataProviders
                     .OfType<SyntaxTrivia>()
                     .Where(o => o.IsKind(SyntaxKind.LineDirectiveTrivia) && o.HasStructure)
                     .FirstOrDefault();
-                
+
                 if (lineTriviaSyntax.GetStructure() is LineDirectiveTriviaSyntax lineTrivia && lineTrivia.HashToken.Text == "#" && lineTrivia.DirectiveNameToken.Text == "line")
                 {
                     if (int.TryParse(lineTrivia.Line.Text, out var lineNumber))

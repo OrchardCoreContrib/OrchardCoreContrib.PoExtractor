@@ -1,10 +1,10 @@
-﻿using System.IO;
-using System.Linq;
-using Microsoft.CodeAnalysis;
+﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using OrchardCoreContrib.PoExtractor.DotNet;
 using OrchardCoreContrib.PoExtractor.DotNet.CS;
 using OrchardCoreContrib.PoExtractor.DotNet.CS.MetadataProviders;
+using System.IO;
+using System.Linq;
 
 namespace OrchardCoreContrib.PoExtractor.Tests.Fakes
 {

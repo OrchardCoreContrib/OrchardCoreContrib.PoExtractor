@@ -26,15 +26,15 @@ namespace OrchardCoreContrib.PoExtractor.Razor
                 new DisplayAttributeGroupNameStringExtractor(razorMetadataProvider),
                 new DisplayAttributeShortNameStringExtractor(razorMetadataProvider)
             }, strings);
-            
+
             var compiledViews = ViewCompiler.CompileViews(path);
-            
+
             foreach (var view in compiledViews)
             {
                 try
                 {
                     var syntaxTree = CSharpSyntaxTree.ParseText(view.GeneratedCode, path: view.FilePath);
-                    
+
                     razorWalker.Visit(syntaxTree.GetRoot());
                 }
                 catch

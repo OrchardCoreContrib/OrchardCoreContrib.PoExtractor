@@ -9,7 +9,7 @@
         /// Gets or sets the context for the localizable string.
         /// </summary>
         public string Context { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the localizable text.
         /// </summary>

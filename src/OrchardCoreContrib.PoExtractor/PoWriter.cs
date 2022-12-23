@@ -42,7 +42,7 @@ namespace OrchardCoreContrib.PoExtractor
             foreach (var location in record.Locations)
             {
                 _writer.WriteLine($"#: {location.SourceFile}:{location.SourceFileLine}");
-                
+
                 if (!string.IsNullOrEmpty(location.Comment))
                 {
                     _writer.WriteLine($"#. {location.Comment}");
@@ -55,7 +55,7 @@ namespace OrchardCoreContrib.PoExtractor
             }
 
             _writer.WriteLine($"msgid \"{Escape(record.Text)}\"");
-            
+
             if (string.IsNullOrEmpty(record.TextPlural))
             {
                 _writer.WriteLine($"msgstr \"\"");

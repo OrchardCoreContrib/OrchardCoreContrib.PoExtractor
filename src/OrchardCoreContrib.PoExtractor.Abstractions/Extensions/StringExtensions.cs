@@ -13,7 +13,7 @@
         public static string TrimStart(this string text, string value)
         {
             var index = text.IndexOf(value);
-            
+
             return index < 0
                 ? text
                 : text.Remove(index, value.Length);

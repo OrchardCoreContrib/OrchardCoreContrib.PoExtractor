@@ -31,7 +31,7 @@ namespace OrchardCoreContrib.PoExtractor.Liquid
         public void Visit(LiquidStatementContext statementContext)
         {
             _filePath = statementContext.FilePath;
-            
+
             Visit(statementContext.Statement);
         }
 
@@ -60,7 +60,7 @@ namespace OrchardCoreContrib.PoExtractor.Liquid
                     Visit(@if.Condition);
                     Visit(@if.Statements);
                     Visit(@if.ElseIfs);
-                    Visit(@if.Else);  
+                    Visit(@if.Else);
                     break;
                 case OutputStatement output:
                     Visit(output.Expression);
@@ -72,7 +72,7 @@ namespace OrchardCoreContrib.PoExtractor.Liquid
                     break;
                 case WhenStatement @when:
                     Visit(when.Options);
-                    Visit(when.Statements);                  
+                    Visit(when.Statements);
                     break;
                 case TagStatement tag:
                     if (tag.Statements != null)
@@ -82,7 +82,7 @@ namespace OrchardCoreContrib.PoExtractor.Liquid
                             Visit(item);
                         }
                     }
-                    
+
                     break;
             }
         }
@@ -108,7 +108,7 @@ namespace OrchardCoreContrib.PoExtractor.Liquid
                     Visit(binary.Right);
                     break;
                 case FilterExpression filter:
-                    ProcessFilterExpression(filter); 
+                    ProcessFilterExpression(filter);
                     break;
 
             }

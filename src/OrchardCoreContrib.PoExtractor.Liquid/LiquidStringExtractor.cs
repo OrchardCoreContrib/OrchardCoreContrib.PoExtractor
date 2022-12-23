@@ -33,9 +33,9 @@ namespace OrchardCoreContrib.PoExtractor.Liquid
                         .GetAwaiter()
                         .GetResult()
                         .ToStringValue();
-                    
+
                     result = CreateLocalizedString(text, null, expressionContext);
-                    
+
                     return true;
                 }
             }

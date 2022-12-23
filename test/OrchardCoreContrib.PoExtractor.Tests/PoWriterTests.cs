@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-
-namespace OrchardCoreContrib.PoExtractor.Tests
+﻿namespace OrchardCoreContrib.PoExtractor.Tests
 {
     public class PoWriterTests
     {
