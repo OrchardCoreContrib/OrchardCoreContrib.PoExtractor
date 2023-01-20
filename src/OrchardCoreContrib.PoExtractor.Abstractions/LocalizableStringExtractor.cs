@@ -8,8 +8,6 @@ namespace OrchardCoreContrib.PoExtractor
     /// <typeparam name="TNode">The type of the node.</typeparam>
     public abstract class LocalizableStringExtractor<TNode> : IStringExtractor<TNode>
     {
-        private readonly IMetadataProvider<TNode> _metadataProvider;
-
         /// <summary>
         /// Creates a new instance of a <see cref="LocalizableStringExtractor{T}"/>.
         /// </summary>
@@ -41,8 +39,8 @@ namespace OrchardCoreContrib.PoExtractor
             {
                 Text = text,
                 TextPlural = textPlural,
-                Location = _metadataProvider.GetLocation(node),
-                Context = _metadataProvider.GetContext(node)
+                Location = MetadataProvider.GetLocation(node),
+                Context = MetadataProvider.GetContext(node)
             };
 
             return result;
