@@ -25,4 +25,10 @@
     <ProjectReference Include="..\..\src\OrchardCoreContrib.PoExtractor\OrchardCoreContrib.PoExtractor.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="ProjectFiles\StringLocalizerExample.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+  </ItemGroup>
+
 </Project>

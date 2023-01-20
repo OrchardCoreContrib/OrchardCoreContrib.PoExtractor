@@ -41,13 +41,7 @@ namespace OrchardCoreContrib.PoExtractor.DotNet.CS
                 var argument = accessor.ArgumentList.Arguments.FirstOrDefault();
                 if (argument != null && argument.Expression is LiteralExpressionSyntax literal && literal.IsKind(SyntaxKind.StringLiteralExpression))
                 {
-                    result = new LocalizableStringOccurence()
-                    {
-                        Text = literal.Token.ValueText,
-                        Context = MetadataProvider.GetContext(node),
-                        Location = MetadataProvider.GetLocation(node)
-                    };
-
+                    result = CreateLocalizedString(literal.Token.ValueText, null, node);
                     return true;
                 }
             }
