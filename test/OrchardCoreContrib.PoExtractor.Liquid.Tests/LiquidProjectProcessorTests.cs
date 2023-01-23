@@ -11,7 +11,7 @@ namespace OrchardCoreContrib.PoExtractor.Liquid.Tests
         public void ExtractsStringFromLiquidProperty()
         {
             // Act
-            _processor.Process("ProjectFiles", string.Empty, _localizableStrings);
+            _processor.Process("ProjectFiles", "DummyBasePath", _localizableStrings);
 
             // Assert
             Assert.Contains(_localizableStrings.Values, s => s.Text == "string in variable");
@@ -21,7 +21,7 @@ namespace OrchardCoreContrib.PoExtractor.Liquid.Tests
         public void ExtractsStringFromLiquidExpression()
         {
             // Act
-            _processor.Process("ProjectFiles", string.Empty, _localizableStrings);
+            _processor.Process("ProjectFiles", "DummyBasePath", _localizableStrings);
 
             // Assert
             Assert.Contains(_localizableStrings.Values, s => s.Text == "string in expression");
