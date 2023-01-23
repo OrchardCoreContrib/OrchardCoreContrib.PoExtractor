@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\OrchardCoreContrib.PoExtractor\OrchardCoreContrib.PoExtractor.csproj" />
+    <ProjectReference Include="..\..\src\OrchardCoreContrib.PoExtractor.DotNet.CS\OrchardCoreContrib.PoExtractor.DotNet.CS.csproj" />
   </ItemGroup>
 
 </Project>
