@@ -7,7 +7,7 @@
 		<AssemblyName>OrchardCoreContrib.PoExtractor</AssemblyName>
 		<ToolCommandName>extractpo</ToolCommandName>
 		<PackAsTool>true</PackAsTool>
-		<Version>1.0.0</Version>
+		<Version>1.0.1</Version>
 		<Authors>The Orchard Core Contrib Team</Authors>
 		<Company />
 		<Description>.NET Core global tool for extracting translatable strings from the OrchardCore source files.</Description>
