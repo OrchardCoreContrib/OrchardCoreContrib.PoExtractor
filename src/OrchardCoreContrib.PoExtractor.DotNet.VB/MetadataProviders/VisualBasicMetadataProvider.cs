@@ -34,8 +34,20 @@ namespace OrchardCoreContrib.PoExtractor.DotNet.VB.MetadataProviders
                 throw new ArgumentNullException(nameof(node));
             }
 
-            var @namespace = node.Ancestors().OfType<NamespaceStatementSyntax>().FirstOrDefault()?.Name.ToString();
-            var @class = node.Ancestors().OfType<ClassStatementSyntax>().FirstOrDefault()?.Identifier.ValueText;
+            var @namespace = node
+                .Ancestors()
+                .OfType<NamespaceBlockSyntax>()
+                .FirstOrDefault()?.NamespaceStatement.Name
+                .ToString();
+
+            var classes = node
+                .Ancestors()
+                .OfType<ClassBlockSyntax>()
+                .Select(c => c.ClassStatement.Identifier.ValueText);
+
+            var @class = classes.Count() == 1
+                ? classes.Single()
+                : String.Join('.', classes.Reverse());
 
             return $"{@namespace}.{@class}";
         }
