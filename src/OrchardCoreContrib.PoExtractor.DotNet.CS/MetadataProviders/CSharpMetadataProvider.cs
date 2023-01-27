@@ -38,10 +38,15 @@ namespace OrchardCoreContrib.PoExtractor.DotNet.CS.MetadataProviders
                 .OfType<NamespaceDeclarationSyntax>()
                 .FirstOrDefault()?
                 .Name.ToString();
-            var @class = node.Ancestors()
+
+            var classes = node
+                .Ancestors()
                 .OfType<ClassDeclarationSyntax>()
-                .FirstOrDefault()?
-                .Identifier.ValueText;
+                .Select(c => c.Identifier.ValueText);
+
+            var @class = classes.Count() == 1
+                ? classes.Single()
+                : String.Join('.', classes.Reverse());
 
             return $"{@namespace}.{@class}";
         }
