@@ -13,7 +13,7 @@ dotnet tool install --global OrchardCoreContrib.PoExtractor
 ## Usage
 
 ```powershell
-dotnet extractpo <INTPUT_PATH> <OUTPUT_PATH> [-l|--language {"C#"|"VB"}] [-t|--template {"razor"|"liquid"}]
+extractpo <INTPUT_PATH> <OUTPUT_PATH> [-l|--language {"C#"|"VB"}] [-t|--template {"razor"|"liquid"}]
 ```
 
 ### Description
