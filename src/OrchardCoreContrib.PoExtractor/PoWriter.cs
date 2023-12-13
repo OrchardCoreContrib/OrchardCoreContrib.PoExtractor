@@ -104,6 +104,8 @@ namespace OrchardCoreContrib.PoExtractor
             var sb = new StringBuilder(text);
             sb.Replace("\\", "\\\\"); // \ -> \\
             sb.Replace("\"", "\\\""); // " -> \"
+            sb.Replace("\r", "\\r");
+            sb.Replace("\n", "\\n");
 
             return sb.ToString();
         }

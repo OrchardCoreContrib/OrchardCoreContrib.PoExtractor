@@ -28,6 +28,27 @@ namespace OrchardCoreContrib.PoExtractor.Tests
         }
 
         [Fact]
+        public void WriteRecord_Escapes()
+        {
+            // Arrange
+            var localizableString = new LocalizableString
+            {
+                Text = "Computer \r\n"
+            };
+
+            // Act
+            using (var writer = new PoWriter(_stream))
+            {
+                writer.WriteRecord(localizableString);
+            }
+
+            // Assert
+            var result = ReadPoStream();
+            Assert.Equal($"msgid \"Computer \\r\\n\"", result[0]);
+            Assert.Equal($"msgstr \"\"", result[1]);
+        }
+
+        [Fact]
         public void WriteRecord_WritesPluralLocalizableString()
         {
             // Arrange
