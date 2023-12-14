@@ -65,8 +65,8 @@ namespace OrchardCoreContrib.PoExtractor.Tests
 
             // Assert
             var result = ReadPoStream();
-            Assert.Equal($"msgid \"Orchard\\rCore\"", result[0]);
-            Assert.Equal($"msgstr \"\"", result[1]);
+            Assert.Equal("msgid \"Orchard\rCore\"", result[0]);
+            Assert.Equal("msgstr \"\"", result[1]);
         }
 
         [Fact]
