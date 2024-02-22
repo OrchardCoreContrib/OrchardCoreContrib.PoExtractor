@@ -39,6 +39,14 @@ namespace OrchardCoreContrib.PoExtractor.DotNet.CS.MetadataProviders
                 .FirstOrDefault()?
                 .Name.ToString();
 
+            if (string.IsNullOrEmpty(@namespace))
+            {
+                @namespace = node.Ancestors()
+                    .OfType<FileScopedNamespaceDeclarationSyntax>()
+                    .FirstOrDefault()?
+                    .Name.ToString();
+            }
+
             var classes = node
                 .Ancestors()
                 .OfType<ClassDeclarationSyntax>()
@@ -48,7 +56,9 @@ namespace OrchardCoreContrib.PoExtractor.DotNet.CS.MetadataProviders
                 ? classes.Single()
                 : String.Join('.', classes.Reverse());
 
-            return $"{@namespace}.{@class}";
+            return string.IsNullOrEmpty(@namespace)
+                ? @class
+                : $"{@namespace}.{@class}";
         }
 
         /// <inheritdoc/>
