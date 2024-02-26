@@ -64,14 +64,11 @@ public class SingularStringExtractorTests
     {
         // Arrange
         var syntaxTree = ParseSyntaxTree(
-            """
-            S[
-                \"\"\"
-                Thing
-                in a literal string
-                \"\"\"
-            ];
-            """);
+@"
+S[""""""
+     a raw literal 
+     multiline string
+     """"""];");
         
         var node = syntaxTree
             .GetRoot()
@@ -85,8 +82,8 @@ public class SingularStringExtractorTests
         Assert.True(extracted);
         Assert.Equal(
             """
-            Thing
-            in a literal string
+            a raw literal 
+            multiline string
             """,
             result.Text);
     }
