@@ -27,4 +27,39 @@ public class SingularStringExtractorTests
         Assert.True(extracted);
         Assert.Equal(text, result.Text);
     }
+
+    [Fact]
+    public void ExtractRawLiteralString()
+    {
+        // Arrange
+        var text = """
+                   Thing
+                   in a literal string
+                   """;
+        var metadataProvider = new CSharpMetadataProvider("DummyBasePath");
+        var extractor = new SingularStringExtractor(metadataProvider);
+
+        var syntaxTree = CSharpSyntaxTree.ParseText(
+            """
+            S[
+                \"\"\"
+                Thing
+                in a literal string
+                \"\"\"
+            ];
+            """,
+            path: "DummyPath");
+        
+        var node = syntaxTree
+            .GetRoot()
+            .DescendantNodes()
+            .ElementAt(2);
+
+        // Act
+        var extracted = extractor.TryExtract(node, out var result);
+
+        // Assert
+        Assert.True(extracted);
+        Assert.Equal(text, result.Text);
+    }
 }
