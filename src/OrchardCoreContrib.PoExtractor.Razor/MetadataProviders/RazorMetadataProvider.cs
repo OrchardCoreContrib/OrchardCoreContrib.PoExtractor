@@ -39,11 +39,11 @@ namespace OrchardCoreContrib.PoExtractor.Razor.MetadataProviders
 
             var path = node.SyntaxTree.FilePath.TrimStart(_basePath);
             path = RemoveRazorFileExtension(path);
+
             return path.Replace(Path.DirectorySeparatorChar, '.');
         }
 
-        private static string RemoveRazorFileExtension(
-            string path)
+        private static string RemoveRazorFileExtension(string path)
         {
             return path
                 .Replace(_razorPageExtension, string.Empty)
