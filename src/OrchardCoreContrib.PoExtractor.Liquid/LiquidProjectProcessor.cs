@@ -48,15 +48,11 @@ public class LiquidProjectProcessor : IProjectProcessor
 
         foreach (var file in Directory.EnumerateFiles(path, $"*{_liquidExtension}", SearchOption.AllDirectories).OrderBy(file => file))
         {
-            using (var stream = File.OpenRead(file))
+            using var stream = File.OpenRead(file);
+            using var reader = new StreamReader(stream);
+            if (_parser.TryParse(reader.ReadToEnd(), out var template, out var errors))
             {
-                using (var reader = new StreamReader(stream))
-                {
-                    if (_parser.TryParse(reader.ReadToEnd(), out var template, out var errors))
-                    {
-                        ProcessTemplate(template, liquidVisitor, file);
-                    }
-                }
+                ProcessTemplate(template, liquidVisitor, file);
             }
         }
     }

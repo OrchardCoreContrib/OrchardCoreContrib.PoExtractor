@@ -43,15 +43,11 @@ public class VisualBasicProjectProcessor : IProjectProcessor
 
         foreach (var file in Directory.EnumerateFiles(path, $"*{_visualBasicExtension}", SearchOption.AllDirectories).OrderBy(file => file))
         {
-            using (var stream = File.OpenRead(file))
-            {
-                using (var reader = new StreamReader(stream))
-                {
-                    var syntaxTree = VisualBasicSyntaxTree.ParseText(reader.ReadToEnd(), path: file);
+            using var stream = File.OpenRead(file);
+            using var reader = new StreamReader(stream);
+            var syntaxTree = VisualBasicSyntaxTree.ParseText(reader.ReadToEnd(), path: file);
 
-                    visualBasicWalker.Visit(syntaxTree.GetRoot());
-                }
-            }
+            visualBasicWalker.Visit(syntaxTree.GetRoot());
         }
     }
 }

@@ -108,10 +108,8 @@ public class Program
 
                 Directory.CreateDirectory(Path.GetDirectoryName(potPath));
 
-                using (var potFile = new PoWriter(potPath))
-                {
-                    potFile.WriteRecord(localizableStrings.Values);
-                }
+                using var potFile = new PoWriter(potPath);
+                potFile.WriteRecord(localizableStrings.Values);
             }
 
             Console.WriteLine($"{Path.GetFileName(projectPath)}: Found {localizableStrings.Values.Count()} strings.");

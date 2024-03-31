@@ -135,11 +135,9 @@ public class PoWriterTests
 
     private string[] ReadPoStream()
     {
-        using (var reader = new StreamReader(new MemoryStream(_stream.ToArray())))
-        {
-            return reader
-                .ReadToEnd()
-                .Split(Environment.NewLine);
-        }
+        using var reader = new StreamReader(new MemoryStream(_stream.ToArray()));
+        return reader
+            .ReadToEnd()
+            .Split(Environment.NewLine);
     }
 }

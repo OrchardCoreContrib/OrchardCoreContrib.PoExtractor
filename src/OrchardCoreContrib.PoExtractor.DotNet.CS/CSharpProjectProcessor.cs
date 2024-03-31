@@ -48,15 +48,11 @@ public class CSharpProjectProcessor : IProjectProcessor
                 continue;
             }
 
-            using (var stream = File.OpenRead(file))
-            {
-                using (var reader = new StreamReader(stream))
-                {
-                    var syntaxTree = CSharpSyntaxTree.ParseText(reader.ReadToEnd(), path: file);
+            using var stream = File.OpenRead(file);
+            using var reader = new StreamReader(stream);
+            var syntaxTree = CSharpSyntaxTree.ParseText(reader.ReadToEnd(), path: file);
 
-                    csharpWalker.Visit(syntaxTree.GetRoot());
-                }
-            }
+            csharpWalker.Visit(syntaxTree.GetRoot());
         }
     }
 }
