@@ -1,20 +1,19 @@
 ﻿using Fluid.Ast;
 
-namespace OrchardCoreContrib.PoExtractor.Liquid
+namespace OrchardCoreContrib.PoExtractor.Liquid;
+
+/// <summary>
+/// Represents a liquid expression context.
+/// </summary>
+public class LiquidExpressionContext
 {
     /// <summary>
-    /// Represents a liquid expression context.
+    /// Gets or sets the liquid file path.
     /// </summary>
-    public class LiquidExpressionContext
-    {
-        /// <summary>
-        /// Gets or sets the liquid file path.
-        /// </summary>
-        public string FilePath { get; set; }
+    public string FilePath { get; set; }
 
-        /// <summary>
-        /// Gets or sets the expression.
-        /// </summary>
-        public FilterExpression Expression { get; set; }
-    }
+    /// <summary>
+    /// Gets or sets the expression.
+    /// </summary>
+    public FilterExpression Expression { get; set; }
 }
