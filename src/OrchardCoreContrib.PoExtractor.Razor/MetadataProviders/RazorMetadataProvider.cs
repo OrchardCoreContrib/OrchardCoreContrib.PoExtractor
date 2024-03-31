@@ -81,7 +81,7 @@ namespace OrchardCoreContrib.PoExtractor.Razor.MetadataProviders
                     if (int.TryParse(lineTrivia.Line.Text, out var lineNumber))
                     {
                         result.SourceFileLine = lineNumber;
-                        result.Comment = GetSourceCodeLine(node.SyntaxTree.FilePath, lineNumber).Trim();
+                        result.Comment = GetSourceCodeLine(node.SyntaxTree.FilePath, lineNumber)?.Trim();
                     }
                 }
             }
