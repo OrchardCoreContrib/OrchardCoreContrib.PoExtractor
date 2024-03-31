@@ -89,7 +89,7 @@ public class Program
         {
             var projectPath = Path.GetDirectoryName(projectFile);
             var projectBasePath = Path.GetDirectoryName(projectPath) + Path.DirectorySeparatorChar;
-            var projectRelativePath = projectPath.Substring(projectBasePath.Length);
+            var projectRelativePath = projectPath[projectBasePath.Length..];
 
             if (IgnoredProject.ToList().Any(p => projectRelativePath.StartsWith(p)))
             {

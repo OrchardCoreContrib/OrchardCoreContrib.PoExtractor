@@ -57,7 +57,7 @@ public class LiquidProjectProcessor : IProjectProcessor
         }
     }
 
-    private void ProcessTemplate(IFluidTemplate template, ExtractingLiquidWalker visitor, string path)
+    private static void ProcessTemplate(IFluidTemplate template, ExtractingLiquidWalker visitor, string path)
     {
         if (template is CompositeFluidTemplate compositeTemplate)
         {

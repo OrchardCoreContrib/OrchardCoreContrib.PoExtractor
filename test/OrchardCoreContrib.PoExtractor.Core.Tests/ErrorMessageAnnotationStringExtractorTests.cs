@@ -22,7 +22,7 @@ public class ErrorMessageAnnotationStringExtractorTests
             .ToList();
 
         Assert.NotEmpty(localizedStrings);
-        Assert.Equal(6, localizedStrings.Count());
+        Assert.Equal(6, localizedStrings.Count);
         Assert.Contains(localizedStrings, s => s == "The username is required.");
     }
 

@@ -12,7 +12,7 @@ public class PoWriter : IDisposable
 {
     public const string PortaleObjectTemplateExtension = ".pot";
 
-    private readonly TextWriter _writer;
+    private readonly StreamWriter _writer;
 
     /// <summary>
     /// Creates a new instance of the <see cref="PoWriter"/>, that writes records to the file
