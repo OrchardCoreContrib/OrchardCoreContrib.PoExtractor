@@ -13,7 +13,7 @@ public class LocalizableString
     /// </summary>
     public LocalizableString()
     {
-        Locations = new List<LocalizableStringLocation>();
+        Locations = [];
     }
 
     /// <summary>
@@ -31,10 +31,7 @@ public class LocalizableString
         TextPlural = source.TextPlural;
         Context = source.Context;
 
-        Locations = new List<LocalizableStringLocation>
-        {
-            source.Location
-        };
+        Locations = [ source.Location ];
     }
 
     /// <summary>

@@ -33,8 +33,8 @@ public class VisualBasicProjectProcessor : IProjectProcessor
         }
 
         var visualBasicMetadataProvider = new VisualBasicMetadataProvider(basePath);
-        var visualBasicWalker = new ExtractingCodeWalker(new IStringExtractor<SyntaxNode>[]
-        {
+        var visualBasicWalker = new ExtractingCodeWalker(
+        [
             new SingularStringExtractor(visualBasicMetadataProvider),
             new PluralStringExtractor(visualBasicMetadataProvider),
             new ErrorMessageAnnotationStringExtractor(visualBasicMetadataProvider),
@@ -42,7 +42,7 @@ public class VisualBasicProjectProcessor : IProjectProcessor
             new DisplayAttributeNameStringExtractor(visualBasicMetadataProvider),
             new DisplayAttributeGroupNameStringExtractor(visualBasicMetadataProvider),
             new DisplayAttributeShortNameStringExtractor(visualBasicMetadataProvider)
-        }, localizableStrings);
+        ], localizableStrings);
 
         foreach (var file in Directory.EnumerateFiles(path, $"*{_visualBasicExtension}", SearchOption.AllDirectories).OrderBy(file => file))
         {

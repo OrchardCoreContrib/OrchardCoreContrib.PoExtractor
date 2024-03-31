@@ -14,14 +14,14 @@ public class Program
 {
     private static readonly string _defaultLanguage = Language.CSharp;
     private static readonly string _defaultTemplateEngine = TemplateEngine.Both;
-    private static readonly string[] _ignoredProjects = new string[]
-    {
+    private static readonly string[] _ignoredProjects =
+    [
         "docs",
         "src\\OrchardCore.Cms.Web",
         "src\\OrchardCore.Mvc.Web",
         "src\\Templates",
         "test"
-    };
+    ];
 
     public static void Main(string[] args)
     {

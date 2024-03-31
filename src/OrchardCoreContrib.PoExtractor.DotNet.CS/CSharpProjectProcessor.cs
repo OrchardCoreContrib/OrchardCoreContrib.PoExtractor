@@ -33,8 +33,8 @@ public class CSharpProjectProcessor : IProjectProcessor
         }
 
         var csharpMetadataProvider = new CSharpMetadataProvider(basePath);
-        var csharpWalker = new ExtractingCodeWalker(new IStringExtractor<SyntaxNode>[]
-        {
+        var csharpWalker = new ExtractingCodeWalker(
+        [
             new SingularStringExtractor(csharpMetadataProvider),
             new PluralStringExtractor(csharpMetadataProvider),
             new ErrorMessageAnnotationStringExtractor(csharpMetadataProvider),
@@ -42,7 +42,7 @@ public class CSharpProjectProcessor : IProjectProcessor
             new DisplayAttributeNameStringExtractor(csharpMetadataProvider),
             new DisplayAttributeGroupNameStringExtractor(csharpMetadataProvider),
             new DisplayAttributeShortNameStringExtractor(csharpMetadataProvider)
-        }, localizableStrings);
+        ], localizableStrings);
 
         foreach (var file in Directory.EnumerateFiles(path, $"*{_cSharpExtension}", SearchOption.AllDirectories).OrderBy(file => file))
         {

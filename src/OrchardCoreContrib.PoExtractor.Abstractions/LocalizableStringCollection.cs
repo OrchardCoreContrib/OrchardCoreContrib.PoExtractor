@@ -15,7 +15,7 @@ public class LocalizableStringCollection
     /// </summary>
     public LocalizableStringCollection()
     {
-        _values = new Dictionary<string, LocalizableString>();
+        _values = [];
     }
 
     /// <summary>
