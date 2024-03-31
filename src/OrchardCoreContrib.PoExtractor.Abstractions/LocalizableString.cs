@@ -22,10 +22,7 @@ public class LocalizableString
     /// <param name="source">the <see cref="LocalizableStringOccurence"/> with the data.</param>
     public LocalizableString(LocalizableStringOccurence source)
     {
-        if (source is null)
-        {
-            throw new ArgumentNullException(nameof(source));
-        }
+        ArgumentNullException.ThrowIfNull(source);
 
         Text = source.Text;
         TextPlural = source.TextPlural;

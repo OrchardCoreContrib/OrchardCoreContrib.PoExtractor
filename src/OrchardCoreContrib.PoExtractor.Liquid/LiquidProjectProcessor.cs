@@ -41,10 +41,7 @@ public class LiquidProjectProcessor : IProjectProcessor
             throw new ArgumentException($"'{nameof(basePath)}' cannot be null or empty.", nameof(basePath));
         }
 
-        if (localizableStrings is null)
-        {
-            throw new ArgumentNullException(nameof(localizableStrings));
-        }
+        ArgumentNullException.ThrowIfNull(localizableStrings);
 
         var liquidMetadataProvider = new LiquidMetadataProvider(basePath);
         var liquidVisitor = new ExtractingLiquidWalker(new[] { new LiquidStringExtractor(liquidMetadataProvider) }, localizableStrings);

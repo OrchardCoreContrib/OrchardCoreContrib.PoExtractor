@@ -29,10 +29,7 @@ public class VisualBasicMetadataProvider : IMetadataProvider<SyntaxNode>
     /// <inheritdoc/>
     public string GetContext(SyntaxNode node)
     {
-        if (node is null)
-        {
-            throw new ArgumentNullException(nameof(node));
-        }
+        ArgumentNullException.ThrowIfNull(node);
 
         var @namespace = node
             .Ancestors()
@@ -55,10 +52,7 @@ public class VisualBasicMetadataProvider : IMetadataProvider<SyntaxNode>
     /// <inheritdoc/>
     public LocalizableStringLocation GetLocation(SyntaxNode node)
     {
-        if (node is null)
-        {
-            throw new ArgumentNullException(nameof(node));
-        }
+        ArgumentNullException.ThrowIfNull(node);
 
         var lineNumber = node.GetLocation().GetMappedLineSpan().StartLinePosition.Line;
 

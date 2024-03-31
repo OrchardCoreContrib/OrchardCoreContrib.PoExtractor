@@ -29,10 +29,7 @@ public class LocalizableStringCollection
     /// <param name="item">The item to add.</param>
     public void Add(LocalizableStringOccurence item)
     {
-        if (item is null)
-        {
-            throw new ArgumentNullException(nameof(item));
-        }
+        ArgumentNullException.ThrowIfNull(item);
 
         var key = item.Context + item.Text;
         if (_values.TryGetValue(key, out var localizedString))

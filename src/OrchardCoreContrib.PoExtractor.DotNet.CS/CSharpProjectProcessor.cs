@@ -27,10 +27,7 @@ public class CSharpProjectProcessor : IProjectProcessor
             throw new ArgumentException($"'{nameof(basePath)}' cannot be null or empty.", nameof(basePath));
         }
 
-        if (localizableStrings is null)
-        {
-            throw new ArgumentNullException(nameof(localizableStrings));
-        }
+        ArgumentNullException.ThrowIfNull(localizableStrings);
 
         var csharpMetadataProvider = new CSharpMetadataProvider(basePath);
         var csharpWalker = new ExtractingCodeWalker(

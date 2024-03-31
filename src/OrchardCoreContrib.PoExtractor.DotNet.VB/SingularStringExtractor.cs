@@ -26,10 +26,7 @@ public class SingularStringExtractor : LocalizableStringExtractor<SyntaxNode>
     /// <inheritdoc/>
     public override bool TryExtract(SyntaxNode node, out LocalizableStringOccurence result)
     {
-        if (node is null)
-        {
-            throw new ArgumentNullException(nameof(node));
-        }
+        ArgumentNullException.ThrowIfNull(node);
 
         result = null;
 

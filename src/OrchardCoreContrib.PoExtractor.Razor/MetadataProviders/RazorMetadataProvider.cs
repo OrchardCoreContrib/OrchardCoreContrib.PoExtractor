@@ -32,10 +32,7 @@ public class RazorMetadataProvider : IMetadataProvider<SyntaxNode>
     /// <inheritdoc/>
     public string GetContext(SyntaxNode node)
     {
-        if (node is null)
-        {
-            throw new ArgumentNullException(nameof(node));
-        }
+        ArgumentNullException.ThrowIfNull(node);
 
         var path = node.SyntaxTree.FilePath.TrimStart(_basePath);
         path = RemoveRazorFileExtension(path);
@@ -53,10 +50,7 @@ public class RazorMetadataProvider : IMetadataProvider<SyntaxNode>
     /// <inheritdoc/>
     public LocalizableStringLocation GetLocation(SyntaxNode node)
     {
-        if (node is null)
-        {
-            throw new ArgumentNullException(nameof(node));
-        }
+        ArgumentNullException.ThrowIfNull(node);
 
         var result = new LocalizableStringLocation
         {

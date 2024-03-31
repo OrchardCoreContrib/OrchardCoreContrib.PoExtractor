@@ -24,10 +24,7 @@ public class LiquidStringExtractor : LocalizableStringExtractor<LiquidExpression
     /// <inheritdoc/>
     public override bool TryExtract(LiquidExpressionContext expressionContext, out LocalizableStringOccurence result)
     {
-        if (expressionContext is null)
-        {
-            throw new ArgumentNullException(nameof(expressionContext));
-        }
+        ArgumentNullException.ThrowIfNull(expressionContext);
 
         result = null;
         var filter = expressionContext.Expression;

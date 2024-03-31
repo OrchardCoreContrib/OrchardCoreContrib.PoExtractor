@@ -32,10 +32,7 @@ public class ExtractingLiquidWalker
     /// <param name="statementContext">The statement context.</param>
     public void Visit(LiquidStatementContext statementContext)
     {
-        if (statementContext is null)
-        {
-            throw new ArgumentNullException(nameof(statementContext));
-        }
+        ArgumentNullException.ThrowIfNull(statementContext);
 
         _filePath = statementContext.FilePath;
 
