@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="Fluid.Core" Version="2.5.0" />
-    <PackageReference Include="OrchardCore.DisplayManagement.Liquid" Version="1.8.2" />
+    <PackageReference Include="OrchardCore.DisplayManagement.Liquid" Version="1.8.3" />
   </ItemGroup>
 
   <ItemGroup>
