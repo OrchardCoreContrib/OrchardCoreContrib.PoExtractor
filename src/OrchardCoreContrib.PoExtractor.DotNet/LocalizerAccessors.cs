@@ -23,11 +23,11 @@
         /// <summary>
         /// Gets the localizer identifiers.
         /// </summary>
-        public static string[] LocalizerIdentifiers = new string[]
-        {
+        public static string[] LocalizerIdentifiers =
+        [
             DefaultLocalizerIdentifier,
             StringLocalizerIdentifier,
             HtmlLocalizerIdentifier
-        };
+        ];
     }
 }
