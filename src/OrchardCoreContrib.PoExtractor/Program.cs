@@ -17,7 +17,7 @@ public class Program
 
     public static void Main(string[] args)
     {
-        if (args.Length < 2 || args.Length > 6 || args.Length % 2 == 1)
+        if (args.Length < 2 || args.Length > 10 || args.Length % 2 == 1)
         {
             ShowHelp();
 
@@ -161,6 +161,15 @@ public class Program
                     }
 
                     break;
+                case "--localizer":
+                    if (!string.IsNullOrEmpty(args[i - 1]))
+                    {
+                        var localizerIdentifiers = args[i - 1].Split(',', StringSplitOptions.RemoveEmptyEntries);
+
+                        LocalizerAccessors.LocalizerIdentifiers = localizerIdentifiers;
+                    }
+
+                    break;
                 default:
                     language = null;
                     templateEngine = null;
@@ -181,10 +190,11 @@ public class Program
         Console.WriteLine("  <OUTPUT_PATH> The path to a directory where POT files will be generated.");
         Console.WriteLine();
         Console.WriteLine("Options:");
-        Console.WriteLine("  -l, --language <C#|VB>             Specifies the code language to extracts translatable strings from.");
-        Console.WriteLine("                                     Default: C# language");
-        Console.WriteLine("  -t, --template <Razor|Liquid>      Specifies the template engine to extract the translatable strings from.");
-        Console.WriteLine("                                     Default: Razor & Liquid templates");
-        Console.WriteLine("  -i, --ignore project1,project2,    Ignores extracting PO filed from a given project(s).");
+        Console.WriteLine("  -l, --language <C#|VB>                 Specifies the code language to extracts translatable strings from.");
+        Console.WriteLine("                                         Default: C# language");
+        Console.WriteLine("  -t, --template <Razor|Liquid>          Specifies the template engine to extract the translatable strings from.");
+        Console.WriteLine("                                         Default: Razor & Liquid templates");
+        Console.WriteLine("  -i, --ignore project1,project2         Ignores extracting PO filed from a given project(s).");
+        Console.WriteLine("  --localizer localizer1,localizer2      Specifies the name of the localizer(s) that will be used suring the extraction process.");
     }
 }
