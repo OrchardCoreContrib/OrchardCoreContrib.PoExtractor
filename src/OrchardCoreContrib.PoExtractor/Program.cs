@@ -14,14 +14,6 @@ public class Program
 {
     private static readonly string _defaultLanguage = Language.CSharp;
     private static readonly string _defaultTemplateEngine = TemplateEngine.Both;
-    private static readonly string[] _ignoredProjects =
-    [
-        "docs",
-        "src\\OrchardCore.Cms.Web",
-        "src\\OrchardCore.Mvc.Web",
-        "src\\Templates",
-        "test"
-    ];
 
     public static void Main(string[] args)
     {
@@ -90,8 +82,8 @@ public class Program
             var projectPath = Path.GetDirectoryName(projectFile);
             var projectBasePath = Path.GetDirectoryName(projectPath) + Path.DirectorySeparatorChar;
             var projectRelativePath = projectPath[projectBasePath.Length..];
-
-            if (IgnoredProject.ToList().Any(p => projectRelativePath.StartsWith(p)))
+            var rootedProject = projectPath[(projectPath.IndexOf(inputPath) + inputPath.Length + 1)..];
+            if (IgnoredProject.ToList().Any(p => rootedProject.StartsWith(p)))
             {
                 continue;
             }
@@ -156,6 +148,19 @@ public class Program
                     }
 
                     break;
+                case "-i":
+                case "--ignore":
+                    if (!string.IsNullOrEmpty(args[i - 1]))
+                    {
+                        var ignoredProjects = args[i - 1].Split(',', StringSplitOptions.RemoveEmptyEntries);
+                        
+                        foreach (var ignoredProject in ignoredProjects)
+                        {
+                            IgnoredProject.Add(ignoredProject);
+                        }
+                    }
+
+                    break;
                 default:
                     language = null;
                     templateEngine = null;
@@ -180,5 +185,6 @@ public class Program
         Console.WriteLine("                                     Default: C# language");
         Console.WriteLine("  -t, --template <Razor|Liquid>      Specifies the template engine to extract the translatable strings from.");
         Console.WriteLine("                                     Default: Razor & Liquid templates");
+        Console.WriteLine("  -i, --ignore project1,project2,    Ignores extracting PO filed from a given project(s).");
     }
 }
