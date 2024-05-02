@@ -148,6 +148,19 @@ public class Program
                     }
 
                     break;
+                case "-i":
+                case "--ignore":
+                    if (!string.IsNullOrEmpty(args[i - 1]))
+                    {
+                        var ignoredProjects = args[i - 1].Split(',', StringSplitOptions.RemoveEmptyEntries);
+                        
+                        foreach (var ignoredProject in ignoredProjects)
+                        {
+                            IgnoredProject.Add(ignoredProject);
+                        }
+                    }
+
+                    break;
                 default:
                     language = null;
                     templateEngine = null;
@@ -172,5 +185,6 @@ public class Program
         Console.WriteLine("                                     Default: C# language");
         Console.WriteLine("  -t, --template <Razor|Liquid>      Specifies the template engine to extract the translatable strings from.");
         Console.WriteLine("                                     Default: Razor & Liquid templates");
+        Console.WriteLine("  -i, --ignore project1,project2,    Ignores extracting PO filed from a given project(s).");
     }
 }
