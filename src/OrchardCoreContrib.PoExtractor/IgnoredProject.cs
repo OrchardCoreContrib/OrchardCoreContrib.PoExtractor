@@ -4,7 +4,7 @@ namespace OrchardCoreContrib.PoExtractor;
 
 public class IgnoredProject
 {
-    public static readonly string Docs = "src\\dos";
+    public static readonly string Docs = "src\\docs";
 
     public static readonly string Cms = "src\\OrchardCore.Cms.Web";
 

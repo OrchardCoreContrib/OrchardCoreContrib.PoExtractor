@@ -14,14 +14,6 @@ public class Program
 {
     private static readonly string _defaultLanguage = Language.CSharp;
     private static readonly string _defaultTemplateEngine = TemplateEngine.Both;
-    private static readonly string[] _ignoredProjects =
-    [
-        "docs",
-        "src\\OrchardCore.Cms.Web",
-        "src\\OrchardCore.Mvc.Web",
-        "src\\Templates",
-        "test"
-    ];
 
     public static void Main(string[] args)
     {
@@ -90,8 +82,8 @@ public class Program
             var projectPath = Path.GetDirectoryName(projectFile);
             var projectBasePath = Path.GetDirectoryName(projectPath) + Path.DirectorySeparatorChar;
             var projectRelativePath = projectPath[projectBasePath.Length..];
-
-            if (IgnoredProject.ToList().Any(p => projectRelativePath.StartsWith(p)))
+            var rootedProject = projectPath[(projectPath.IndexOf(inputPath) + inputPath.Length + 1)..];
+            if (IgnoredProject.ToList().Any(p => rootedProject.StartsWith(p)))
             {
                 continue;
             }
