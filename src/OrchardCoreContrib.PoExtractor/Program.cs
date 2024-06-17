@@ -34,7 +34,7 @@ public class Program
             return;
         }
 
-        (string language, string templateEngine) = GetCliOptions(args);
+        (string language, string templateEngine, string singleOutputFile) = GetCliOptions(args);
 
         if (language == null || templateEngine == null)
         {
@@ -77,6 +77,9 @@ public class Program
             projectProcessors.Add(new LiquidProjectProcessor());
         }
 
+        var isSingleFileOutput = !string.IsNullOrEmpty(singleOutputFile);
+
+        var localizableStrings = new LocalizableStringCollection();
         foreach (var projectFile in projectFiles)
         {
             var projectPath = Path.GetDirectoryName(projectFile);
@@ -88,30 +91,49 @@ public class Program
                 continue;
             }
 
-            var localizableStrings = new LocalizableStringCollection();
             foreach (var projectProcessor in projectProcessors)
             {
                 projectProcessor.Process(projectPath, projectBasePath, localizableStrings);
             }
 
+            if (!isSingleFileOutput)
+            {
+                if (localizableStrings.Values.Any())
+                {
+                    var potPath = Path.Combine(outputPath, Path.GetFileNameWithoutExtension(projectFile) + PoWriter.PortaleObjectTemplateExtension);
+
+                    Directory.CreateDirectory(Path.GetDirectoryName(potPath));
+
+                    using var potFile = new PoWriter(potPath);
+                    potFile.WriteRecord(localizableStrings.Values);
+                    localizableStrings.Clear();
+                }
+
+                Console.WriteLine($"{Path.GetFileName(projectPath)}: Found {localizableStrings.Values.Count()} strings.");
+            }
+        }
+
+
+        if (isSingleFileOutput)
+        {
+            Console.WriteLine($"Found {localizableStrings.Values.Count()} strings.");
             if (localizableStrings.Values.Any())
             {
-                var potPath = Path.Combine(outputPath, Path.GetFileNameWithoutExtension(projectFile) + PoWriter.PortaleObjectTemplateExtension);
+                var potPath = Path.Combine(outputPath, singleOutputFile);
 
                 Directory.CreateDirectory(Path.GetDirectoryName(potPath));
-
                 using var potFile = new PoWriter(potPath);
                 potFile.WriteRecord(localizableStrings.Values);
             }
-
-            Console.WriteLine($"{Path.GetFileName(projectPath)}: Found {localizableStrings.Values.Count()} strings.");
         }
     }
 
-    private static (string language, string templateEngine) GetCliOptions(string[] args)
+    private static (string language, string templateEngine, string singleOutputFile) GetCliOptions(string[] args)
     {
         var language = _defaultLanguage;
         var templateEngine = _defaultTemplateEngine;
+        string singleOutputFile = null;
+
         for (int i = 4; i <= args.Length; i += 2)
         {
             switch (args[i - 2])
@@ -153,7 +175,7 @@ public class Program
                     if (!string.IsNullOrEmpty(args[i - 1]))
                     {
                         var ignoredProjects = args[i - 1].Split(',', StringSplitOptions.RemoveEmptyEntries);
-                        
+
                         foreach (var ignoredProject in ignoredProjects)
                         {
                             IgnoredProject.Add(ignoredProject);
@@ -170,6 +192,13 @@ public class Program
                     }
 
                     break;
+                case "-s":
+                case "--single":
+                    if (!string.IsNullOrEmpty(args[i - 1]))
+                    {
+                        singleOutputFile = args[i - 1];
+                    }
+                    break;
                 default:
                     language = null;
                     templateEngine = null;
@@ -177,7 +206,7 @@ public class Program
             }
         }
 
-        return (language, templateEngine);
+        return (language, templateEngine, singleOutputFile);
     }
 
     private static void ShowHelp()
@@ -195,6 +224,7 @@ public class Program
         Console.WriteLine("  -t, --template <Razor|Liquid>          Specifies the template engine to extract the translatable strings from.");
         Console.WriteLine("                                         Default: Razor & Liquid templates");
         Console.WriteLine("  -i, --ignore project1,project2         Ignores extracting PO filed from a given project(s).");
-        Console.WriteLine("  --localizer localizer1,localizer2      Specifies the name of the localizer(s) that will be used suring the extraction process.");
+        Console.WriteLine("  --localizer localizer1,localizer2      Specifies the name of the localizer(s) that will be used during the extraction process.");
+        Console.WriteLine("  -s, --single messages.pot              Get single output file.");
     }
 }

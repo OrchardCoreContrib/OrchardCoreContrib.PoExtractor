@@ -41,4 +41,12 @@ public class LocalizableStringCollection
             _values.Add(key, new LocalizableString(item));
         }
     }
+
+    /// <summary>
+    /// Clear collection
+    /// </summary>
+    public void Clear()
+    {
+        _values.Clear();
+    }
 }
