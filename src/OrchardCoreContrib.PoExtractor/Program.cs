@@ -131,7 +131,6 @@ public class Program
         var language = _defaultLanguage;
         var templateEngine = _defaultTemplateEngine;
         string singleOutputFile = null;
-
         for (int i = 4; i <= args.Length; i += 2)
         {
             switch (args[i - 2])
