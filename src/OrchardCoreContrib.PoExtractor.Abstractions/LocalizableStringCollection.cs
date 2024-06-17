@@ -45,8 +45,5 @@ public class LocalizableStringCollection
     /// <summary>
     /// Clear collection
     /// </summary>
-    public void Clear()
-    {
-        _values.Clear();
-    }
+    public void Clear() => _values.Clear();
 }
