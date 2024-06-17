@@ -222,6 +222,6 @@ public class Program
         Console.WriteLine("                                         Default: Razor & Liquid templates");
         Console.WriteLine("  -i, --ignore project1,project2         Ignores extracting PO filed from a given project(s).");
         Console.WriteLine("  --localizer localizer1,localizer2      Specifies the name of the localizer(s) that will be used during the extraction process.");
-        Console.WriteLine("  -s, --single messages.pot              Get single output file.");
+        Console.WriteLine("  -s, --single messages.pot              Specifices the single output file.");
     }
 }
