@@ -78,7 +78,6 @@ public class Program
         }
 
         var isSingleFileOutput = !string.IsNullOrEmpty(singleOutputFile);
-
         var localizableStrings = new LocalizableStringCollection();
         foreach (var projectFile in projectFiles)
         {
