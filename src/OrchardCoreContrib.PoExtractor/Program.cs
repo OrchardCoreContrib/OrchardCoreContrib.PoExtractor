@@ -112,7 +112,6 @@ public class Program
             }
         }
 
-
         if (isSingleFileOutput)
         {
             Console.WriteLine($"Found {localizableStrings.Values.Count()} strings.");
