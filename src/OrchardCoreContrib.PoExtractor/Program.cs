@@ -114,15 +114,17 @@ public class Program
 
         if (isSingleFileOutput)
         {
-            Console.WriteLine($"Found {localizableStrings.Values.Count()} strings.");
             if (localizableStrings.Values.Any())
             {
                 var potPath = Path.Combine(outputPath, singleOutputFile);
 
                 Directory.CreateDirectory(Path.GetDirectoryName(potPath));
+
                 using var potFile = new PoWriter(potPath);
                 potFile.WriteRecord(localizableStrings.Values);
             }
+
+            Console.WriteLine($"Found {localizableStrings.Values.Count()} strings.");
         }
     }
 
@@ -195,6 +197,7 @@ public class Program
                     {
                         singleOutputFile = args[i - 1];
                     }
+
                     break;
                 default:
                     language = null;
@@ -222,6 +225,6 @@ public class Program
         Console.WriteLine("                                         Default: Razor & Liquid templates");
         Console.WriteLine("  -i, --ignore project1,project2         Ignores extracting PO filed from a given project(s).");
         Console.WriteLine("  --localizer localizer1,localizer2      Specifies the name of the localizer(s) that will be used during the extraction process.");
-        Console.WriteLine("  -s, --single messages.pot              Specifies the single output file.");
+        Console.WriteLine("  -s, --single <FILE_NAME>               Specifies the single output file.");
     }
 }
