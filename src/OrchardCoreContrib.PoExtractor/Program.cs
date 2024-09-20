@@ -105,10 +105,10 @@ public class Program
 
                     using var potFile = new PoWriter(potPath);
                     potFile.WriteRecord(localizableStrings.Values);
-                    localizableStrings.Clear();
                 }
 
                 Console.WriteLine($"{Path.GetFileName(projectPath)}: Found {localizableStrings.Values.Count()} strings.");
+                localizableStrings.Clear();
             }
         }
 
