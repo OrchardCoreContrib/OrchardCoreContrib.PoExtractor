@@ -12,15 +12,12 @@ namespace OrchardCoreContrib.PoExtractor.DotNet.CS;
 /// <remarks>
 /// The localizable string is identified by the name convention - T["TEXT TO TRANSLATE"]
 /// </remarks>
-public class SingularStringExtractor : LocalizableStringExtractor<SyntaxNode>
+/// <remarks>
+/// Creates a new instance of a <see cref="SingularStringExtractor"/>.
+/// </remarks>
+/// <param name="metadataProvider">The <see cref="IMetadataProvider{TNode}"/>.</param>
+public class SingularStringExtractor(IMetadataProvider<SyntaxNode> metadataProvider) : LocalizableStringExtractor<SyntaxNode>(metadataProvider)
 {
-    /// <summary>
-    /// Creates a new instance of a <see cref="SingularStringExtractor"/>.
-    /// </summary>
-    /// <param name="metadataProvider">The <see cref="IMetadataProvider{TNode}"/>.</param>
-    public SingularStringExtractor(IMetadataProvider<SyntaxNode> metadataProvider) : base(metadataProvider)
-    {
-    }
 
     /// <inheritdoc/>
     public override bool TryExtract(SyntaxNode node, out LocalizableStringOccurence result)

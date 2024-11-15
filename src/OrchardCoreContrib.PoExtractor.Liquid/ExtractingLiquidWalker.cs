@@ -1,5 +1,4 @@
 ﻿using Fluid.Ast;
-using Microsoft.CodeAnalysis;
 using System;
 using System.Collections.Generic;
 
@@ -8,23 +7,17 @@ namespace OrchardCoreContrib.PoExtractor.Liquid;
 /// <summary>
 /// Traverses Fluid AST and extracts localizable strings using provided collection of <see cref="IStringExtractor{T}"/>
 /// </summary>
-public class ExtractingLiquidWalker
+/// <remarks>
+/// Initializes a new instance of the <see cref="ExtractingLiquidWalker"/> class
+/// </remarks>
+/// <param name="extractors">the collection of extractors to use</param>
+/// <param name="localizableStrings">the <see cref="LocalizableStringCollection"/> where the results are saved</param>
+public class ExtractingLiquidWalker(IEnumerable<IStringExtractor<LiquidExpressionContext>> extractors, LocalizableStringCollection localizableStrings)
 {
     private string _filePath;
 
-    private readonly LocalizableStringCollection _localizableStrings;
-    private readonly IEnumerable<IStringExtractor<LiquidExpressionContext>> _extractors;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="ExtractingLiquidWalker"/> class
-    /// </summary>
-    /// <param name="extractors">the collection of extractors to use</param>
-    /// <param name="localizableStrings">the <see cref="LocalizableStringCollection"/> where the results are saved</param>
-    public ExtractingLiquidWalker(IEnumerable<IStringExtractor<LiquidExpressionContext>> extractors, LocalizableStringCollection localizableStrings)
-    {
-        _extractors = extractors ?? throw new ArgumentNullException(nameof(extractors));
-        _localizableStrings = localizableStrings ?? throw new ArgumentNullException(nameof(localizableStrings));
-    }
+    private readonly LocalizableStringCollection _localizableStrings = localizableStrings ?? throw new ArgumentNullException(nameof(localizableStrings));
+    private readonly IEnumerable<IStringExtractor<LiquidExpressionContext>> _extractors = extractors ?? throw new ArgumentNullException(nameof(extractors));
 
     /// <summary>
     /// Visits liquid statement.

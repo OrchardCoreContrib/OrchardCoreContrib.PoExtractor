@@ -1,5 +1,4 @@
-﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.VisualBasic;
+﻿using Microsoft.CodeAnalysis.VisualBasic;
 using OrchardCoreContrib.PoExtractor.DotNet.VB.MetadataProviders;
 using System;
 using System.IO;

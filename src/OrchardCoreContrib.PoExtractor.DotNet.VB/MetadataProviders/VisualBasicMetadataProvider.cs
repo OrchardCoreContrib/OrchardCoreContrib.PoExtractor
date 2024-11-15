@@ -18,10 +18,7 @@ public class VisualBasicMetadataProvider : IMetadataProvider<SyntaxNode>
     /// <param name="basePath">The base path.</param>
     public VisualBasicMetadataProvider(string basePath)
     {
-        if (string.IsNullOrEmpty(basePath))
-        {
-            throw new ArgumentException($"'{nameof(basePath)}' cannot be null or empty.", nameof(basePath));
-        }
+        ArgumentException.ThrowIfNullOrEmpty(basePath, nameof(basePath));
 
         _basePath = basePath;
     }
