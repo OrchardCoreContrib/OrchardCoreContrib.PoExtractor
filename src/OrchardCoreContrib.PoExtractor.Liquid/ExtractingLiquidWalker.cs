@@ -47,7 +47,7 @@ public class ExtractingLiquidWalker(IEnumerable<IStringExtractor<LiquidExpressio
                 break;
             case CycleStatement cycle:
                 Visit(cycle.Group);
-                Visit(cycle.Values2);
+                Visit(cycle.Values);
                 break;
             case ElseIfStatement elseIf:
                 Visit(elseIf.Condition);
