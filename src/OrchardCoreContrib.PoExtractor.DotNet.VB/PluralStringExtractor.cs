@@ -12,16 +12,12 @@ namespace OrchardCoreContrib.PoExtractor.DotNet.VB;
 /// <remarks>
 /// The localizable string is identified by the name convention - T.Plural(count, "1 book", "{0} books").
 /// </remarks>
-public class PluralStringExtractor : LocalizableStringExtractor<SyntaxNode>
+/// <remarks>
+/// Creates a new instance of a <see cref="PluralStringExtractor"/>.
+/// </remarks>
+/// <param name="metadataProvider">The <see cref="IMetadataProvider{TNode}"/>.</param>
+public class PluralStringExtractor(IMetadataProvider<SyntaxNode> metadataProvider) : LocalizableStringExtractor<SyntaxNode>(metadataProvider)
 {
-    /// <summary>
-    /// Creates a new instance of a <see cref="PluralStringExtractor"/>.
-    /// </summary>
-    /// <param name="metadataProvider">The <see cref="IMetadataProvider{TNode}"/>.</param>
-    public PluralStringExtractor(IMetadataProvider<SyntaxNode> metadataProvider) : base(metadataProvider)
-    {
-
-    }
 
     /// <inheritdoc/>
     public override bool TryExtract(SyntaxNode node, out LocalizableStringOccurence result)

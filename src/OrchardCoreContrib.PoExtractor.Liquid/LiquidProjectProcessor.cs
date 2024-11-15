@@ -31,20 +31,12 @@ public class LiquidProjectProcessor : IProjectProcessor
     /// <inheritdoc/>
     public void Process(string path, string basePath, LocalizableStringCollection localizableStrings)
     {
-        if (string.IsNullOrEmpty(path))
-        {
-            throw new ArgumentException($"'{nameof(path)}' cannot be null or empty.", nameof(path));
-        }
-
-        if (string.IsNullOrEmpty(basePath))
-        {
-            throw new ArgumentException($"'{nameof(basePath)}' cannot be null or empty.", nameof(basePath));
-        }
-
+        ArgumentException.ThrowIfNullOrEmpty(path, nameof(path));
+        ArgumentException.ThrowIfNullOrEmpty(basePath, nameof(basePath));
         ArgumentNullException.ThrowIfNull(localizableStrings);
 
         var liquidMetadataProvider = new LiquidMetadataProvider(basePath);
-        var liquidVisitor = new ExtractingLiquidWalker(new[] { new LiquidStringExtractor(liquidMetadataProvider) }, localizableStrings);
+        var liquidVisitor = new ExtractingLiquidWalker([new LiquidStringExtractor(liquidMetadataProvider)], localizableStrings);
 
         foreach (var file in Directory.EnumerateFiles(path, $"*{_liquidExtension}", SearchOption.AllDirectories).OrderBy(file => file))
         {

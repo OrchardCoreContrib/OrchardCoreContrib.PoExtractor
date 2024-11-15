@@ -9,17 +9,14 @@ namespace OrchardCoreContrib.PoExtractor.Liquid;
 /// <remarks>
 /// The localizable string is identified by the name convention of the filter - "TEXT TO TRANSLATE" | t 
 /// </remarks>
-public class LiquidStringExtractor : LocalizableStringExtractor<LiquidExpressionContext>
+/// <remarks>
+/// Creates a new instance of a <see cref="LiquidStringExtractor"/>.
+/// </remarks>
+/// <param name="metadataProvider">The <see cref="IMetadataProvider{T}"/>.</param>
+public class LiquidStringExtractor(IMetadataProvider<LiquidExpressionContext> metadataProvider)
+    : LocalizableStringExtractor<LiquidExpressionContext>(metadataProvider)
 {
     private static readonly string _localizationFilterName = "t";
-
-    /// <summary>
-    /// Creates a new instance of a <see cref="LiquidStringExtractor"/>.
-    /// </summary>
-    /// <param name="metadataProvider">The <see cref="IMetadataProvider{T}"/>.</param>
-    public LiquidStringExtractor(IMetadataProvider<LiquidExpressionContext> metadataProvider) : base(metadataProvider)
-    {
-    }
 
     /// <inheritdoc/>
     public override bool TryExtract(LiquidExpressionContext expressionContext, out LocalizableStringOccurence result)

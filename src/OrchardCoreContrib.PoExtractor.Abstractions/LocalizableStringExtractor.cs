@@ -6,18 +6,13 @@ namespace OrchardCoreContrib.PoExtractor;
 /// Represents a base class for extracting a localizable strings.
 /// </summary>
 /// <typeparam name="TNode">The type of the node.</typeparam>
-public abstract class LocalizableStringExtractor<TNode> : IStringExtractor<TNode>
+/// <remarks>
+/// Creates a new instance of a <see cref="LocalizableStringExtractor{T}"/>.
+/// </remarks>
+/// <param name="metadataProvider">The <see cref="IMetadataProvider{T}"/>.</param>
+public abstract class LocalizableStringExtractor<TNode>(IMetadataProvider<TNode> metadataProvider) : IStringExtractor<TNode>
 {
-    /// <summary>
-    /// Creates a new instance of a <see cref="LocalizableStringExtractor{T}"/>.
-    /// </summary>
-    /// <param name="metadataProvider">The <see cref="IMetadataProvider{T}"/>.</param>
-    public LocalizableStringExtractor(IMetadataProvider<TNode> metadataProvider)
-    {
-        MetadataProvider = metadataProvider ?? throw new ArgumentNullException(nameof(metadataProvider));
-    }
-
-    protected IMetadataProvider<TNode> MetadataProvider { get; }
+    protected IMetadataProvider<TNode> MetadataProvider { get; } = metadataProvider ?? throw new ArgumentNullException(nameof(metadataProvider));
 
     /// <inheritdoc/>
     public abstract bool TryExtract(TNode node, out LocalizableStringOccurence result);
@@ -39,8 +34,8 @@ public abstract class LocalizableStringExtractor<TNode> : IStringExtractor<TNode
         {
             Text = text,
             TextPlural = textPlural,
-            Location = MetadataProvider.GetLocation(node),
-            Context = MetadataProvider.GetContext(node)
+            Location = metadataProvider.GetLocation(node),
+            Context = metadataProvider.GetContext(node)
         };
 
         return result;

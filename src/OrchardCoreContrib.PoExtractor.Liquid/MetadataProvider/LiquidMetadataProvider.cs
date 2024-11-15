@@ -1,51 +1,41 @@
 ﻿using System;
 using System.IO;
 
-namespace OrchardCoreContrib.PoExtractor.Liquid.MetadataProviders
+namespace OrchardCoreContrib.PoExtractor.Liquid.MetadataProviders;
+
+/// <summary>
+/// Provides metadata for .liquid files.
+/// </summary>
+public class LiquidMetadataProvider : IMetadataProvider<LiquidExpressionContext>
 {
+    private readonly string _basePath;
+
     /// <summary>
-    /// Provides metadata for .liquid files.
+    /// Creates a new instance of a <see cref="LiquidMetadataProvider"/>.
     /// </summary>
-    public class LiquidMetadataProvider : IMetadataProvider<LiquidExpressionContext>
+    /// <param name="basePath">The base path.</param>
+    public LiquidMetadataProvider(string basePath)
     {
-        private readonly string _basePath;
+        ArgumentException.ThrowIfNullOrEmpty(basePath, nameof(basePath));
 
-        /// <summary>
-        /// Creates a new instance of a <see cref="LiquidMetadataProvider"/>.
-        /// </summary>
-        /// <param name="basePath">The base path.</param>
-        public LiquidMetadataProvider(string basePath)
-        {
-            if (string.IsNullOrEmpty(basePath))
-            {
-                throw new ArgumentException($"'{nameof(basePath)}' cannot be null or empty.", nameof(basePath));
-            }
+        _basePath = basePath;
+    }
 
-            _basePath = basePath;
-        }
+    /// <inheritdoc/>
+    public string GetContext(LiquidExpressionContext expressionContext)
+    {
+        ArgumentNullException.ThrowIfNull(expressionContext, nameof(expressionContext));
 
-        /// <inheritdoc/>
-        public string GetContext(LiquidExpressionContext expressionContext)
-        {
-            if (expressionContext is null)
-            {
-                throw new ArgumentNullException(nameof(expressionContext));
-            }
+        var path = expressionContext.FilePath.TrimStart(_basePath);
 
-            var path = expressionContext.FilePath.TrimStart(_basePath);
+        return path.Replace(Path.DirectorySeparatorChar, '.').Replace(".liquid", string.Empty);
+    }
 
-            return path.Replace(Path.DirectorySeparatorChar, '.').Replace(".liquid", string.Empty);
-        }
+    /// <inheritdoc/>
+    public LocalizableStringLocation GetLocation(LiquidExpressionContext expressionContext)
+    {
+        ArgumentNullException.ThrowIfNull(expressionContext, nameof(expressionContext));
 
-        /// <inheritdoc/>
-        public LocalizableStringLocation GetLocation(LiquidExpressionContext expressionContext)
-        {
-            if (expressionContext is null)
-            {
-                throw new ArgumentNullException(nameof(expressionContext));
-            }
-
-            return new() { SourceFile = expressionContext.FilePath.TrimStart(_basePath) };
-        }
+        return new() { SourceFile = expressionContext.FilePath.TrimStart(_basePath) };
     }
 }
