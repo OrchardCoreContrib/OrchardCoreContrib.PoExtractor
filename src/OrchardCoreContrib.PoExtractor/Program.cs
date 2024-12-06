@@ -3,10 +3,6 @@ using OrchardCoreContrib.PoExtractor.DotNet.CS;
 using OrchardCoreContrib.PoExtractor.DotNet.VB;
 using OrchardCoreContrib.PoExtractor.Liquid;
 using OrchardCoreContrib.PoExtractor.Razor;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 
 namespace OrchardCoreContrib.PoExtractor;
 
@@ -34,9 +30,9 @@ public class Program
             return;
         }
 
-        (string language, string templateEngine, string singleOutputFile) = GetCliOptions(args);
+        var options = GetCliOptions(args);
 
-        if (language == null || templateEngine == null)
+        if (options.Language == null || options.TemplateEngine == null)
         {
             ShowHelp();
 
@@ -46,7 +42,7 @@ public class Program
         var projectFiles = new List<string>();
         var projectProcessors = new List<IProjectProcessor>();
 
-        if (language == Language.CSharp)
+        if (options.Language == Language.CSharp)
         {
             projectProcessors.Add(new CSharpProjectProcessor());
 
@@ -63,21 +59,21 @@ public class Program
                 .OrderBy(f => f));
         }
 
-        if (templateEngine == TemplateEngine.Both)
+        if (options.TemplateEngine == TemplateEngine.Both)
         {
             projectProcessors.Add(new RazorProjectProcessor());
             projectProcessors.Add(new LiquidProjectProcessor());
         }
-        else if (templateEngine == TemplateEngine.Razor)
+        else if (options.TemplateEngine == TemplateEngine.Razor)
         {
             projectProcessors.Add(new RazorProjectProcessor());
         }
-        else if (templateEngine == TemplateEngine.Liquid)
+        else if (options.TemplateEngine == TemplateEngine.Liquid)
         {
             projectProcessors.Add(new LiquidProjectProcessor());
         }
 
-        var isSingleFileOutput = !string.IsNullOrEmpty(singleOutputFile);
+        var isSingleFileOutput = !string.IsNullOrEmpty(options.SingleOutputFile);
         var localizableStrings = new LocalizableStringCollection();
         foreach (var projectFile in projectFiles)
         {
@@ -116,7 +112,7 @@ public class Program
         {
             if (localizableStrings.Values.Any())
             {
-                var potPath = Path.Combine(outputPath, singleOutputFile);
+                var potPath = Path.Combine(outputPath, options.SingleOutputFile);
 
                 Directory.CreateDirectory(Path.GetDirectoryName(potPath));
 
@@ -128,11 +124,15 @@ public class Program
         }
     }
 
-    private static (string language, string templateEngine, string singleOutputFile) GetCliOptions(string[] args)
+    private static GetCliOptionsResult GetCliOptions(string[] args)
     {
-        var language = _defaultLanguage;
-        var templateEngine = _defaultTemplateEngine;
-        string singleOutputFile = null;
+        var result = new GetCliOptionsResult
+        {
+            Language = _defaultLanguage,
+            TemplateEngine = _defaultTemplateEngine,
+            SingleOutputFile = null,
+        };
+
         for (int i = 4; i <= args.Length; i += 2)
         {
             switch (args[i - 2])
@@ -141,15 +141,15 @@ public class Program
                 case "--language":
                     if (args[i - 1].Equals(Language.CSharp, StringComparison.CurrentCultureIgnoreCase))
                     {
-                        language = Language.CSharp;
+                        result.Language = Language.CSharp;
                     }
                     else if (args[i - 1].Equals(Language.VisualBasic, StringComparison.CurrentCultureIgnoreCase))
                     {
-                        language = Language.VisualBasic;
+                        result.Language = Language.VisualBasic;
                     }
                     else
                     {
-                        language = null;
+                        result.Language = null;
                     }
 
                     break;
@@ -157,15 +157,15 @@ public class Program
                 case "--template":
                     if (args[i - 1].Equals(TemplateEngine.Razor, StringComparison.CurrentCultureIgnoreCase))
                     {
-                        templateEngine = TemplateEngine.Razor;
+                        result.TemplateEngine = TemplateEngine.Razor;
                     }
                     else if (args[i - 1].Equals(TemplateEngine.Liquid, StringComparison.CurrentCultureIgnoreCase))
                     {
-                        templateEngine = TemplateEngine.Liquid;
+                        result.TemplateEngine = TemplateEngine.Liquid;
                     }
                     else
                     {
-                        templateEngine = null;
+                        result.TemplateEngine = null;
                     }
 
                     break;
@@ -195,18 +195,18 @@ public class Program
                 case "--single":
                     if (!string.IsNullOrEmpty(args[i - 1]))
                     {
-                        singleOutputFile = args[i - 1];
+                        result.SingleOutputFile = args[i - 1];
                     }
 
                     break;
                 default:
-                    language = null;
-                    templateEngine = null;
+                    result.Language = null;
+                    result.TemplateEngine = null;
                     break;
             }
         }
 
-        return (language, templateEngine, singleOutputFile);
+        return result;
     }
 
     private static void ShowHelp()
