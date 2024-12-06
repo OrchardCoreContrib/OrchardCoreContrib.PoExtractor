@@ -42,6 +42,15 @@ Specifies the code language to extracts translatable strings from. Default: `C#`
 
 Specifies the template engine to extract the translatable strings from. Default: `Razor` & `Liquid` templates.
 
+- **`-p|--plugin {path to CSX file}`**
+
+Specifies a path to a C# script file which can define further project processors. (You can find an example script [here](test/OrchardCoreContrib.PoExtractor.Tests/PluginTestFiles/BasicJsonLocalizationProcessor.csx).) This can be used to process localization from code languages or template engines not supported by the above options. You can have multiple of this switch in one call to load several plugins at once.
+
+When executing the plugins, the _OrchardCoreContrib.PoExtractor.Abstractions_ library is automatically loaded, and two globals are defined:
+
+- `List<IProjectProcessor> projectProcessors`: Add an instance of your custom `IProjectProcessor` implementation type to this list.
+- `List<string> projectFiles`: In the unlikely case that you have to add a new project file type (such as _.fsproj_) add the project file paths to this list.
+
 ## Uninstallation
 
 ```powershell
