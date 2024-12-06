@@ -1,4 +1,6 @@
-﻿using OrchardCoreContrib.PoExtractor.DotNet;
+﻿using Microsoft.CodeAnalysis.CSharp.Scripting;
+using Microsoft.CodeAnalysis.Scripting;
+using OrchardCoreContrib.PoExtractor.DotNet;
 using OrchardCoreContrib.PoExtractor.DotNet.CS;
 using OrchardCoreContrib.PoExtractor.DotNet.VB;
 using OrchardCoreContrib.PoExtractor.Liquid;
@@ -11,7 +13,7 @@ public class Program
     private static readonly string _defaultLanguage = Language.CSharp;
     private static readonly string _defaultTemplateEngine = TemplateEngine.Both;
 
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
         if (args.Length < 2 || args.Length > 10 || args.Length % 2 == 1)
         {
@@ -73,6 +75,11 @@ public class Program
             projectProcessors.Add(new LiquidProjectProcessor());
         }
 
+        if (options.Plugins.Count > 0)
+        {
+            await ProcessPluginsAsync(options.Plugins, projectProcessors, projectFiles);
+        }
+
         var isSingleFileOutput = !string.IsNullOrEmpty(options.SingleOutputFile);
         var localizableStrings = new LocalizableStringCollection();
         foreach (var projectFile in projectFiles)
@@ -121,6 +128,21 @@ public class Program
             }
 
             Console.WriteLine($"Found {localizableStrings.Values.Count()} strings.");
+        }
+    }
+
+    private static async Task ProcessPluginsAsync(
+        IList<string> plugins,
+        List<IProjectProcessor> projectProcessors,
+        List<string> projectFiles)
+    {
+        var options = ScriptOptions.Default
+            .AddReferences(typeof(IProjectProcessor).Assembly);
+
+        foreach (var plugin in plugins)
+        {
+            var code = await File.ReadAllTextAsync(plugin);
+            await CSharpScript.EvaluateAsync(code, options, new { projectProcessors, projectFiles });
         }
     }
 
@@ -234,7 +256,7 @@ public class Program
         Console.WriteLine("  -i, --ignore project1,project2         Ignores extracting PO filed from a given project(s).");
         Console.WriteLine("  --localizer localizer1,localizer2      Specifies the name of the localizer(s) that will be used during the extraction process.");
         Console.WriteLine("  -s, --single <FILE_NAME>               Specifies the single output file.");
-        Console.WriteLine("  -p, --plugin <FILE_NAME>               A path to a C# script file which can define further IProjectProcessor");
+        Console.WriteLine("  -p, --plugin <FILE_NAME>               A path to a C# script (.csx) file which can define further IProjectProcessor");
         Console.WriteLine("                                         implementations. You can have multiple of this switch in a call.");
     }
 }
