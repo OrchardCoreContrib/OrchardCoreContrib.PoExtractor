@@ -199,6 +199,14 @@ public class Program
                     }
 
                     break;
+                case "-p":
+                case "--plugin":
+                    if (File.Exists(args[i - 1]))
+                    {
+                        result.Plugins.Add(args[i - 1]);
+                    }
+
+                    break;
                 default:
                     result.Language = null;
                     result.TemplateEngine = null;
@@ -226,5 +234,7 @@ public class Program
         Console.WriteLine("  -i, --ignore project1,project2         Ignores extracting PO filed from a given project(s).");
         Console.WriteLine("  --localizer localizer1,localizer2      Specifies the name of the localizer(s) that will be used during the extraction process.");
         Console.WriteLine("  -s, --single <FILE_NAME>               Specifies the single output file.");
+        Console.WriteLine("  -p, --plugin <FILE_NAME>               A path to a C# script file which can define further IProjectProcessor");
+        Console.WriteLine("                                         implementations. You can have multiple of this switch in a call.");
     }
 }
