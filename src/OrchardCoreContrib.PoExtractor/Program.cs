@@ -131,7 +131,7 @@ public class Program
         }
     }
 
-    private static async Task ProcessPluginsAsync(
+    public static async Task ProcessPluginsAsync(
         IList<string> plugins,
         List<IProjectProcessor> projectProcessors,
         List<string> projectFiles)
