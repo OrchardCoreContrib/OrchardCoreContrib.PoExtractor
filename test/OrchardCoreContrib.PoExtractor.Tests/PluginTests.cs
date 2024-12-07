@@ -9,7 +9,7 @@ public class PluginTests
     private const string PluginTestFiles = nameof(PluginTestFiles);
     
     [Fact]
-    public async Task WriteRecord_WritesSingularLocalizableString()
+    public async Task ProcessPluginsBasicJsonLocalizationProcessor()
     {
         // Arrange
         using var stream = new MemoryStream();
