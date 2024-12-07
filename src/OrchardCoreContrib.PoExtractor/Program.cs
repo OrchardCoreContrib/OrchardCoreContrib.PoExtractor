@@ -136,13 +136,12 @@ public class Program
         List<IProjectProcessor> projectProcessors,
         List<string> projectFiles)
     {
-        var options = ScriptOptions.Default
-            .AddReferences(typeof(IProjectProcessor).Assembly);
+        var options = ScriptOptions.Default.AddReferences(typeof(Program).Assembly);
 
         foreach (var plugin in plugins)
         {
             var code = await File.ReadAllTextAsync(plugin);
-            await CSharpScript.EvaluateAsync(code, options, new { projectProcessors, projectFiles });
+            await CSharpScript.EvaluateAsync(code, options, new PluginContext(projectProcessors, projectFiles));
         }
     }
 
@@ -259,4 +258,6 @@ public class Program
         Console.WriteLine("  -p, --plugin <FILE_NAME>               A path to a C# script (.csx) file which can define further IProjectProcessor");
         Console.WriteLine("                                         implementations. You can have multiple of this switch in a call.");
     }
+
+    public record PluginContext(List<IProjectProcessor> projectProcessors, List<string> projectFiles);
 }
