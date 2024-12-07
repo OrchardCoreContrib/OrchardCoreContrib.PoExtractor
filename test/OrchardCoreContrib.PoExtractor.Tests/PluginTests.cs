@@ -61,6 +61,12 @@ public class PluginTests
         Assert.Equal(CleanupSpaces(expectedResult), CleanupSpaces(actualResult));
     }
 
-    private static string CleanupSpaces(string input) =>
-        Regex.Replace(input.Trim(), @"^\s+", string.Empty, RegexOptions.Multiline);
+    private static string CleanupSpaces(string input)
+    {
+        // Trim leading whitespaces.
+        input = Regex.Replace(input.Trim(), @"^\s+", string.Empty, RegexOptions.Multiline);
+        
+        // Make the path OS-specific, so the test works on Windows as well. 
+        return input.Replace('/', Path.DirectorySeparatorChar);
+    }
 }
