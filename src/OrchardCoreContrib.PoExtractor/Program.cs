@@ -1,6 +1,4 @@
-﻿using Microsoft.CodeAnalysis.CSharp.Scripting;
-using Microsoft.CodeAnalysis.Scripting;
-using OrchardCoreContrib.PoExtractor.DotNet;
+﻿using OrchardCoreContrib.PoExtractor.DotNet;
 using OrchardCoreContrib.PoExtractor.DotNet.CS;
 using OrchardCoreContrib.PoExtractor.DotNet.VB;
 using OrchardCoreContrib.PoExtractor.Liquid;
@@ -131,19 +129,22 @@ public class Program
         }
     }
 
-    public static async Task ProcessPluginsAsync(
+    /// <summary>
+    /// A shortcut to <see cref="PluginHelper.ProcessPluginsAsync"/> that gives the script access to all of the
+    /// <c>OrchardCoreContrib.PoExtractor.*</c> assemblies.
+    /// </summary>
+    public static Task ProcessPluginsAsync(
         IList<string> plugins,
         List<IProjectProcessor> projectProcessors,
-        List<string> projectFiles)
-    {
-        var options = ScriptOptions.Default.AddReferences(typeof(Program).Assembly);
-
-        foreach (var plugin in plugins)
-        {
-            var code = await File.ReadAllTextAsync(plugin);
-            await CSharpScript.EvaluateAsync(code, options, new PluginContext(projectProcessors, projectFiles));
-        }
-    }
+        List<string> projectFiles) =>
+        PluginHelper.ProcessPluginsAsync(plugins, projectProcessors, projectFiles, [
+            typeof(IProjectProcessor).Assembly, // OrchardCoreContrib.PoExtractor.Abstractions
+            typeof(ExtractingCodeWalker).Assembly, // OrchardCoreContrib.PoExtractor.DotNet
+            typeof(CSharpProjectProcessor).Assembly, // OrchardCoreContrib.PoExtractor.DotNet.CS
+            typeof(VisualBasicProjectProcessor).Assembly, // OrchardCoreContrib.PoExtractor.DotNet.VB
+            typeof(LiquidProjectProcessor).Assembly, // OrchardCoreContrib.PoExtractor.Liquid
+            typeof(RazorProjectProcessor).Assembly, // OrchardCoreContrib.PoExtractor.Razor
+        ]);
 
     private static GetCliOptionsResult GetCliOptions(string[] args)
     {
@@ -258,6 +259,4 @@ public class Program
         Console.WriteLine("  -p, --plugin <FILE_NAME>               A path to a C# script (.csx) file which can define further IProjectProcessor");
         Console.WriteLine("                                         implementations. You can have multiple of this switch in a call.");
     }
-
-    public record PluginContext(List<IProjectProcessor> projectProcessors, List<string> projectFiles);
 }
