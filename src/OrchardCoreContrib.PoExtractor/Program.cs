@@ -158,15 +158,16 @@ public class Program
 
         for (int i = 4; i <= args.Length; i += 2)
         {
+            var item = args[i - 1];
             switch (args[i - 2])
             {
                 case "-l":
                 case "--language":
-                    if (args[i - 1].Equals(Language.CSharp, StringComparison.CurrentCultureIgnoreCase))
+                    if (item.Equals(Language.CSharp, StringComparison.CurrentCultureIgnoreCase))
                     {
                         result.Language = Language.CSharp;
                     }
-                    else if (args[i - 1].Equals(Language.VisualBasic, StringComparison.CurrentCultureIgnoreCase))
+                    else if (item.Equals(Language.VisualBasic, StringComparison.CurrentCultureIgnoreCase))
                     {
                         result.Language = Language.VisualBasic;
                     }
@@ -178,11 +179,11 @@ public class Program
                     break;
                 case "-t":
                 case "--template":
-                    if (args[i - 1].Equals(TemplateEngine.Razor, StringComparison.CurrentCultureIgnoreCase))
+                    if (item.Equals(TemplateEngine.Razor, StringComparison.CurrentCultureIgnoreCase))
                     {
                         result.TemplateEngine = TemplateEngine.Razor;
                     }
-                    else if (args[i - 1].Equals(TemplateEngine.Liquid, StringComparison.CurrentCultureIgnoreCase))
+                    else if (item.Equals(TemplateEngine.Liquid, StringComparison.CurrentCultureIgnoreCase))
                     {
                         result.TemplateEngine = TemplateEngine.Liquid;
                     }
@@ -194,9 +195,9 @@ public class Program
                     break;
                 case "-i":
                 case "--ignore":
-                    if (!string.IsNullOrEmpty(args[i - 1]))
+                    if (!string.IsNullOrEmpty(item))
                     {
-                        var ignoredProjects = args[i - 1].Split(',', StringSplitOptions.RemoveEmptyEntries);
+                        var ignoredProjects = item.Split(',', StringSplitOptions.RemoveEmptyEntries);
 
                         foreach (var ignoredProject in ignoredProjects)
                         {
@@ -206,9 +207,9 @@ public class Program
 
                     break;
                 case "--localizer":
-                    if (!string.IsNullOrEmpty(args[i - 1]))
+                    if (!string.IsNullOrEmpty(item))
                     {
-                        var localizerIdentifiers = args[i - 1].Split(',', StringSplitOptions.RemoveEmptyEntries);
+                        var localizerIdentifiers = item.Split(',', StringSplitOptions.RemoveEmptyEntries);
 
                         LocalizerAccessors.LocalizerIdentifiers = localizerIdentifiers;
                     }
@@ -216,9 +217,9 @@ public class Program
                     break;
                 case "-s":
                 case "--single":
-                    if (!string.IsNullOrEmpty(args[i - 1]))
+                    if (!string.IsNullOrEmpty(item))
                     {
-                        result.SingleOutputFile = args[i - 1];
+                        result.SingleOutputFile = item;
                     }
 
                     break;
@@ -226,7 +227,7 @@ public class Program
                 case "--plugin":
                     if (File.Exists(args[i - 1]))
                     {
-                        result.Plugins.Add(args[i - 1]);
+                        result.Plugins.Add(item);
                     }
 
                     break;
