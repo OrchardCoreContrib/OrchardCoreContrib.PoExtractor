@@ -1,4 +1,5 @@
-﻿using OrchardCoreContrib.PoExtractor.DotNet;
+﻿using OrchardCore.Modules;
+using OrchardCoreContrib.PoExtractor.DotNet;
 using OrchardCoreContrib.PoExtractor.DotNet.CS;
 using OrchardCoreContrib.PoExtractor.DotNet.VB;
 using OrchardCoreContrib.PoExtractor.Liquid;
@@ -225,7 +226,7 @@ public class Program
                     break;
                 case "-p":
                 case "--plugin":
-                    if (File.Exists(args[i - 1]))
+                    if (File.Exists(item) || item.StartsWithOrdinalIgnoreCase("https://"))
                     {
                         result.Plugins.Add(item);
                     }
@@ -258,7 +259,7 @@ public class Program
         Console.WriteLine("  -i, --ignore project1,project2         Ignores extracting PO filed from a given project(s).");
         Console.WriteLine("  --localizer localizer1,localizer2      Specifies the name of the localizer(s) that will be used during the extraction process.");
         Console.WriteLine("  -s, --single <FILE_NAME>               Specifies the single output file.");
-        Console.WriteLine("  -p, --plugin <FILE_NAME>               A path to a C# script (.csx) file which can define further IProjectProcessor");
-        Console.WriteLine("                                         implementations. You can have multiple of this switch in a call.");
+        Console.WriteLine("  -p, --plugin <FILE_NAME_OR_HTTPS_URL>  A path or web URL with HTTPS scheme to a C# script (.csx) file which can define further");
+        Console.WriteLine("                                         IProjectProcessor implementations. You can have multiple of this switch in a call.");
     }
 }

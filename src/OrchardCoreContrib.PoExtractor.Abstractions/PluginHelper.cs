@@ -16,7 +16,9 @@ public static class PluginHelper
 
         foreach (var plugin in plugins)
         {
-            var code = await File.ReadAllTextAsync(plugin);
+            var code = plugin.StartsWith("https://", StringComparison.OrdinalIgnoreCase)
+                ? await new HttpClient().GetStringAsync(plugin)
+                : await File.ReadAllTextAsync(plugin);
             await CSharpScript.EvaluateAsync(code, options, new PluginContext(projectProcessors, projectFiles));
         }
     }
