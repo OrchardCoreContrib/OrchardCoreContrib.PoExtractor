@@ -85,7 +85,8 @@ public class Program
             var projectPath = Path.GetDirectoryName(projectFile);
             var projectBasePath = Path.GetDirectoryName(projectPath) + Path.DirectorySeparatorChar;
             var projectRelativePath = projectPath[projectBasePath.Length..];
-            var rootedProject = projectPath[(projectPath.IndexOf(inputPath) + inputPath.Length + 1)..];
+            var rootedProject = projectPath == inputPath 
+                ? projectPath : projectPath[(projectPath.IndexOf(inputPath) + inputPath.Length + 1)..];
             if (IgnoredProject.ToList().Any(p => rootedProject.StartsWith(p)))
             {
                 continue;
