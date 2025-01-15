@@ -1,8 +1,12 @@
+#r "../../../../OrchardCore.Commerce/src/Modules/OrchardCore.Commerce/bin/Debug/net8.0/OrchardCore.Commerce.dll"
+
 using System;
 using System.IO;
 using System.Linq;
 using System.Text.Json.Nodes;
 using OrchardCoreContrib.PoExtractor;
+using OrchardCore.Commerce.Constants;
+Console.WriteLine("Imported resource: {0}", ResourceNames.ShoppingCart);
 
 // This example plugin implements processing for a very simplistic subset of the i18next JSON format. It only supports
 // strings and other objects, and the files must be located in i18n/{language}.json. Even though this is only meant as a
