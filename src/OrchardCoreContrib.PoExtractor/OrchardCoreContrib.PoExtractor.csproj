@@ -26,6 +26,9 @@
 		<None Include="../../images/icon.png" Pack="true" PackagePath="icon.png" />
 	</ItemGroup>
 	<ItemGroup>
+	  <PackageReference Include="McMaster.Extensions.CommandLineUtils" />
+	</ItemGroup>
+	<ItemGroup>
 		<ProjectReference Include="..\OrchardCoreContrib.PoExtractor.DotNet.CS\OrchardCoreContrib.PoExtractor.DotNet.CS.csproj" />
 		<ProjectReference Include="..\OrchardCoreContrib.PoExtractor.DotNet.VB\OrchardCoreContrib.PoExtractor.DotNet.VB.csproj" />
 		<ProjectReference Include="..\OrchardCoreContrib.PoExtractor.Liquid\OrchardCoreContrib.PoExtractor.Liquid.csproj" />
