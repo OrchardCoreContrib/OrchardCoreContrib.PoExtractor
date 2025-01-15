@@ -51,6 +51,14 @@ When executing the plugins, all _OrchardCoreContrib.PoExtractor_ assemblies are 
 - `List<IProjectProcessor> projectProcessors`: Add an instance of your custom `IProjectProcessor` implementation type to this list.
 - `List<string> projectFiles`: In the unlikely case that you have to add a new project file type (such as _.fsproj_) add the project file paths to this list.
 
+> [!TIP]
+> You can't import NuGet packages in your script file, but you can import local DLL files using the `#r "path/to/package.dll"` directive. The path can be relative to the script file's location. (For remote scripts loaded with a URL, the path can be relative to the current working directory.) For example:
+> ```csharp
+> #r "src/Modules/OrchardCore.Commerce/bin/Debug/net8.0/OrchardCore.Commerce.dll"
+> using OrchardCore.Commerce.Constants;
+> Console.WriteLine("Imported resource name: {0}", ResourceNames.ShoppingCart);
+> ```
+
 ## Uninstallation
 
 ```powershell

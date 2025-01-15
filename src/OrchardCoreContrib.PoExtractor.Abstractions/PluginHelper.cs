@@ -12,13 +12,26 @@ public static class PluginHelper
         List<string> projectFiles,
         IEnumerable<Assembly> assemblies)
     {
-        var options = ScriptOptions.Default.AddReferences(assemblies);
+        var sharedOptions = ScriptOptions.Default.AddReferences(assemblies);
 
         foreach (var plugin in plugins)
         {
-            var code = plugin.StartsWith("https://", StringComparison.OrdinalIgnoreCase)
-                ? await new HttpClient().GetStringAsync(plugin)
-                : await File.ReadAllTextAsync(plugin);
+            string code;
+            ScriptOptions options;
+
+            if (plugin.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
+            {
+                code = await new HttpClient().GetStringAsync(plugin);
+                options = sharedOptions.WithFilePath(Path.Join(
+                    Environment.CurrentDirectory,
+                    Path.GetFileName(new Uri(plugin).AbsolutePath)));
+            }
+            else
+            {
+                code = await File.ReadAllTextAsync(plugin);
+                options = sharedOptions.WithFilePath(Path.GetFullPath(plugin));
+            }
+
             await CSharpScript.EvaluateAsync(code, options, new PluginContext(projectProcessors, projectFiles));
         }
     }
