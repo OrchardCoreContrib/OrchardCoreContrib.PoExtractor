@@ -1,4 +1,4 @@
-#r "../../../../OrchardCore.Commerce/src/Modules/OrchardCore.Commerce/bin/Debug/net8.0/OrchardCore.Commerce.dll"
+#r "../../../OrchardCore.Commerce/src/Modules/OrchardCore.Commerce/bin/Debug/net8.0/OrchardCore.Commerce.dll"
 
 using System;
 using System.IO;
