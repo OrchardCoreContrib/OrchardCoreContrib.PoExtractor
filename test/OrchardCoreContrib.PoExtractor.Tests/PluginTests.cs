@@ -19,7 +19,7 @@ public class PluginTests
         var localizableStrings = new LocalizableStringCollection();
         
         // Act
-        await Program.ProcessPluginsAsync(plugins, projectProcessors, projectFiles);
+        await PluginHelper.ProcessPluginsAsync(plugins, projectProcessors, projectFiles);
         projectProcessors[0].Process(PluginTestFiles, Path.GetFileName(Environment.CurrentDirectory), localizableStrings);
 
         using (var writer = new PoWriter(stream))
