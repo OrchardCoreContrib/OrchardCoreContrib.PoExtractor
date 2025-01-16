@@ -102,7 +102,7 @@ public class Program
                     projectProcessor.Process(projectPath, projectBasePath, localizableStrings);
                 }
 
-                if (isSingleFileOutput)
+                if (!isSingleFileOutput)
                 {
                     if (localizableStrings.Values.Any())
                     {
