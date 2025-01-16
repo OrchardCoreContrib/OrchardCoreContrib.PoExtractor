@@ -38,7 +38,7 @@ public class Program
         {
             if (!Directory.Exists(inputPath.Value))
             {
-                Console.WriteLine($"The input path '{inputPath.Value}' is not exist.");
+                Console.WriteLine($"The input path '{inputPath.Value}' does not exist.");
 
                 return;
             }
