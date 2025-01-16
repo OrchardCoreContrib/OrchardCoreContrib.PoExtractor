@@ -24,13 +24,13 @@ public class Program
             .IsRequired();
 
         // Options
-        var language = app.Option("-l|--language <LANGUAGE>", "Specifies the code language to extracts translatable strings from.", CommandOptionType.SingleValue, options =>
+        var language = app.Option("-l|--language <LANGUAGE>", "Specifies the code language to extracts translatable strings from.", CommandOptionType.SingleValue, option =>
         {
-            options.Accepts(cfg => cfg.Values("C#", "VB"));
-            options.DefaultValue = "C#";
+            option.Accepts(cfg => cfg.Values("C#", "VB"));
+            option.DefaultValue = "C#";
         });
-        var template = app.Option("-t|--template <TEMPLATE>", "Specifies the template engine to extract the translatable strings from.", CommandOptionType.SingleValue, options =>
-            options.Accepts(cfg => cfg.Values("Razor", "Liquid"))
+        var template = app.Option("-t|--template <TEMPLATE>", "Specifies the template engine to extract the translatable strings from.", CommandOptionType.SingleValue, option =>
+            option.Accepts(cfg => cfg.Values("Razor", "Liquid"))
         );
         var ignoredProjects = app.Option("-i|--ignore <IGNORED_PROJECTS>", "Ignores extracting PO files from a given project(s).", CommandOptionType.MultipleValue);
         var localizers = app.Option("--localizer <LOCALIZERS>", "Specifies the name of the localizer(s) that will be used during the extraction process.", CommandOptionType.MultipleValue);
