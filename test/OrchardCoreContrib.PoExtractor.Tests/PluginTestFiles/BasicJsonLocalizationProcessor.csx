@@ -74,4 +74,4 @@ public class BasicJsonLocalizationProcessor : IProjectProcessor
     }
 }
 
-projectProcessors.Add(new BasicJsonLocalizationProcessor());
+ProjectProcessors.Add(new BasicJsonLocalizationProcessor());
