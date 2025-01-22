@@ -64,9 +64,12 @@ public class PluginTests
     private static string CleanupSpaces(string input)
     {
         // Trim leading whitespaces.
-        input = Regex.Replace(input.Trim(), @"^\s+", string.Empty, RegexOptions.Multiline);
+        input = TrimLeadingSpacesRegex().Replace(input.Trim(), string.Empty);
         
         // Make the path OS-specific, so the test works on Windows as well. 
         return input.Replace('/', Path.DirectorySeparatorChar);
     }
+    
+    [GeneratedRegex(@"^\s+", RegexOptions.Multiline)]
+    private static partial Regex TrimLeadingSpacesRegex();
 }
