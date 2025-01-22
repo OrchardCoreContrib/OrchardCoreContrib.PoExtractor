@@ -1,4 +1,6 @@
-﻿using McMaster.Extensions.CommandLineUtils;
+﻿using System.ComponentModel.DataAnnotations;
+using McMaster.Extensions.CommandLineUtils;
+using OrchardCore.Modules;
 using OrchardCoreContrib.PoExtractor.DotNet;
 using OrchardCoreContrib.PoExtractor.DotNet.CS;
 using OrchardCoreContrib.PoExtractor.DotNet.VB;
@@ -22,19 +24,29 @@ public class Program
             .IsRequired();
 
         // Options
-        var language = app.Option("-l|--language <LANGUAGE>", "Specifies the code language to extracts translatable strings from.", CommandOptionType.SingleValue, options =>
+        var language = app.Option("-l|--language <LANGUAGE>", "Specifies the code language to extracts translatable strings from.", CommandOptionType.SingleValue, option =>
         {
-            options.Accepts(cfg => cfg.Values("C#", "VB"));
-            options.DefaultValue = "C#";
+            option.Accepts(cfg => cfg.Values("C#", "VB"));
+            option.DefaultValue = "C#";
         });
-        var template = app.Option("-t|--template <TEMPLATE>", "Specifies the template engine to extract the translatable strings from.", CommandOptionType.SingleValue, options =>
-            options.Accepts(cfg => cfg.Values("Razor", "Liquid"))
+        var template = app.Option("-t|--template <TEMPLATE>", "Specifies the template engine to extract the translatable strings from.", CommandOptionType.SingleValue, option =>
+            option.Accepts(cfg => cfg.Values("Razor", "Liquid"))
         );
         var ignoredProjects = app.Option("-i|--ignore <IGNORED_PROJECTS>", "Ignores extracting PO files from a given project(s).", CommandOptionType.MultipleValue);
         var localizers = app.Option("--localizer <LOCALIZERS>", "Specifies the name of the localizer(s) that will be used during the extraction process.", CommandOptionType.MultipleValue);
         var single = app.Option("-s|--single <FILE_NAME>", "Specifies the single output file.", CommandOptionType.SingleValue);
+        var plugins = app.Option(
+            "-p|--plugin <FILE_NAME_OR_HTTPS_URL>",
+            "A path or web URL with HTTPS scheme to a C# script (.csx) file which can define further " +
+            "IProjectProcessor implementations. You can have multiple of this switch in a call.",
+            CommandOptionType.MultipleValue,
+            option => option.OnValidate(_ => option
+                .Values
+                .All(item => File.Exists(item) || item.StartsWithOrdinalIgnoreCase("https://"))
+                ? ValidationResult.Success
+                : new ValidationResult("Plugin must be an existing local file or a valid HTTPS URL.")));
 
-        app.OnExecute(() =>
+        app.OnExecuteAsync(async cancellationToken =>
         {
             if (!Directory.Exists(inputPath.Value))
             {
@@ -84,6 +96,11 @@ public class Program
                 projectProcessors.Add(new LiquidProjectProcessor());
             }
 
+            if (plugins.Values.Count > 0)
+            {
+                await PluginHelper.ProcessPluginsAsync(plugins.Values, projectProcessors, projectFiles);
+            }
+
             var isSingleFileOutput = !string.IsNullOrEmpty(single.Value());
             var localizableStrings = new LocalizableStringCollection();
             foreach (var projectFile in projectFiles)
@@ -91,7 +108,9 @@ public class Program
                 var projectPath = Path.GetDirectoryName(projectFile);
                 var projectBasePath = Path.GetDirectoryName(projectPath) + Path.DirectorySeparatorChar;
                 var projectRelativePath = projectPath[projectBasePath.Length..];
-                var rootedProject = projectPath[(projectPath.IndexOf(inputPath.Value) + inputPath.Value.Length + 1)..];
+                var rootedProject = projectPath == inputPath.Value
+                    ? projectPath 
+                    : projectPath[(projectPath.IndexOf(inputPath.Value, StringComparison.Ordinal) + inputPath.Value.Length + 1)..];
                 if (IgnoredProject.ToList().Any(p => rootedProject.StartsWith(p)))
                 {
                     continue;
