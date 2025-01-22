@@ -4,7 +4,7 @@ using Xunit;
 
 namespace OrchardCoreContrib.PoExtractor.Tests;
 
-public class PluginTests
+public partial class PluginTests
 {
     private const string PluginTestFiles = nameof(PluginTestFiles);
     
