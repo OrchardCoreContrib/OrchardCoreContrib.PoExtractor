@@ -51,5 +51,5 @@ public static class PluginHelper
         }
     }
 
-    public record PluginContext(List<IProjectProcessor> projectProcessors, List<string> projectFiles);
+    public record PluginContext(List<IProjectProcessor> ProjectProcessors, List<string> ProjectFiles);
 }
