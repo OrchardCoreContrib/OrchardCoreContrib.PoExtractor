@@ -60,7 +60,10 @@ public class Program
                 IgnoredProject.Add(ignoredProject);
             }
 
-            LocalizerAccessors.LocalizerIdentifiers = [.. localizers.Values];
+            if (localizers.Values.Count > 0)
+            {
+                LocalizerAccessors.LocalizerIdentifiers = [.. localizers.Values];
+            }
 
             var projectFiles = new List<string>();
             var projectProcessors = new List<IProjectProcessor>();
