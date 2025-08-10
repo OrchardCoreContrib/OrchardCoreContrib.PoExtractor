@@ -35,6 +35,7 @@ public class RazorMetadataProvider : IMetadataProvider<SyntaxNode>
         ArgumentNullException.ThrowIfNull(node);
 
         var path = node.SyntaxTree.FilePath.TrimStart(_basePath);
+        path = RemoveProjectNameFromPath(path);
         path = RemoveRazorFileExtension(path);
 
         return path.Replace(Path.DirectorySeparatorChar, '.');
@@ -107,5 +108,26 @@ public class RazorMetadataProvider : IMetadataProvider<SyntaxNode>
         }
 
         return null;
+    }
+
+    private static string RemoveProjectNameFromPath(string path)
+    {
+        // Remove leading directory separator if present
+        if (path.StartsWith(Path.DirectorySeparatorChar))
+        {
+            path = path.Substring(1);
+        }
+
+        // Find the first directory separator to locate the project name
+        var firstSeparatorIndex = path.IndexOf(Path.DirectorySeparatorChar);
+        
+        // If there's no separator, just return the path as is
+        if (firstSeparatorIndex == -1)
+        {
+            return path;
+        }
+
+        // Remove the project name (everything before the first separator)
+        return path.Substring(firstSeparatorIndex + 1);
     }
 }

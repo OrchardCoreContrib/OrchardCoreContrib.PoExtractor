@@ -110,7 +110,6 @@ public class Program
             {
                 var projectPath = Path.GetDirectoryName(projectFile);
                 var projectBasePath = Path.GetDirectoryName(projectPath) + Path.DirectorySeparatorChar;
-                var projectRelativePath = projectPath[projectBasePath.Length..];
                 var rootedProject = projectPath == inputPath.Value
                     ? projectPath 
                     : projectPath[(projectPath.IndexOf(inputPath.Value, StringComparison.Ordinal) + inputPath.Value.Length + 1)..];
