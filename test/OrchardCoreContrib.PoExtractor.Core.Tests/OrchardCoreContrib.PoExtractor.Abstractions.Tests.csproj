@@ -1,23 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
 	<PropertyGroup>
 		<RootNamespace>OrchardCoreContrib.PoExtractor.Tests</RootNamespace>
-		<TargetFramework>net6.0</TargetFramework>
 	</PropertyGroup>
-
 	<ItemGroup>
-		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
-		<PackageReference Include="xunit" Version="2.4.1" />
-		<PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
+		<PackageReference Include="Microsoft.NET.Test.Sdk" />
+		<PackageReference Include="xunit" />
+		<PackageReference Include="xunit.analyzers" />
+		<PackageReference Include="xunit.runner.visualstudio">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
 		</PackageReference>
 	</ItemGroup>
-
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\OrchardCoreContrib.PoExtractor.DotNet.CS\OrchardCoreContrib.PoExtractor.DotNet.CS.csproj" />
 	</ItemGroup>
-
 	<ItemGroup>
 		<Compile Update="ProjectFiles\LoginViewModel.cs">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -26,5 +22,4 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Compile>
 	</ItemGroup>
-
 </Project>

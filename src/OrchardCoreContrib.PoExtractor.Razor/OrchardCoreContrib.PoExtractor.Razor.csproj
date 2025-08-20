@@ -1,12 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Razor.Language" Version="5.0.6" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\OrchardCoreContrib.PoExtractor.DotNet.CS\OrchardCoreContrib.PoExtractor.DotNet.CS.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Razor.Language" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\OrchardCoreContrib.PoExtractor.DotNet.CS\OrchardCoreContrib.PoExtractor.DotNet.CS.csproj" />
+	</ItemGroup>
 </Project>

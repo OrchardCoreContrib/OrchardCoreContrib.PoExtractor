@@ -1,65 +1,79 @@
-﻿using OrchardCoreContrib.PoExtractor.DotNet;
+﻿using System.ComponentModel.DataAnnotations;
+using McMaster.Extensions.CommandLineUtils;
+using OrchardCore.Modules;
+using OrchardCoreContrib.PoExtractor.DotNet;
 using OrchardCoreContrib.PoExtractor.DotNet.CS;
 using OrchardCoreContrib.PoExtractor.DotNet.VB;
 using OrchardCoreContrib.PoExtractor.Liquid;
 using OrchardCoreContrib.PoExtractor.Razor;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 
-namespace OrchardCoreContrib.PoExtractor
+namespace OrchardCoreContrib.PoExtractor;
+
+public class Program
 {
-    public class Program
+    public static void Main(string[] args)
     {
-        private static readonly string _defaultLanguage = Language.CSharp;
-        private static readonly string _defaultTemplateEngine = TemplateEngine.Both;
-        private static readonly string[] _ignoredProjects = new string[]
-        {
-            "docs",
-            "src\\OrchardCore.Cms.Web",
-            "src\\OrchardCore.Mvc.Web",
-            "src\\Templates",
-            "test"
-        };
+        var app = new CommandLineApplication();
 
-        public static void Main(string[] args)
+        app.HelpOption();
+
+        // Arguments
+        var inputPath = app.Argument("Input Path", "The path to the input directory, all projects at the the path will be processed.")
+            .IsRequired();
+        var outputPath = app.Argument("Output Path", "The path to a directory where POT files will be generated.")
+            .IsRequired();
+
+        // Options
+        var language = app.Option("-l|--language <LANGUAGE>", "Specifies the code language to extracts translatable strings from.", CommandOptionType.SingleValue, option =>
         {
-            if (args.Length < 2 || args.Length > 6 || args.Length % 2 == 1)
+            option.Accepts(cfg => cfg.Values("C#", "VB"));
+            option.DefaultValue = "C#";
+        });
+        var template = app.Option("-t|--template <TEMPLATE>", "Specifies the template engine to extract the translatable strings from.", CommandOptionType.SingleValue, option =>
+            option.Accepts(cfg => cfg.Values("Razor", "Liquid"))
+        );
+        var ignoredProjects = app.Option("-i|--ignore <IGNORED_PROJECTS>", "Ignores extracting PO files from a given project(s).", CommandOptionType.MultipleValue);
+        var localizers = app.Option("--localizer <LOCALIZERS>", "Specifies the name of the localizer(s) that will be used during the extraction process.", CommandOptionType.MultipleValue);
+        var single = app.Option("-s|--single <FILE_NAME>", "Specifies the single output file.", CommandOptionType.SingleValue);
+        var plugins = app.Option(
+            "-p|--plugin <FILE_NAME_OR_HTTPS_URL>",
+            "A path or web URL with HTTPS scheme to a C# script (.csx) file which can define further " +
+            "IProjectProcessor implementations. You can have multiple of this switch in a call.",
+            CommandOptionType.MultipleValue,
+            option => option.OnValidate(_ => option
+                .Values
+                .All(item => File.Exists(item) || item.StartsWithOrdinalIgnoreCase("https://"))
+                ? ValidationResult.Success
+                : new ValidationResult("Plugin must be an existing local file or a valid HTTPS URL.")));
+
+        app.OnExecuteAsync(async cancellationToken =>
+        {
+            if (!Directory.Exists(inputPath.Value))
             {
-                ShowHelp();
+                Console.WriteLine($"The input path '{inputPath.Value}' does not exist.");
 
                 return;
             }
 
-            var inputPath = new DirectoryInfo(args[0]).FullName;
-            var outputPath = new DirectoryInfo(args[1]).FullName;
-
-            if (!Directory.Exists(inputPath))
+            foreach (var ignoredProject in ignoredProjects.Values)
             {
-                ShowHelp();
-
-                return;
+                IgnoredProject.Add(ignoredProject);
             }
 
-            (string language, string templateEngine) = GetCliOptions(args);
-
-            if (language == null || templateEngine == null)
+            if (localizers.Values.Count > 0)
             {
-                ShowHelp();
-
-                return;
+                LocalizerAccessors.LocalizerIdentifiers = [.. localizers.Values];
             }
 
             var projectFiles = new List<string>();
             var projectProcessors = new List<IProjectProcessor>();
 
-            if (language == Language.CSharp)
+            if (language.Value() == Language.CSharp)
             {
                 projectProcessors.Add(new CSharpProjectProcessor());
 
                 projectFiles.AddRange(Directory
-                    .EnumerateFiles(inputPath, $"*{ProjectExtension.CS}", SearchOption.AllDirectories)
+                    .EnumerateFiles(inputPath.Value, $"*{ProjectExtension.CS}", SearchOption.AllDirectories)
                     .OrderBy(f => f));
             }
             else
@@ -67,121 +81,82 @@ namespace OrchardCoreContrib.PoExtractor
                 projectProcessors.Add(new VisualBasicProjectProcessor());
 
                 projectFiles.AddRange(Directory
-                    .EnumerateFiles(inputPath, $"*{ProjectExtension.VB}", SearchOption.AllDirectories)
+                    .EnumerateFiles(inputPath.Value, $"*{ProjectExtension.VB}", SearchOption.AllDirectories)
                     .OrderBy(f => f));
             }
 
-            if (templateEngine == TemplateEngine.Both)
+            if (template.Value() == TemplateEngine.Both)
             {
                 projectProcessors.Add(new RazorProjectProcessor());
                 projectProcessors.Add(new LiquidProjectProcessor());
             }
-            else if (templateEngine == TemplateEngine.Razor)
+            else if (template.Value() == TemplateEngine.Razor)
             {
                 projectProcessors.Add(new RazorProjectProcessor());
             }
-            else if (templateEngine == TemplateEngine.Liquid)
+            else if (template.Value() == TemplateEngine.Liquid)
             {
                 projectProcessors.Add(new LiquidProjectProcessor());
             }
 
+            if (plugins.Values.Count > 0)
+            {
+                await PluginHelper.ProcessPluginsAsync(plugins.Values, projectProcessors, projectFiles);
+            }
+
+            var isSingleFileOutput = !string.IsNullOrEmpty(single.Value());
+            var localizableStrings = new LocalizableStringCollection();
             foreach (var projectFile in projectFiles)
             {
                 var projectPath = Path.GetDirectoryName(projectFile);
                 var projectBasePath = Path.GetDirectoryName(projectPath) + Path.DirectorySeparatorChar;
-                var projectRelativePath = projectPath.Substring(projectBasePath.Length);
-
-                if (IgnoredProject.ToList().Any(p => projectRelativePath.StartsWith(p)))
+                var projectRelativePath = projectPath[projectBasePath.Length..];
+                var rootedProject = projectPath == inputPath.Value
+                    ? projectPath 
+                    : projectPath[(projectPath.IndexOf(inputPath.Value, StringComparison.Ordinal) + inputPath.Value.Length + 1)..];
+                if (IgnoredProject.ToList().Any(p => rootedProject.StartsWith(p)))
                 {
                     continue;
                 }
 
-                var localizableStrings = new LocalizableStringCollection();
                 foreach (var projectProcessor in projectProcessors)
                 {
                     projectProcessor.Process(projectPath, projectBasePath, localizableStrings);
                 }
 
+                if (!isSingleFileOutput)
+                {
+                    if (localizableStrings.Values.Any())
+                    {
+                        var potPath = Path.Combine(outputPath.Value, Path.GetFileNameWithoutExtension(projectFile) + PoWriter.PortaleObjectTemplateExtension);
+
+                        Directory.CreateDirectory(Path.GetDirectoryName(potPath));
+
+                        using var potFile = new PoWriter(potPath);
+                        potFile.WriteRecord(localizableStrings.Values);
+                    }
+
+                    Console.WriteLine($"{Path.GetFileName(projectPath)}: Found {localizableStrings.Values.Count()} strings.");
+                    localizableStrings.Clear();
+                }
+            }
+
+            if (isSingleFileOutput)
+            {
                 if (localizableStrings.Values.Any())
                 {
-                    var potPath = Path.Combine(outputPath, Path.GetFileNameWithoutExtension(projectFile) + PoWriter.PortaleObjectTemplateExtension);
+                    var potPath = Path.Combine(outputPath.Value, single.Value());
 
                     Directory.CreateDirectory(Path.GetDirectoryName(potPath));
 
-                    using (var potFile = new PoWriter(potPath))
-                    {
-                        potFile.WriteRecord(localizableStrings.Values);
-                    }
+                    using var potFile = new PoWriter(potPath);
+                    potFile.WriteRecord(localizableStrings.Values);
                 }
 
-                Console.WriteLine($"{Path.GetFileName(projectPath)}: Found {localizableStrings.Values.Count()} strings.");
+                Console.WriteLine($"Found {localizableStrings.Values.Count()} strings.");
             }
-        }
+        });
 
-        private static (string language, string templateEngine) GetCliOptions(string[] args)
-        {
-            var language = _defaultLanguage;
-            var templateEngine = _defaultTemplateEngine;
-            for (int i = 4; i <= args.Length; i += 2)
-            {
-                switch (args[i - 2])
-                {
-                    case "-l":
-                    case "--language":
-                        if (args[i - 1].Equals(Language.CSharp, StringComparison.CurrentCultureIgnoreCase))
-                        {
-                            language = Language.CSharp;
-                        }
-                        else if (args[i - 1].Equals(Language.VisualBasic, StringComparison.CurrentCultureIgnoreCase))
-                        {
-                            language = Language.VisualBasic;
-                        }
-                        else
-                        {
-                            language = null;
-                        }
-
-                        break;
-                    case "-t":
-                    case "--template":
-                        if (args[i - 1].Equals(TemplateEngine.Razor, StringComparison.CurrentCultureIgnoreCase))
-                        {
-                            templateEngine = TemplateEngine.Razor;
-                        }
-                        else if (args[i - 1].Equals(TemplateEngine.Liquid, StringComparison.CurrentCultureIgnoreCase))
-                        {
-                            templateEngine = TemplateEngine.Liquid;
-                        }
-                        else
-                        {
-                            templateEngine = null;
-                        }
-
-                        break;
-                    default:
-                        language = null;
-                        templateEngine = null;
-                        break;
-                }
-            }
-
-            return (language, templateEngine);
-        }
-
-        private static void ShowHelp()
-        {
-            Console.WriteLine("Usage:");
-            Console.WriteLine("  extractpo <INPUT_PATH> <OUTPUT_PATH> [options]");
-            Console.WriteLine();
-            Console.WriteLine("Arguments:");
-            Console.WriteLine("  <INPUT_PATH> The path to the input directory, all projects at the the path will be processed.");
-            Console.WriteLine("  <OUTPUT_PATH> The path to a directory where POT files will be generated.");
-            Console.WriteLine();
-            Console.WriteLine("Options:");
-            Console.WriteLine("  -l, --language <C#|VB>             Specifies the code language to extracts translatable strings from.");
-            Console.WriteLine("                                     Default: C# language");
-            Console.WriteLine("  -t, --template <Razor|Liquid>      Specifies the template engine to extract the translatable strings from.");
-            Console.WriteLine("                                     Default: Razor & Liquid templates");
-        }
+        app.Execute(args);
     }
 }

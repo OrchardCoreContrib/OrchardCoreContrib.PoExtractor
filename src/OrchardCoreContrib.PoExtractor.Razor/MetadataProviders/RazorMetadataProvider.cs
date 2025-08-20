@@ -5,105 +5,107 @@ using System;
 using System.IO;
 using System.Linq;
 
-namespace OrchardCoreContrib.PoExtractor.Razor.MetadataProviders
+namespace OrchardCoreContrib.PoExtractor.Razor.MetadataProviders;
+
+/// <summary>
+/// Provides metadata for Razor .cshtml files.
+/// </summary>
+public class RazorMetadataProvider : IMetadataProvider<SyntaxNode>
 {
+    private static readonly string _razorPageExtension = ".cshtml";
+    private static readonly string _razorComponentExtension = ".razor";
+
+    private string[] _sourceCache;
+    private string _sourceCachePath;
+
+    private readonly string _basePath;
+
     /// <summary>
-    /// Provides metadata for Razor .cshtml files.
+    /// Creates a new instance of a <see cref="RazorMetadataProvider"/>.
     /// </summary>
-    public class RazorMetadataProvider : IMetadataProvider<SyntaxNode>
+    /// <param name="basePath">The base path.</param>
+    public RazorMetadataProvider(string basePath)
     {
-        private static readonly string _razorExtension = ".cshtml";
+        _basePath = basePath;
+    }
 
-        private string[] _sourceCache;
-        private string _sourceCachePath;
+    /// <inheritdoc/>
+    public string GetContext(SyntaxNode node)
+    {
+        ArgumentNullException.ThrowIfNull(node);
 
-        private readonly string _basePath;
+        var path = node.SyntaxTree.FilePath.TrimStart(_basePath);
+        path = RemoveRazorFileExtension(path);
 
-        /// <summary>
-        /// Creates a new instance of a <see cref="RazorMetadataProvider"/>.
-        /// </summary>
-        /// <param name="basePath">The base path.</param>
-        public RazorMetadataProvider(string basePath)
+        return path.Replace(Path.DirectorySeparatorChar, '.');
+    }
+
+    private static string RemoveRazorFileExtension(string path)
+    {
+        return path
+            .Replace(_razorPageExtension, string.Empty)
+            .Replace(_razorComponentExtension, string.Empty);
+    }
+
+    /// <inheritdoc/>
+    public LocalizableStringLocation GetLocation(SyntaxNode node)
+    {
+        ArgumentNullException.ThrowIfNull(node);
+
+        var result = new LocalizableStringLocation
         {
-            _basePath = basePath;
-        }
+            SourceFile = node.SyntaxTree.FilePath.TrimStart(_basePath)
+        };
 
-        /// <inheritdoc/>
-        public string GetContext(SyntaxNode node)
+        var statement = node
+            .Ancestors()
+            .OfType<ExpressionStatementSyntax>()
+            .FirstOrDefault();
+
+        if (statement != null)
         {
-            if (node is null)
-            {
-                throw new ArgumentNullException(nameof(node));
-            }
-
-            var path = node.SyntaxTree.FilePath.TrimStart(_basePath);
-
-            return path.Replace(Path.DirectorySeparatorChar, '.').Replace(_razorExtension, string.Empty);
-        }
-
-        /// <inheritdoc/>
-        public LocalizableStringLocation GetLocation(SyntaxNode node)
-        {
-            if (node is null)
-            {
-                throw new ArgumentNullException(nameof(node));
-            }
-
-            var result = new LocalizableStringLocation
-            {
-                SourceFile = node.SyntaxTree.FilePath.TrimStart(_basePath)
-            };
-
-            var statement = node
-                .Ancestors()
-                .OfType<ExpressionStatementSyntax>()
+            var lineTriviaSyntax = statement
+                .DescendantTrivia()
+                .OfType<SyntaxTrivia>()
+                .Where(o => o.IsKind(SyntaxKind.LineDirectiveTrivia) && o.HasStructure)
                 .FirstOrDefault();
 
-            if (statement != null)
+            if (lineTriviaSyntax.GetStructure() is LineDirectiveTriviaSyntax lineTrivia && lineTrivia.HashToken.Text == "#" && lineTrivia.DirectiveNameToken.Text == "line")
             {
-                var lineTriviaSyntax = statement
-                    .DescendantTrivia()
-                    .OfType<SyntaxTrivia>()
-                    .Where(o => o.IsKind(SyntaxKind.LineDirectiveTrivia) && o.HasStructure)
-                    .FirstOrDefault();
-
-                if (lineTriviaSyntax.GetStructure() is LineDirectiveTriviaSyntax lineTrivia && lineTrivia.HashToken.Text == "#" && lineTrivia.DirectiveNameToken.Text == "line")
+                if (int.TryParse(lineTrivia.Line.Text, out var lineNumber))
                 {
-                    if (int.TryParse(lineTrivia.Line.Text, out var lineNumber))
-                    {
-                        result.SourceFileLine = lineNumber;
-                        result.Comment = GetSourceCodeLine(node.SyntaxTree.FilePath, lineNumber).Trim();
-                    }
+                    result.SourceFileLine = lineNumber;
+                    result.Comment = GetSourceCodeLine(node.SyntaxTree.FilePath, lineNumber)?.Trim();
                 }
             }
-
-            return result;
         }
 
-        private string GetSourceCodeLine(string path, int line)
+        return result;
+    }
+
+    private string GetSourceCodeLine(string path, int line)
+    {
+        if (_sourceCachePath != path)
         {
-            if (_sourceCachePath != path)
+            _sourceCache = null;
+            _sourceCachePath = null;
+
+            try
             {
-                _sourceCache = null;
-                _sourceCachePath = null;
-
-                try
-                {
-                    _sourceCache = File.ReadAllLines(path);
-                    _sourceCachePath = path;
-                }
-                catch
-                {
-                }
+                _sourceCache = File.ReadAllLines(path);
+                _sourceCachePath = path;
             }
-
-            var zeroBasedLineNumber = line - 1;
-            if (_sourceCache != null && _sourceCache.Length > zeroBasedLineNumber)
+            catch
             {
-                return _sourceCache[zeroBasedLineNumber];
             }
-
-            return null;
         }
+
+        var zeroBasedLineNumber = line - 1;
+        if (_sourceCache != null && _sourceCache.Length > zeroBasedLineNumber)
+        {
+            return _sourceCache[zeroBasedLineNumber];
+        }
+
+        return null;
     }
 }

@@ -4,49 +4,40 @@ using Microsoft.CodeAnalysis.VisualBasic.Syntax;
 using System;
 using System.Linq;
 
-namespace OrchardCoreContrib.PoExtractor.DotNet.VB
+namespace OrchardCoreContrib.PoExtractor.DotNet.VB;
+
+/// <summary>
+/// Extracts <see cref="LocalizableStringOccurence"/> with the singular text from the C# & VB AST node
+/// </summary>
+/// <remarks>
+/// The localizable string is identified by the name convention - T["TEXT TO TRANSLATE"]
+/// </remarks>
+/// <remarks>
+/// Creates a new instance of a <see cref="SingularStringExtractor"/>.
+/// </remarks>
+/// <param name="metadataProvider">The <see cref="IMetadataProvider{TNode}"/>.</param>
+public class SingularStringExtractor(IMetadataProvider<SyntaxNode> metadataProvider) : LocalizableStringExtractor<SyntaxNode>(metadataProvider)
 {
-    /// <summary>
-    /// Extracts <see cref="LocalizableStringOccurence"/> with the singular text from the C# & VB AST node
-    /// </summary>
-    /// <remarks>
-    /// The localizable string is identified by the name convention - T["TEXT TO TRANSLATE"]
-    /// </remarks>
-    public class SingularStringExtractor : LocalizableStringExtractor<SyntaxNode>
+    /// <inheritdoc/>
+    public override bool TryExtract(SyntaxNode node, out LocalizableStringOccurence result)
     {
-        /// <summary>
-        /// Creates a new instance of a <see cref="SingularStringExtractor"/>.
-        /// </summary>
-        /// <param name="metadataProvider">The <see cref="IMetadataProvider{TNode}"/>.</param>
-        public SingularStringExtractor(IMetadataProvider<SyntaxNode> metadataProvider) : base(metadataProvider)
-        {
+        ArgumentNullException.ThrowIfNull(node);
 
+        result = null;
+
+        if (node is InvocationExpressionSyntax accessor &&
+            accessor.Expression is IdentifierNameSyntax identifierName &&
+            LocalizerAccessors.LocalizerIdentifiers.Contains(identifierName.Identifier.Text) &&
+            accessor.ArgumentList != null)
+        {
+            var argument = accessor.ArgumentList.Arguments.FirstOrDefault();
+            if (argument != null && argument.GetExpression() is LiteralExpressionSyntax literal && literal.IsKind(SyntaxKind.StringLiteralExpression))
+            {
+                result = CreateLocalizedString(literal.Token.ValueText, null, node);
+                return true;
+            }
         }
 
-        /// <inheritdoc/>
-        public override bool TryExtract(SyntaxNode node, out LocalizableStringOccurence result)
-        {
-            if (node is null)
-            {
-                throw new ArgumentNullException(nameof(node));
-            }
-
-            result = null;
-
-            if (node is InvocationExpressionSyntax accessor &&
-                accessor.Expression is IdentifierNameSyntax identifierName &&
-                LocalizerAccessors.LocalizerIdentifiers.Contains(identifierName.Identifier.Text) &&
-                accessor.ArgumentList != null)
-            {
-                var argument = accessor.ArgumentList.Arguments.FirstOrDefault();
-                if (argument != null && argument.GetExpression() is LiteralExpressionSyntax literal && literal.IsKind(SyntaxKind.StringLiteralExpression))
-                {
-                    result = CreateLocalizedString(literal.Token.ValueText, null, node);
-                    return true;
-                }
-            }
-
-            return false;
-        }
+        return false;
     }
 }

@@ -1,13 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
-		<TargetFramework>net6.0</TargetFramework>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<AssemblyName>OrchardCoreContrib.PoExtractor</AssemblyName>
 		<ToolCommandName>extractpo</ToolCommandName>
 		<PackAsTool>true</PackAsTool>
-		<Version>1.0.1</Version>
+		<Version>1.2.0</Version>
 		<Authors>The Orchard Core Contrib Team</Authors>
 		<Company />
 		<Description>.NET Core global tool for extracting translatable strings from the OrchardCore source files.</Description>
@@ -24,16 +22,19 @@
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 		<Copyright>2019 Orchard Core Contrib</Copyright>
 	</PropertyGroup>
-
 	<ItemGroup>
 		<None Include="../../images/icon.png" Pack="true" PackagePath="icon.png" />
 	</ItemGroup>
-
+	<ItemGroup>
+	  <PackageReference Include="McMaster.Extensions.CommandLineUtils" />
+	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\OrchardCoreContrib.PoExtractor.DotNet.CS\OrchardCoreContrib.PoExtractor.DotNet.CS.csproj" />
 		<ProjectReference Include="..\OrchardCoreContrib.PoExtractor.DotNet.VB\OrchardCoreContrib.PoExtractor.DotNet.VB.csproj" />
 		<ProjectReference Include="..\OrchardCoreContrib.PoExtractor.Liquid\OrchardCoreContrib.PoExtractor.Liquid.csproj" />
 		<ProjectReference Include="..\OrchardCoreContrib.PoExtractor.Razor\OrchardCoreContrib.PoExtractor.Razor.csproj" />
 	</ItemGroup>
-
+	<ItemGroup>
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" />
+	</ItemGroup>
 </Project>

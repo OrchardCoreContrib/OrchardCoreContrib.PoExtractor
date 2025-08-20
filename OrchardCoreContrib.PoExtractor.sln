@@ -27,9 +27,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrchardCoreContrib.PoExtrac
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrchardCoreContrib.PoExtractor.Tests", "test\OrchardCoreContrib.PoExtractor.Tests\OrchardCoreContrib.PoExtractor.Tests.csproj", "{7989E10F-A776-44FE-B3CF-1EB377EFD665}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrchardCoreContrib.PoExtractor.DotNet.CS.Tests", "test\OrchardCoreContrib.PoExtractor.DotNet.CS.Tests\OrchardCoreContrib.PoExtractor.DotNet.CS.Tests.csproj", "{8BD3C4A9-2778-4B2F-8709-79FDC027CA01}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrchardCoreContrib.PoExtractor.DotNet.CS.Tests", "test\OrchardCoreContrib.PoExtractor.DotNet.CS.Tests\OrchardCoreContrib.PoExtractor.DotNet.CS.Tests.csproj", "{8BD3C4A9-2778-4B2F-8709-79FDC027CA01}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrchardCoreContrib.PoExtractor.DotNet.VB.Tests", "test\OrchardCoreContrib.PoExtractor.DotNet.VB.Tests\OrchardCoreContrib.PoExtractor.DotNet.VB.Tests.csproj", "{A5885141-EDF9-4C6C-AFF7-B0BE92079E31}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrchardCoreContrib.PoExtractor.DotNet.VB.Tests", "test\OrchardCoreContrib.PoExtractor.DotNet.VB.Tests\OrchardCoreContrib.PoExtractor.DotNet.VB.Tests.csproj", "{A5885141-EDF9-4C6C-AFF7-B0BE92079E31}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DDD306EA-9B35-4984-9E96-CBE0450B82DC}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+		Directory.Packages.props = Directory.Packages.props
+		README.md = README.md
+		NuGet.config = NuGet.config
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
