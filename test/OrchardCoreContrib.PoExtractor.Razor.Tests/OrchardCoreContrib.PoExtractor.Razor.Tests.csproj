@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../../src/OrchardCoreContrib.PoExtractor.Razor/OrchardCoreContrib.PoExtractor.Razor.csproj" />
+  <PackageReference Include="xunit" />
+  <PackageReference Include="xunit.runner.visualstudio" />
+  <PackageReference Include="Microsoft.NET.Test.Sdk" />
+  <None Include="Sample/**" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>
