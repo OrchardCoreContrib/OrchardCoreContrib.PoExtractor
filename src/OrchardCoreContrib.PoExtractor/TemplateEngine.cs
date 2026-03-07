@@ -6,5 +6,5 @@ public class TemplateEngine
 
     public static readonly string Razor = "Razor";
 
-    public static readonly string Both = string.Empty;
+    public static readonly string Both = null;
 }
