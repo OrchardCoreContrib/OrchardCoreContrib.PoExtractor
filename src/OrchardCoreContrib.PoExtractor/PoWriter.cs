@@ -103,6 +103,7 @@ public class PoWriter : IDisposable
         sb.Replace("\\", "\\\\"); // \ -> \\
         sb.Replace("\"", "\\\""); // " -> \"
         sb.Replace("\r\n", "\\r\\n");
+        sb.Replace("\r", "\\r");
         sb.Replace("\n", "\\n");
 
         return sb.ToString();
