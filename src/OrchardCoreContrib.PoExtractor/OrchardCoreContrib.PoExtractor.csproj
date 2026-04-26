@@ -5,7 +5,7 @@
 		<AssemblyName>OrchardCoreContrib.PoExtractor</AssemblyName>
 		<ToolCommandName>extractpo</ToolCommandName>
 		<PackAsTool>true</PackAsTool>
-		<Version>1.2.0</Version>
+		<Version>1.3.0</Version>
 		<Authors>The Orchard Core Contrib Team</Authors>
 		<Company />
 		<Description>.NET Core global tool for extracting translatable strings from the OrchardCore source files.</Description>
@@ -21,9 +21,14 @@
 		<Product>Orchard Core Contrib Portable Object Extraction Tool</Product>
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 		<Copyright>2019 Orchard Core Contrib</Copyright>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
 	<ItemGroup>
 		<None Include="../../images/icon.png" Pack="true" PackagePath="icon.png" />
+		<None Include="..\..\README.md">
+		  <Pack>True</Pack>
+		  <PackagePath>\</PackagePath>
+		</None>
 	</ItemGroup>
 	<ItemGroup>
 	  <PackageReference Include="McMaster.Extensions.CommandLineUtils" />
