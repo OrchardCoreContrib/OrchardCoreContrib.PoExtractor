@@ -49,7 +49,7 @@ public class PoWriterTests
     }
 
     [Fact]
-    public void WriteRecord_ShouldNotEscape_CarriageReturn()
+    public void WriteRecord_ShouldEscape_CarriageReturn()
     {
         // Arrange
         var localizableString = new LocalizableString
@@ -65,7 +65,7 @@ public class PoWriterTests
 
         // Assert
         var result = ReadPoStream();
-        Assert.Equal("msgid \"Orchard\rCore\"", result[0]);
+        Assert.Equal("msgid \"Orchard\\rCore\"", result[0]);
         Assert.Equal("msgstr \"\"", result[1]);
     }
 
