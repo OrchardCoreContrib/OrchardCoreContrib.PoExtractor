@@ -3,9 +3,6 @@ using Fluid.Parser;
 using Microsoft.Extensions.Options;
 using OrchardCore.DisplayManagement.Liquid;
 using OrchardCoreContrib.PoExtractor.Liquid.MetadataProviders;
-using System;
-using System.IO;
-using System.Linq;
 
 namespace OrchardCoreContrib.PoExtractor.Liquid;
 
@@ -23,9 +20,10 @@ public class LiquidProjectProcessor : IProjectProcessor
     /// </summary>
     public LiquidProjectProcessor()
     {
-        var parserOptions = Options.Create(new LiquidViewOptions());
+        var liquidViewOptions = Options.Create(new LiquidViewOptions());
+        var fileParserOptions = Options.Create(new FluidParserOptions());
 
-        _parser = new LiquidViewParser(parserOptions);
+        _parser = new LiquidViewParser(liquidViewOptions, fileParserOptions);
     }
 
     /// <inheritdoc/>
