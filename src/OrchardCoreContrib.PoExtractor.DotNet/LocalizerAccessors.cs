@@ -27,6 +27,12 @@ public static class LocalizerAccessors
     [
         DefaultLocalizerIdentifier,
         StringLocalizerIdentifier,
-        HtmlLocalizerIdentifier
+        HtmlLocalizerIdentifier,
     ];
+
+    /// <summary>
+    /// Determines whether the identifier matches a supported localizer accessor name.
+    /// </summary>
+    public static bool IsLocalizerIdentifier(string identifier) =>
+        LocalizerIdentifiers.Contains(identifier, StringComparer.Ordinal);
 }

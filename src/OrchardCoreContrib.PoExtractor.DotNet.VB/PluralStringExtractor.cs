@@ -28,8 +28,7 @@ public class PluralStringExtractor(IMetadataProvider<SyntaxNode> metadataProvide
 
         if (node is InvocationExpressionSyntax invocation &&
             invocation.Expression is MemberAccessExpressionSyntax accessor &&
-            accessor.Expression is IdentifierNameSyntax identifierName &&
-            LocalizerAccessors.LocalizerIdentifiers.Contains(identifierName.Identifier.Text) &&
+            LocalizerAccessorSyntax.IsLocalizerAccessor(accessor.Expression) &&
             accessor.Name.Identifier.Text == "Plural")
         {
             var arguments = invocation.ArgumentList.Arguments;

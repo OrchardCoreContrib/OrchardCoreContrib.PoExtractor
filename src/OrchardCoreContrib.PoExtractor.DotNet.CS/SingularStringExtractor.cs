@@ -27,12 +27,21 @@ public class SingularStringExtractor(IMetadataProvider<SyntaxNode> metadataProvi
         result = null;
 
         if (node is ElementAccessExpressionSyntax accessor &&
-            accessor.Expression is IdentifierNameSyntax identifierName &&
-            LocalizerAccessors.LocalizerIdentifiers.Contains(identifierName.Identifier.Text) &&
+            LocalizerAccessorSyntax.IsLocalizerAccessor(accessor.Expression) &&
             accessor.ArgumentList != null)
         {
-
             var argument = accessor.ArgumentList.Arguments.FirstOrDefault();
+            if (argument != null && argument.Expression is LiteralExpressionSyntax literal && literal.IsKind(SyntaxKind.StringLiteralExpression))
+            {
+                result = CreateLocalizedString(literal.Token.ValueText, null, node);
+                return true;
+            }
+        }
+
+        if (node is InvocationExpressionSyntax invocation &&
+            LocalizerAccessorSyntax.IsLocalizerAccessor(invocation.Expression))
+        {
+            var argument = invocation.ArgumentList.Arguments.FirstOrDefault();
             if (argument != null && argument.Expression is LiteralExpressionSyntax literal && literal.IsKind(SyntaxKind.StringLiteralExpression))
             {
                 result = CreateLocalizedString(literal.Token.ValueText, null, node);

@@ -26,8 +26,7 @@ public class SingularStringExtractor(IMetadataProvider<SyntaxNode> metadataProvi
         result = null;
 
         if (node is InvocationExpressionSyntax accessor &&
-            accessor.Expression is IdentifierNameSyntax identifierName &&
-            LocalizerAccessors.LocalizerIdentifiers.Contains(identifierName.Identifier.Text) &&
+            LocalizerAccessorSyntax.IsLocalizerAccessor(accessor.Expression) &&
             accessor.ArgumentList != null)
         {
             var argument = accessor.ArgumentList.Arguments.FirstOrDefault();
