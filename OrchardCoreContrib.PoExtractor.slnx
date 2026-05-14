@@ -1,0 +1,24 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+    <File Path="NuGet.config" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/OrchardCoreContrib.PoExtractor.Abstractions/OrchardCoreContrib.PoExtractor.Abstractions.csproj" />
+    <Project Path="src/OrchardCoreContrib.PoExtractor.DotNet.CS/OrchardCoreContrib.PoExtractor.DotNet.CS.csproj" />
+    <Project Path="src/OrchardCoreContrib.PoExtractor.DotNet.VB/OrchardCoreContrib.PoExtractor.DotNet.VB.csproj" />
+    <Project Path="src/OrchardCoreContrib.PoExtractor.DotNet/OrchardCoreContrib.PoExtractor.DotNet.csproj" />
+    <Project Path="src/OrchardCoreContrib.PoExtractor.Liquid/OrchardCoreContrib.PoExtractor.Liquid.csproj" />
+    <Project Path="src/OrchardCoreContrib.PoExtractor.Razor/OrchardCoreContrib.PoExtractor.Razor.csproj" />
+    <Project Path="src/OrchardCoreContrib.PoExtractor/OrchardCoreContrib.PoExtractor.csproj" />
+  </Folder>
+  <Folder Name="/test/">
+    <Project Path="test/OrchardCoreContrib.PoExtractor.Core.Tests/OrchardCoreContrib.PoExtractor.Abstractions.Tests.csproj" />
+    <Project Path="test/OrchardCoreContrib.PoExtractor.DotNet.CS.Tests/OrchardCoreContrib.PoExtractor.DotNet.CS.Tests.csproj" />
+    <Project Path="test/OrchardCoreContrib.PoExtractor.DotNet.VB.Tests/OrchardCoreContrib.PoExtractor.DotNet.VB.Tests.csproj" />
+    <Project Path="test/OrchardCoreContrib.PoExtractor.Liquid.Tests/OrchardCoreContrib.PoExtractor.Liquid.Tests.csproj" />
+    <Project Path="test/OrchardCoreContrib.PoExtractor.Tests/OrchardCoreContrib.PoExtractor.Tests.csproj" />
+  </Folder>
+</Solution>
