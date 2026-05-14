@@ -19,7 +19,7 @@ jobs:
       with:
         dotnet-version: 10.0.*
     - name: Install Dependencies
-      run: dotnet restore
+      run: dotnet restore --configfile ./NuGet.config
     - name: Build
       run: dotnet build --configuration Release --no-restore
     - name: Test
