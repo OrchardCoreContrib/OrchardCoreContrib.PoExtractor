@@ -1,8 +1,13 @@
 ﻿<Project>
 	<PropertyGroup>
 		<TargetFramework>net10.0</TargetFramework>
+		<LangVersion>latest</LangVersion>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<IsPackable>false</IsPackable>
+		<Nullable>disable</Nullable>
+		<!--<TreatWarningsAsErrors>true</TreatWarningsAsErrors>-->
+		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
 		<AccelerateBuildsInVisualStudio>true</AccelerateBuildsInVisualStudio>
+		<ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+		<NoWarn>NU1507</NoWarn>
 	</PropertyGroup>
 </Project>
