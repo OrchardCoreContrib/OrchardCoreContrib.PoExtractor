@@ -30,8 +30,10 @@ public class Program
             option.DefaultValue = "C#";
         });
         var template = app.Option("-t|--template <TEMPLATE>", "Specifies the template engine to extract the translatable strings from.", CommandOptionType.SingleValue, option =>
-            option.Accepts(cfg => cfg.Values("Razor", "Liquid"))
-        );
+        {
+            option.Accepts(cfg => cfg.Values(TemplateEngine.Both, "Razor", "Liquid"));
+            option.DefaultValue = TemplateEngine.Both;
+        });
         var ignoredProjects = app.Option("-i|--ignore <IGNORED_PROJECTS>", "Ignores extracting PO files from a given project(s).", CommandOptionType.MultipleValue);
         var localizers = app.Option("--localizer <LOCALIZERS>", "Specifies the name of the localizer(s) that will be used during the extraction process.", CommandOptionType.MultipleValue);
         var single = app.Option("-s|--single <FILE_NAME>", "Specifies the single output file.", CommandOptionType.SingleValue);
@@ -112,7 +114,7 @@ public class Program
                 var projectBasePath = Path.GetDirectoryName(projectPath) + Path.DirectorySeparatorChar;
                 var projectRelativePath = projectPath[projectBasePath.Length..];
                 var rootedProject = projectPath == inputPath.Value
-                    ? projectPath 
+                    ? projectPath
                     : projectPath[(projectPath.IndexOf(inputPath.Value, StringComparison.Ordinal) + inputPath.Value.Length + 1)..];
                 if (IgnoredProject.ToList().Any(p => rootedProject.StartsWith(p)))
                 {
