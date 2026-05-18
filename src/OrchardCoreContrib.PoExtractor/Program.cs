@@ -31,7 +31,7 @@ public class Program
         });
         var template = app.Option("-t|--template <TEMPLATE>", "Specifies the template engine to extract the translatable strings from.", CommandOptionType.SingleValue, option =>
         {
-            option.Accepts(cfg => cfg.Values(TemplateEngine.Both, "Razor", "Liquid"));
+            option.Accepts(cfg => cfg.Values(TemplateEngine.Both, TemplateEngine.Razor, TemplateEngine.Liquid));
             option.DefaultValue = TemplateEngine.Both;
         });
         var ignoredProjects = app.Option("-i|--ignore <IGNORED_PROJECTS>", "Ignores extracting PO files from a given project(s).", CommandOptionType.MultipleValue);
