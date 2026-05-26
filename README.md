@@ -15,7 +15,7 @@ dotnet tool install --global OrchardCoreContrib.PoExtractor
 ## Usage
 
 ```powershell
-extractpo <INTPUT_PATH> <OUTPUT_PATH> [-l|--language {"C#"|"VB"}] [-t|--template {"razor"|"liquid"}]
+extractpo <INTPUT_PATH> <OUTPUT_PATH> [-l|--language {"C#"|"VB"}] [-t|--template {"razor"|"liquid"}] [--liquid-processor-configuration {path to JSON file}]
 ```
 
 ### Description
@@ -59,6 +59,19 @@ When executing the plugins, all _OrchardCoreContrib.PoExtractor_ assemblies are 
 > using OrchardCore.Commerce.Constants;
 > Console.WriteLine("Imported resource name: {0}", ResourceNames.ShoppingCart);
 > ```
+
+- **`--liquid-processor-configuration {path to JSON file}`**
+
+Specifies the path to a JSON file with `LiquidProcessorConfiguration`, containing `InlineTags` and `BlockTags` arrays used to register custom Liquid tags during parsing.
+
+Example:
+
+```json
+{
+  "InlineTags": ["resources", "link", "script", "style"],
+  "BlockTags": ["edit_custom_settings", "scriptblock", "styleblock", "EditCustomSettings"]
+}
+```
 
 ## Uninstallation
 

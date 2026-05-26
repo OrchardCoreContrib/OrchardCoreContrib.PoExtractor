@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json;
 using McMaster.Extensions.CommandLineUtils;
 using OrchardCore.Modules;
 using OrchardCoreContrib.PoExtractor.DotNet;
@@ -37,6 +38,33 @@ public class Program
         var ignoredProjects = app.Option("-i|--ignore <IGNORED_PROJECTS>", "Ignores extracting PO files from a given project(s).", CommandOptionType.MultipleValue);
         var localizers = app.Option("--localizer <LOCALIZERS>", "Specifies the name of the localizer(s) that will be used during the extraction process.", CommandOptionType.MultipleValue);
         var single = app.Option("-s|--single <FILE_NAME>", "Specifies the single output file.", CommandOptionType.SingleValue);
+        var liquidProcessorConfigurationPath = app.Option(
+            "--liquid-processor-configuration <FILE_NAME>",
+            "Specifies a path to a JSON file with LiquidProcessorConfiguration (InlineTags and BlockTags).",
+            CommandOptionType.SingleValue,
+            option => option.OnValidate(_ =>
+            {
+                if (!option.HasValue())
+                {
+                    return ValidationResult.Success;
+                }
+
+                if (!File.Exists(option.Value()))
+                {
+                    return new ValidationResult("Liquid processor configuration must be an existing local file.");
+                }
+
+                try
+                {
+                    LoadLiquidProcessorConfiguration(option.Value());
+
+                    return ValidationResult.Success;
+                }
+                catch (JsonException ex)
+                {
+                    return new ValidationResult($"Liquid processor configuration must be valid JSON: {ex.Message}");
+                }
+            }));
         var plugins = app.Option(
             "-p|--plugin <FILE_NAME_OR_HTTPS_URL>",
             "A path or web URL with HTTPS scheme to a C# script (.csx) file which can define further " +
@@ -69,6 +97,9 @@ public class Program
 
             var projectFiles = new List<string>();
             var projectProcessors = new List<IProjectProcessor>();
+            var liquidProcessorConfiguration = liquidProcessorConfigurationPath.HasValue()
+                ? LoadLiquidProcessorConfiguration(liquidProcessorConfigurationPath.Value())
+                : new LiquidProcessorConfiguration();
 
             if (language.Value() == Language.CSharp)
             {
@@ -90,7 +121,7 @@ public class Program
             if (template.Value() == TemplateEngine.Both)
             {
                 projectProcessors.Add(new RazorProjectProcessor());
-                projectProcessors.Add(new LiquidProjectProcessor());
+                projectProcessors.Add(new LiquidProjectProcessor(liquidProcessorConfiguration));
             }
             else if (template.Value() == TemplateEngine.Razor)
             {
@@ -98,7 +129,7 @@ public class Program
             }
             else if (template.Value() == TemplateEngine.Liquid)
             {
-                projectProcessors.Add(new LiquidProjectProcessor());
+                projectProcessors.Add(new LiquidProjectProcessor(liquidProcessorConfiguration));
             }
 
             if (plugins.Values.Count > 0)
@@ -161,4 +192,10 @@ public class Program
 
         app.Execute(args);
     }
+
+    private static LiquidProcessorConfiguration LoadLiquidProcessorConfiguration(string path)
+        => JsonSerializer.Deserialize<LiquidProcessorConfiguration>(
+               File.ReadAllText(path),
+               new JsonSerializerOptions { PropertyNameCaseInsensitive = true })
+           ?? new LiquidProcessorConfiguration();
 }

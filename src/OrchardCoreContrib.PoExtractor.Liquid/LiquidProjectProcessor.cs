@@ -18,13 +18,39 @@ public class LiquidProjectProcessor : IProjectProcessor
     /// <summary>
     /// Initializes a new instance of the <see cref="LiquidProjectProcessor"/>
     /// </summary>
-    public LiquidProjectProcessor()
+    public LiquidProjectProcessor(LiquidProcessorConfiguration configuration = null)
     {
-        var liquidViewOptions = Options.Create(new LiquidViewOptions());
+        configuration ??= new LiquidProcessorConfiguration();
+
+        var liquidViewOptions = new LiquidViewOptions();
+        liquidViewOptions.LiquidViewParserConfiguration.Add(parser =>
+        {
+            foreach (var tag in NormalizeTags(configuration.InlineTags))
+            {
+                parser.RegisterParserTag(
+                    tag,
+                    parser.ArgumentsListParser,
+                    static (_, _, _, _) => System.Threading.Tasks.ValueTask.FromResult(Fluid.Ast.Completion.Normal));
+            }
+
+            foreach (var tag in NormalizeTags(configuration.BlockTags))
+            {
+                parser.RegisterParserBlock(
+                    tag,
+                    parser.ArgumentsListParser,
+                    static (_, _, _, _, _) => System.Threading.Tasks.ValueTask.FromResult(Fluid.Ast.Completion.Normal));
+            }
+        });
+
         var fileParserOptions = Options.Create(new FluidParserOptions());
 
-        _parser = new LiquidViewParser(liquidViewOptions, fileParserOptions);
+        _parser = new LiquidViewParser(Options.Create(liquidViewOptions), fileParserOptions);
     }
+
+    private static IEnumerable<string> NormalizeTags(IReadOnlyList<string> tags) => tags?
+        .Where(static tag => !string.IsNullOrWhiteSpace(tag))
+        .Distinct(StringComparer.Ordinal)
+        ?? [];
 
     /// <inheritdoc/>
     public void Process(string path, string basePath, LocalizableStringCollection localizableStrings)
@@ -43,6 +69,10 @@ public class LiquidProjectProcessor : IProjectProcessor
             if (_parser.TryParse(reader.ReadToEnd(), out var template, out var errors))
             {
                 ProcessTemplate(template, liquidVisitor, file);
+            }
+            else
+            {
+                Console.WriteLine($"Error: {errors}, file: {file}");
             }
         }
     }
