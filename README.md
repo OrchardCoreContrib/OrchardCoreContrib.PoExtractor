@@ -70,14 +70,71 @@ dotnet tool uninstall --global OrchardCoreContrib.PoExtractor
 
 OrchardCoreContrib.PoExtractor assumes, the code follows several conventions:
 
-* `IStringLocalizer` or a derived class is accessed via a field named `S` (This is a convention used in Orchard Core)
-* `IHtmlLocalizer` or a derived class is accessed via a field named `H` (This is a convention used in Orchard Core)
-* `IStringLocalizer` or `IHtmlLocalizer` is accessed via a field named `T` (This is a older convention used in Orchard Core)
+* `IStringLocalizer` or a derived class is accessed via a field, property, or helper named `S` (This is a convention used in Orchard Core)
+* `IHtmlLocalizer` or a derived class is accessed via a field, property, or helper named `H` (This is a convention used in Orchard Core)
+* `IStringLocalizer` or `IHtmlLocalizer` is accessed via a field, property, or helper named `T` (This is a older convention used in Orchard Core)
 * Liquid templates use the filter named `t` (This is a convention used in Fluid)
 * context of the localizable string is the full name (with namespace) of the containing class for C# or VB code
 * context of the localizable string is the dot-delimited relative path the to view for Razor templates
 * context of the localizable string is the dot-delimited relative path the to template for Liquid templates
- 
+* code extraction supports Orchard-style accessors such as `S["Text"]` and `T["Text"]`, instance/helper calls such as `S("Text")` and `T("Text")`, and typed static helper calls such as `S<MyClass>("Text")`, `T<MyClass>("Text")`, and `.Plural(...)`
+
+## Static localization helpers
+
+The extractor can recognize typed static helper calls such as `S<MyClass>("Text")`, `T<MyClass>("Text")`, `S<MyClass>.Plural(...)`, and `T<MyClass>.Plural(...)`, but this tool doesn't provide those runtime helpers for you. If you want to use them in your project then you need to define them in the consuming application.
+
+Use a typed helper instead of a single global untyped localizer. This keeps runtime localization aligned with the class-based extraction context written into the POT file.
+
+Example C# setup:
+
+```csharp
+using Microsoft.Extensions.Localization;
+
+public static class StaticLocalizers
+{
+    private static IStringLocalizerFactory _stringLocalizerFactory;
+
+    public static void Configure(IStringLocalizerFactory stringLocalizerFactory) =>
+        _stringLocalizerFactory = stringLocalizerFactory;
+
+    public static TypedStringLocalizer<T> S<T>() => new(_stringLocalizerFactory.Create(typeof(T)));
+
+    public static TypedStringLocalizer<T> T<T>() => new(_stringLocalizerFactory.Create(typeof(T)));
+}
+
+public readonly struct TypedStringLocalizer<T>(IStringLocalizer localizer)
+{
+    public LocalizedString this[string name] => localizer[name];
+
+    public LocalizedString this[string name, params object[] arguments] => localizer[name, arguments];
+
+    public LocalizedString Invoke(string name) => localizer[name];
+
+    public LocalizedString Invoke(string name, params object[] arguments) => localizer[name, arguments];
+
+    public LocalizedString Plural(int count, string singular, string plural) =>
+        localizer[count == 1 ? singular : plural, count];
+}
+```
+
+Register the factory once during startup:
+
+```csharp
+StaticLocalizers.Configure(app.Services.GetRequiredService<IStringLocalizerFactory>());
+```
+
+Then create project-level aliases matching the extractor-supported shapes:
+
+```csharp
+using static StaticLocalizers;
+
+var title = S<MyClass>()["Title"];
+var message = T<MyClass>().Invoke("Hello");
+var itemCount = T<MyClass>().Plural(totalItems, "1 item", "{0} items");
+```
+
+If you want call sites like `S<MyClass>("Text")` or `T<MyClass>.Plural(...)`, add your own thin wrapper methods or types with those exact names. The important part is that the helper remains typed by the containing class, not backed by one shared untyped localizer.
+  
 ## Example
 
 C# code:

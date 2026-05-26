@@ -28,11 +28,9 @@ public class PluralStringExtractor(IMetadataProvider<SyntaxNode> metadataProvide
 
         if (node is InvocationExpressionSyntax invocation &&
             invocation.Expression is MemberAccessExpressionSyntax accessor &&
-            accessor.Expression is IdentifierNameSyntax identifierName &&
-            LocalizerAccessors.LocalizerIdentifiers.Contains(identifierName.Identifier.Text) &&
+            LocalizerAccessorSyntax.IsLocalizerAccessor(accessor.Expression) &&
             accessor.Name.Identifier.Text == "Plural")
         {
-
             var arguments = invocation.ArgumentList.Arguments;
             if (arguments.Count >= 2 &&
                 arguments[1].Expression is ArrayCreationExpressionSyntax array)
@@ -43,9 +41,7 @@ public class PluralStringExtractor(IMetadataProvider<SyntaxNode> metadataProvide
                     array.Initializer.Expressions[0] is LiteralExpressionSyntax singularLiteral && singularLiteral.IsKind(SyntaxKind.StringLiteralExpression) &&
                     array.Initializer.Expressions[1] is LiteralExpressionSyntax pluralLiteral && pluralLiteral.IsKind(SyntaxKind.StringLiteralExpression))
                 {
-
                     result = CreateLocalizedString(singularLiteral.Token.ValueText, pluralLiteral.Token.ValueText, node);
-
                     return true;
                 }
             }
@@ -55,9 +51,7 @@ public class PluralStringExtractor(IMetadataProvider<SyntaxNode> metadataProvide
                     arguments[1].Expression is LiteralExpressionSyntax singularLiteral && singularLiteral.IsKind(SyntaxKind.StringLiteralExpression) &&
                     arguments[2].Expression is LiteralExpressionSyntax pluralLiteral && pluralLiteral.IsKind(SyntaxKind.StringLiteralExpression))
                 {
-
                     result = CreateLocalizedString(singularLiteral.Token.ValueText, pluralLiteral.Token.ValueText, node);
-
                     return true;
                 }
             }
