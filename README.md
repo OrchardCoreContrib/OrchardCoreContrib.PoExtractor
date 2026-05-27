@@ -68,8 +68,8 @@ Example:
 
 ```json
 {
-  "InlineTags": ["resources", "link", "script", "style"],
-  "BlockTags": ["edit_custom_settings", "scriptblock", "styleblock", "EditCustomSettings"]
+  "InlineTags": ["resources", "link", "script", "style", "yourcustomtag"],
+  "BlockTags": ["scriptblock", "styleblock"]
 }
 ```
 
