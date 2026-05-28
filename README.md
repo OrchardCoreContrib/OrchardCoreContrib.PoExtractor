@@ -15,7 +15,7 @@ dotnet tool install --global OrchardCoreContrib.PoExtractor
 ## Usage
 
 ```powershell
-extractpo <INTPUT_PATH> <OUTPUT_PATH> [-l|--language {"C#"|"VB"}] [-t|--template {"razor"|"liquid"}] [--liquid-processor-configuration {path to JSON file}]
+extractpo <INPUT_PATH> <OUTPUT_PATH> [-l|--language {"C#"|"VB"}] [-t|--template {"razor"|"liquid"}] [--liquid-processor-configuration {path to JSON file}]
 ```
 
 ### Description

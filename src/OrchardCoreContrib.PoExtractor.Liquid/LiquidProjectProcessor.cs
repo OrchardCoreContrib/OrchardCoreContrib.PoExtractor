@@ -27,18 +27,12 @@ public class LiquidProjectProcessor : IProjectProcessor
         {
             foreach (var tag in NormalizeTags(configuration.InlineTags))
             {
-                parser.RegisterParserTag(
-                    tag,
-                    parser.ArgumentsListParser,
-                    static (_, _, _, _) => System.Threading.Tasks.ValueTask.FromResult(Fluid.Ast.Completion.Normal));
+                parser.RegisterParserTag(tag, parser.ArgumentsListParser, static (_, _, _, _) => ValueTask.FromResult(Fluid.Ast.Completion.Normal));
             }
 
             foreach (var tag in NormalizeTags(configuration.BlockTags))
             {
-                parser.RegisterParserBlock(
-                    tag,
-                    parser.ArgumentsListParser,
-                    static (_, _, _, _, _) => System.Threading.Tasks.ValueTask.FromResult(Fluid.Ast.Completion.Normal));
+                parser.RegisterParserBlock(tag, parser.ArgumentsListParser, static (_, _, _, _, _) => ValueTask.FromResult(Fluid.Ast.Completion.Normal));
             }
         });
 

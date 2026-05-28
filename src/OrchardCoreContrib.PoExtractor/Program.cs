@@ -64,6 +64,10 @@ public class Program
                 {
                     return new ValidationResult($"Liquid processor configuration must be valid JSON: {ex.Message}");
                 }
+                catch (Exception ex)
+                {
+                    return new ValidationResult($"Liquid processor configuration could not be read: {ex.Message}");
+                }
             }));
         var plugins = app.Option(
             "-p|--plugin <FILE_NAME_OR_HTTPS_URL>",
@@ -193,9 +197,9 @@ public class Program
         app.Execute(args);
     }
 
-    private static LiquidProcessorConfiguration LoadLiquidProcessorConfiguration(string path)
-        => JsonSerializer.Deserialize<LiquidProcessorConfiguration>(
-               File.ReadAllText(path),
-               new JsonSerializerOptions { PropertyNameCaseInsensitive = true })
-           ?? new LiquidProcessorConfiguration();
+    private static LiquidProcessorConfiguration LoadLiquidProcessorConfiguration(string path) => 
+        string.IsNullOrWhiteSpace(path) || !File.Exists(path)
+            ? new LiquidProcessorConfiguration()
+            : JsonSerializer.Deserialize<LiquidProcessorConfiguration>(File.ReadAllText(path), new JsonSerializerOptions { PropertyNameCaseInsensitive = true })
+               ?? new LiquidProcessorConfiguration();
 }
