@@ -4,5 +4,8 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<IsPackable>false</IsPackable>
 		<AccelerateBuildsInVisualStudio>true</AccelerateBuildsInVisualStudio>
+
+		<SignAssembly>true</SignAssembly>
+		<AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)OrchardCoreContrib.PoExtractor.snk</AssemblyOriginatorKeyFile>
 	</PropertyGroup>
 </Project>
