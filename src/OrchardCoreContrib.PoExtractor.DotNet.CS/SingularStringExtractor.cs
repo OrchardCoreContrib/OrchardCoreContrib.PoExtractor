@@ -33,13 +33,34 @@ public class SingularStringExtractor(IMetadataProvider<SyntaxNode> metadataProvi
         {
 
             var argument = accessor.ArgumentList.Arguments.FirstOrDefault();
-            if (argument != null && argument.Expression is LiteralExpressionSyntax literal && literal.IsKind(SyntaxKind.StringLiteralExpression))
+            if (argument != null && TryGetString(argument.Expression, out var value))
             {
-                result = CreateLocalizedString(literal.Token.ValueText, null, node);
+                result = CreateLocalizedString(value, null, node);
                 return true;
             }
         }
 
+        return false;
+    }
+
+    private static bool TryGetString(ExpressionSyntax expression, out string value)
+    {
+        if (expression is LiteralExpressionSyntax literal && literal.IsKind(SyntaxKind.StringLiteralExpression))
+        {
+            value = literal.Token.ValueText;
+            return true;
+        }
+
+        if (expression is BinaryExpressionSyntax binary &&
+            binary.IsKind(SyntaxKind.AddExpression) &&
+            TryGetString(binary.Left, out var left) &&
+            TryGetString(binary.Right, out var right))
+        {
+            value = left + right;
+            return true;
+        }
+
+        value = null;
         return false;
     }
 }
