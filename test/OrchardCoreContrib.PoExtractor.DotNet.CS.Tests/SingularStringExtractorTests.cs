@@ -14,7 +14,7 @@ public class SingularStringExtractorTests
         var extractor = new SingularStringExtractor(metadataProvider);
 
         var syntaxTree = CSharpSyntaxTree.ParseText($"S[\"{text}\"];", path: "DummyPath");
-        
+
         var node = syntaxTree
             .GetRoot()
             .DescendantNodes()
@@ -26,5 +26,35 @@ public class SingularStringExtractorTests
         // Assert
         Assert.True(extracted);
         Assert.Equal(text, result.Text);
+    }
+
+    [Theory]
+    [InlineData("""S["my " + "text"];""", "my text")]
+    [InlineData("""S["a " + "long " + "text"];""", "a long text")]
+    [InlineData(
+        """
+        S["This is a long piece of text " +
+          "continued on another line."];
+        """,
+        "This is a long piece of text continued on another line.")]
+    public void ExtractConcatenatedString(string source, string expected)
+    {
+        // Arrange
+        var metadataProvider = new CSharpMetadataProvider("DummyBasePath");
+        var extractor = new SingularStringExtractor(metadataProvider);
+
+        var syntaxTree = CSharpSyntaxTree.ParseText(source, path: "DummyPath");
+
+        var node = syntaxTree
+            .GetRoot()
+            .DescendantNodes()
+            .ElementAt(2);
+
+        // Act
+        var extracted = extractor.TryExtract(node, out var result);
+
+        // Assert
+        Assert.True(extracted);
+        Assert.Equal(expected, result.Text);
     }
 }
