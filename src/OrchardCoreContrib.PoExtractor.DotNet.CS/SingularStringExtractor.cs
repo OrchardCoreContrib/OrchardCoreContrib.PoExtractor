@@ -48,6 +48,7 @@ public class SingularStringExtractor(IMetadataProvider<SyntaxNode> metadataProvi
         if (expression is LiteralExpressionSyntax literal && literal.IsKind(SyntaxKind.StringLiteralExpression))
         {
             value = literal.Token.ValueText;
+
             return true;
         }
 
@@ -57,10 +58,12 @@ public class SingularStringExtractor(IMetadataProvider<SyntaxNode> metadataProvi
             TryGetString(binary.Right, out var right))
         {
             value = left + right;
+
             return true;
         }
 
         value = null;
+
         return false;
     }
 }
