@@ -12,7 +12,10 @@ public class SingularStringExtractorTests
         S[@"This is a multi-line
         string."];
         """,
-        "This is a multi-line\nstring.")]
+        """
+        This is a multi-line
+        string.
+        """)]
     [InlineData("""S["my " + "text"];""", "my text")]
     [InlineData("""S["a " + "long " + "text"];""", "a long text")]
     [InlineData(
