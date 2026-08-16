@@ -5,30 +5,14 @@ namespace OrchardCoreContrib.PoExtractor.DotNet.CS.Tests;
 
 public class SingularStringExtractorTests
 {
-    [Fact]
-    public void ExtractString()
-    {
-        // Arrange
-        var text = "Thing";
-        var metadataProvider = new CSharpMetadataProvider("DummyBasePath");
-        var extractor = new SingularStringExtractor(metadataProvider);
-
-        var syntaxTree = CSharpSyntaxTree.ParseText($"S[\"{text}\"];", path: "DummyPath");
-
-        var node = syntaxTree
-            .GetRoot()
-            .DescendantNodes()
-            .ElementAt(2);
-
-        // Act
-        var extracted = extractor.TryExtract(node, out var result);
-
-        // Assert
-        Assert.True(extracted);
-        Assert.Equal(text, result.Text);
-    }
-
     [Theory]
+    [InlineData("""S["Thing"];""", "Thing")]
+    [InlineData(
+        """
+        S[@"This is a multi-line
+        string."];
+        """,
+        "This is a multi-line\nstring.")]
     [InlineData("""S["my " + "text"];""", "my text")]
     [InlineData("""S["a " + "long " + "text"];""", "a long text")]
     [InlineData(
@@ -37,7 +21,7 @@ public class SingularStringExtractorTests
           "continued on another line."];
         """,
         "This is a long piece of text continued on another line.")]
-    public void ExtractConcatenatedString(string source, string expected)
+    public void ExtractString(string source, string expected)
     {
         // Arrange
         var metadataProvider = new CSharpMetadataProvider("DummyBasePath");
